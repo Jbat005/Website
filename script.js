@@ -18,7 +18,7 @@ const projects = [
         link: 'https://doc-pastor-remote-l069-2273e74aa948.herokuapp.com' 
     },
     { 
-        name: 'Berry Cox Price Momentum Baskets & Monte Carlo Efficient Frontier - Quantitative Finance Project', 
+        name: 'Berry Cox Price Momentum Baskets & Monte Carlo Efficient Frontier - Quantitative Finance', 
         description: `Implements a trading strategy based on Berry Cox Alpha Generators, specifically
         the price momentum factors. These factors can predict what an asset's expected growth will be.
         It grabs a basket of the asset's with the highest factor-based score, and another basket with the lowest.

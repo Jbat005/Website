@@ -1,22 +1,22 @@
-/* Basic Global Styles */
+/* Basic Global Styles for Dark Mode */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: #121212; /* Dark background */
+    color: #ffffff; /* Light text */
 }
 
 /* Header */
 header {
-    background-color: #2C3E50; /* Slate blue */
-    color: #fff;
+    background-color: #1a1a1a; /* Darker shade for header */
+    color: #ffffff;
     padding: 10px 0;
     text-align: center;
 }
 
 nav a {
-    color: #fff;
+    color: #ffffff;
     margin: 0 10px;
     text-decoration: none;
 }
@@ -32,11 +32,11 @@ main {
 }
 
 #greeting h1 {
-    color: #2980B9; /* Lighter blue */
+    color: #62cff0; /* A bright color for headings */
 }
 
 #greeting p {
-    color: #333;
+    color: #ffffff;
 }
 
 /* Projects Section */
@@ -45,7 +45,9 @@ main {
 }
 
 .project {
-    background: #eaeaea;
+    background: #1e1e1e; /* Dark background for project cards */
+    color: #ffffff; /* Light text */
+    text-align: center; /* Light text */
     width: 100%;
     max-width: 900px;
     margin: 20px auto;
@@ -64,26 +66,20 @@ main {
 
 /* About Section */
 #about {
-    background: #eaeaea;
+    background: #1e1e1e; /* Dark background for about section */
+    color: #ffffff; /* Light text */
     padding: 15px;
     border-radius: 8px;
     margin-top: 40px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#about h2 {
-    text-align: center; 
-    color: #000; 
-    font-weight: bold; 
-    margin-bottom: 20px; /* Add space underneath the heading */
-}
-
-#about h3 {
-    color: #2980B9;
+#about h2, #about h3 {
+    color: #62cff0; /* Bright color for subheadings */
 }
 
 #about p {
-    color: #666;
+    color: #ffffff;
     line-height: 1.6;
 }
 
@@ -135,8 +131,8 @@ main {
 
 /* Footer */
 footer {
-    background-color: #2C3E50;
-    color: #fff;
+    background-color: #1a1a1a; /* Darker shade for footer */
+    color: #ffffff;
     text-align: center;
     padding: 10px 0;
     position: relative;
@@ -145,7 +141,7 @@ footer {
 }
 
 footer a {
-    color: #fff;
+    color: #ffffff;
     text-decoration: none;
 }
 
