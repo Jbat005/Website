@@ -32,7 +32,7 @@ main {
 }
 
 #greeting h1 {
-    color: #62cff0; /* A bright color for headings */
+    color: #32a852; /* A bright color for headings */
 }
 
 #greeting p {
@@ -74,8 +74,12 @@ main {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#about h2, #about h3 {
-    color: #62cff0; /* Bright color for subheadings */
+#about h2 {
+    text-align: center;
+    color: #ffffff; /* Bright color for headings */
+}
+#about h3 {
+    color: #32a852; /* Bright color for subheadings */
 }
 
 #about p {
@@ -129,6 +133,7 @@ main {
     max-height: 400px; 
 }
 
+
 /* Footer */
 footer {
     background-color: #1a1a1a; /* Darker shade for footer */
@@ -140,9 +145,16 @@ footer {
     width: 100%;
 }
 
+#linkedin-icon, #github-icon {
+    width: 30px; /* Adjust the size as needed */
+    height: auto;
+    vertical-align: middle;
+}
+
 footer a {
     color: #ffffff;
     text-decoration: none;
+    margin: 0 10px;
 }
 
 /* Responsive Design */
