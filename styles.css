@@ -33,10 +33,12 @@ main {
 
 #greeting h1 {
     color: #32a852; /* A bright color for headings */
+    font-family: 'Montserrat', sans-serif; /* New font family */
 }
 
 #greeting p {
     color: #ffffff;
+    font-family: 'Montserrat', sans-serif; /* New font family */
 }
 
 /* Projects Section */
@@ -45,39 +47,48 @@ main {
 }
 
 .project {
-    background: #1e1e1e; /* Dark background for project cards */
-    color: #ffffff; /* Light text */
-    text-align: center; /* Light text */
+    background: #1e1e1e;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
     width: 100%;
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 15px;
+    max-width: 1250px;
+    margin: 30px auto;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex; /* Maintain flexbox layout */
+    justify-content: space-between; /* Align children with space between */
+}
+
+.project-text {
+    width: 45%; /* Decreased size for description */
+    padding-right: 10%; /* Add right padding for spacing */
+}
+
+.project-img {
+    width: 45%; /* Maintain width for image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .project img {
-    width: 80%;
-    max-width: 400px;
-    display: block;
-    margin: 20px auto;
+    max-width: 100%; /* Image takes full width of its container */
+    height: auto;
     border-radius: 8px;
 }
 
+
+
 /* About Section */
-#about {
-    background: #1e1e1e; /* Dark background for about section */
-    color: #ffffff; /* Light text */
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 40px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+#about h2, #about h3, #about p {
+    font-family: 'Montserrat', sans-serif; /* Consistent font family */
 }
 
 #about h2 {
-    text-align: center;
     color: #ffffff; /* Bright color for headings */
 }
+
 #about h3 {
     color: #32a852; /* Bright color for subheadings */
 }
@@ -102,10 +113,6 @@ main {
     order: 2;
 }
 
-#about .about-container:nth-child(even) .about-text {
-    order: 2;
-    padding-left: 20px;
-}
 
 #about .about-container:nth-child(even) .about-image {
     order: 1;
@@ -123,16 +130,10 @@ main {
     max-height: 200px;
 }
 
-#hobbies-image {
-    max-width: 250px;
-    max-height: 250px;
-}
-
 #philosophy-image {
     max-width: 250px; 
     max-height: 400px; 
 }
-
 
 /* Footer */
 footer {
