@@ -12,7 +12,7 @@ const projects = [
         description: `This SQL database contains pizza restaurant data. I created a report of the best opportunities for success, and visualized the most critical
         takeaways from the year's worth of data. Click on the image to explore the data yourself.`, 
         imageUrl: 'pizzaproject.jpg', 
-        link: 'https://doc-pastor-remote-l069-2273e74aa948.herokuapp.com' 
+        link: 'https://jbatistanalytics-3400acb06bb1.herokuapp.com' 
     },
     { 
         name: 'Berry Cox Price Momentum Baskets & Monte Carlo Efficient Frontier - Quantitative Finance', 
