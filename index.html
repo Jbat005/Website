@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Jean Batista | Data Analytics</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-        <link rel="preconnect" href="https://fonts.googleapis.com"> 
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    
+<head>
+    <title>Jean Batista | Data Analytics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
 <body>
     <header>
         <nav>
@@ -27,14 +27,19 @@
             <!-- Project items will be loaded here by JavaScript -->
         </section>
 
+        <section id="resume">
+            <h2>Click on my resume to expand its size.</h2>
+            <img src="resume-thumbnail.jpg" alt="Resume Thumbnail" id="resume-thumbnail">
+        </section>
+        
+        <!-- The "About Me" section moved to be the last section within the <main> -->
         <section id="about">
             <h2>About Me</h2> 
             
             <div class="about-container">
                 <div class="about-text">
                     <h3>Education</h3>
-                    <p>I have a Bachelor's degree in Economics from City College of 
-                        New York. I took courses in python, business analytics, statistics, financial analysis, machine learning and more.</p>
+                    <p>I have a Bachelor's degree in Economics from City College of New York. I took courses in python, business analytics, statistics, financial analysis, machine learning and more.</p>
                 </div>
                 <div class="about-image">
                     <img src="school.jpg" alt="School Image" id="education-image">
@@ -44,9 +49,8 @@
             <div class="about-container">
                 <div class="about-text">
                     <h3>Work experience</h3>
-                    <p> At the moment I dont have any related work experience, but I am looking for a position where I can learn from experienced people. 
-                        I am also open to internships and volunteer work. I am a fast learner and I am willing to learn new skills. And I want to learn as much as possible.
-                    </p>
+                    <p>I currently work for a Home care agency as a personal assistant. Some nights I'm responsible for taking care of a sick family member, keeping track of her medical information (BPI, blood sugar level, BMI, Sp02...), giving medicice doses, and being observant of her overall health.
+                        I have worked other jobs where I also kept records, and practiced my analytical skills. Such as analyzing what factors correlated greatest with earnings while doing food deliveries at Uber Eats. I am looking for a position where I can learn from experienced people. I am also open to internships and volunteer work.</p>
                 </div>
             </div>
             <div class="about-container">
@@ -54,7 +58,14 @@
                     <h3>Technical Skillset</h3>
                     <p>Python, MySQL, Tableau, Excel, HTML, CSS, JS.</p>
                 </div>
-            </div>            
+            </div>
+
+            <div class="about-container">
+                <div class="about-text">
+                    <h3>Hobbies</h3>
+                    <p>I like to code, I mainly enjoy the learning part of it. I like playing chess, In 2023 I was CCNY's president of Chess Club. I try to play often, usually on chess.com while I sit on my patio in the morning. Other times i'll play while in the sauna, it's a good way to pass time. I'm also interested in music, I usually practice piano in my room, although I dont put as much time into it as I should be.</p>
+                </div>
+            </div>              
 
             <div class="about-container">
                 <div class="about-text">
@@ -62,17 +73,25 @@
                     <p>Proficient in English and Spanish.</p>
                 </div>
             </div>
-            </section>
-            </div>
         </section>
     </main>
+
     <footer>
         <a href="https://www.linkedin.com/in/jbatist005/" target="_blank">
             <img src="linkedin-icon.png" alt="LinkedIn" id="linkedin-icon">
+        </a> <!-- Closing tag added here -->
         <a href="https://github.com/Jbat005" target="_blank">
             <img src="github-icon.png" alt="GitHub" id="github-icon">
         </a>
     </footer>
+
+    <!-- Resume Modal -->
+    <div id="resumeModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

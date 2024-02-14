@@ -1,10 +1,3 @@
-/*
-// Commenting out this part for now as the elements are not defined in HTML
-document.getElementById('menu-toggle').addEventListener('click', function() {
-    document.getElementById('nav').classList.toggle('active');
-});
-*/
-
 // Example array of projects
 const projects = [
     { 
@@ -48,5 +41,20 @@ function displayProjects() {
     });
 }
 
-
 document.addEventListener('DOMContentLoaded', displayProjects);
+
+// Resume Modal Functionality
+var modal = document.getElementById('resumeModal');
+var img = document.getElementById('resume-thumbnail');
+var modalImg = document.getElementById('img01');
+var captionText = document.getElementById('caption');
+img.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = this.src; // Use a high-resolution image here if the thumbnail is low-res
+    captionText.innerHTML = this.alt;
+}
+
+var span = document.getElementsByClassName("close")[0];
+span.onclick = function() { 
+    modal.style.display = "none";
+}
