@@ -29,7 +29,8 @@
 
         <section id="resume">
             <h2>Click on my resume to expand its size.</h2>
-            <img src="resume-thumbnail.jpg" alt="Resume Thumbnail" id="resume-thumbnail">
+            <!-- Remove the src attribute pointing to the PDF and add an onclick event to the image -->
+            <img src="resume_flick.jpg" alt="Resume Thumbnail" id="resume-thumbnail" style="cursor: pointer;">
         </section>
         
         <!-- The "About Me" section moved to be the last section within the <main> -->
@@ -39,7 +40,9 @@
             <div class="about-container">
                 <div class="about-text">
                     <h3>Education</h3>
-                    <p>I have a Bachelor's degree in Economics from City College of New York. I took courses in python, business analytics, statistics, financial analysis, machine learning and more.</p>
+                    <p>I have a Bachelor's degree in Economics from City College of New York. I graduated December 2023, 3.262 GPA. I took courses in Python, Business Analytics, Statistics, Financial Analysis, Machine Learning and more.
+                        I was introduced to Python through doing economic based projects. I also have a certificate in Google Advanced Data Analytics. 
+                    </p>
                 </div>
                 <div class="about-image">
                     <img src="school.jpg" alt="School Image" id="education-image">
@@ -63,7 +66,7 @@
             <div class="about-container">
                 <div class="about-text">
                     <h3>Hobbies</h3>
-                    <p>I like to code, I mainly enjoy the learning part of it. I like playing chess, In 2023 I was CCNY's president of Chess Club. I try to play often, usually on chess.com while I sit on my patio in the morning. Other times i'll play while in the sauna, it's a good way to pass time. I'm also interested in music, I usually practice piano in my room, although I dont put as much time into it as I should be.</p>
+                    <p>I like to code, I mainly enjoy the learning part of it. I like playing chess, In 2023 I was CCNY's president of Chess Club. I try to play often, usually on chess.com. I'm also interested in music, I practice piano, although I dont put as much time into it as I should be.</p>
                 </div>
             </div>              
 
@@ -85,12 +88,13 @@
         </a>
     </footer>
 
-    <!-- Resume Modal -->
-    <div id="resumeModal" class="modal">
-        <span class="close">&times;</span>
-        <img class="modal-content" id="img01">
-        <div id="caption"></div>
-    </div>
+<!-- Resume Modal -->
+<div id="resumeModal" class="modal">
+    <span class="close">&times;</span>
+    <!-- The iframe where the PDF will be loaded -->
+    <iframe id="pdfViewer" class="modal-content" style="display:block; width: 100%; height: 100%;"></iframe>
+</div>
+    
 
     <script src="script.js"></script>
 </body>

@@ -99,6 +99,7 @@ main {
 
 #resume img {
     max-width: 10%;
+    color: #ffffff;
     cursor: pointer; /* Indicates the image is clickable */
     display: block; /* Ensure the image is a block-level element */
     margin: auto; /* This will center the image within the #resume section */
@@ -111,8 +112,8 @@ main {
     z-index: 1; /* Sit on top */
     left: 0;
     top: 0;
-    width: 70%; /* Full width */
-    height: 70%; /* Full height */
+    width: 80%; /* Adjust based on desired size */
+    height: 80%; /* Adjust based on desired size */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
@@ -125,6 +126,7 @@ main {
     width: 80%;
     max-width: 800px; /* Adjust based on your image size */
 }
+
 
 /* The Close Button */
 .close {
