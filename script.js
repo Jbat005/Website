@@ -1,16 +1,16 @@
 // Example array of projects
 const projects = [
     {
-        name: 'Pizza Restaurant Analysis - Full website with interactive dashboard',
+        name: 'Python for Business Analytics: Pizza Restaurant',
         description: `This SQL database contains pizza restaurant data. I created a report of the best opportunities for success, and visualized the most critical takeaways from the year's worth of data. Click on the image to explore the data yourself.`,
         imageUrl: 'pizzaproject.jpg',
         link: 'https://jbatistanalytics-3400acb06bb1.herokuapp.com'
     },
     {
-        name: 'Berry Cox Price Momentum Baskets & Monte Carlo Efficient Frontier - Quantitative Finance',
-        description: `Implements price momentum factors trading strategy, that predict asset's expected growth. Curates long and short baskets, highlighting strategy efficacy over long run. Lastly, optimizes portfolio weights using monte carlo simulation. Click on the image to go to the GitHub page.`,
-        imageUrl: 'berrycox1.png',
-        link: 'https://github.com/CCNY-Analytics-and-Quant/Quantative-Finance-Repo/blob/main/Berry-Cox-Baskets/final_project.ipynb'
+        name: 'Quantitative Finance: Automated Portfolio Generator',
+        description: `Use statistical factors to create basket of stocks that generate greater returns than the SP500. Optimizes portfolio weights using Monte-Carlo simulations, then output's portfolio expected growth, and risk-level. Click on the image to go to the GitHub page.`,
+        imageUrl: 'quant_thumbnail.png',
+        link: 'https://github.com/CCNY-Analytics-and-Quant/Quantative-Finance-Repo/blob/main/Auto_Portfolio/auto_portfolio_picks.ipynb'
     }
     // ... (additional projects) ...
 ];
