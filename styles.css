@@ -34,11 +34,14 @@ main {
 #greeting h1 {
     color: #32a852; /* A bright color for headings */
     font-family: 'Montserrat', sans-serif; /* New font family */
+    font-size: 3em;
 }
 
 #greeting p {
     color: #ffffff;
     font-family: 'Montserrat', sans-serif; /* New font family */
+    margin-bottom: 100px;
+    font-size: 2em;
 }
 
 
@@ -72,6 +75,7 @@ main {
 .project-text {
     width: 45%; /* Decreased size for description */
     padding-right: 10%; /* Add right padding for spacing */
+    font-size: 1.1em;
 }
 
 .project-img {
@@ -88,22 +92,7 @@ main {
 }
 
 
-#resume {
-    color: #ffffff;
-    font-family: 'Montserrat', sans-serif;
-    clear: both; /* Clear floats from previous elements */
-    width: 100%; /* Set width to less than half of the container width to fit side by side */
-    margin: 20px 1%; /* Set top and bottom margin to 30px and left/right margin to 1% */
-    text-align: center; /* Align text to center */
-}
 
-#resume img {
-    max-width: 10%;
-    color: #ffffff;
-    cursor: pointer; /* Indicates the image is clickable */
-    display: block; /* Ensure the image is a block-level element */
-    margin: auto; /* This will center the image within the #resume section */
-}
 
 /* The Modal (background) */
 .modal {
@@ -157,11 +146,13 @@ main {
 
 #about h3 {
     color: #32a852; /* Bright color for subheadings */
+    font-size: 1.5em;
 }
 
 #about p {
     color: #ffffff;
     line-height: 1.6;
+    font-size: 1.2em;
 }
 
 #about .about-container {
@@ -171,32 +162,20 @@ main {
 }
 
 
-#about .about-image img {
-    height: auto;
-    object-fit: contain;
-    padding-left: 40px;
-}
-
-/* Specific Styles for Individual Images */
-#education-image {
-    max-width: 330px;
-    max-height: 250px;
-}
-
 
 /* Footer */
 footer {
     background-color: #1a1a1a; /* Darker shade for footer */
     color: #ffffff;
     text-align: center;
-    padding: 10px 0;
+    padding: 20px 0;
     position: relative;
     bottom: 0;
     width: 100%;
 }
 
 #linkedin-icon, #github-icon {
-    width: 30px; /* Adjust the size as needed */
+    width: 60px; /* Adjust the size as needed */
     height: auto;
     vertical-align: middle;
 }
