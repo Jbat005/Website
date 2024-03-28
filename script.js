@@ -2,13 +2,21 @@
 const projects = [
     {
         name: 'Quantitative Finance: Automated Portfolio Generator',
-        description: `Use statistical factors to create basket of stocks that generate greater returns than the SP500. Optimizes portfolio weights using Monte-Carlo simulations, then output's portfolio expected growth, and risk-level. Click on the image to go to the GitHub page.`,
-        imageUrl: 'quant_thumbnail.png',
-        link: 'https://github.com/CCNY-Analytics-and-Quant/Quantative-Finance-Repo/blob/main/Auto_Portfolio/auto_portfolio_picks.ipynb'
+        description: `<ul>
+                        <li>Automatically generates a portfolio that maximizes returns with respect to risks.</li>
+                        <li>The portfolio has increased by 70.59% since the completion of this project(11/15/2023 - 3/28/2024).</li>
+                        <li>Showcases a 3.715% average weekly return over 19 weeks so far.</li>
+                        <li>Click on the image to go to the GitHub page.</li>
+                      </ul>`,
+        imageUrl: 'portfolio_results.png',
+        link: 'https://github.com/CCNY-Analytics-and-Quant/Quantative-Finance-Repo/blob/main/Berry-Cox-Baskets/auto_portfolio_picks.ipynb'
     },
     {
         name: 'Python for Business Analytics: Pizza Restaurant',
-        description: `I took pizza restaurant data and created a report of the best opportunities for success. Click on the image to explore the data yourself.`,
+        description: `<ul>
+                        <li>Took pizza restaurant data and created a report of the best opportunities for success.</li>
+                        <li>Click on the image to visit the report website.</li>
+                      </ul>`,
         imageUrl: 'pizzaproject.jpg',
         link: 'https://jbatistanalytics-3400acb06bb1.herokuapp.com'
     }
