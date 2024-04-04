@@ -100,6 +100,11 @@ main {
     color: #32a852; /* Changes color to green */
 }
 
+.project-description .highlight2 {
+    font-weight: bold; /* Makes text bold */
+    color: #6197EC; /* Changes color to blue */
+}
+
 
 
 /* Add this to ensure the layout does not break on smaller screens */
@@ -163,18 +168,51 @@ main {
     /* ... other styles ... */
 }
 
+
 #about h2, #about h3, #about p {
     font-family: 'Montserrat', sans-serif; /* Consistent font family */
 }
 
+.about-header {
+    display: flex;
+    align-items: center; /* This vertically aligns the items in the middle */
+    justify-content: center; /* This horizontally centers the items */
+    flex-direction: row; /* This ensures they are side by side */
+}
+
 #about h2 {
     color: #32a852; /* Bright color for headings */
-    font-size: 2.25em;
-    margin-top: 150px;
+    font-size: 2.35em;
+    margin-top: 190px;
     text-align: center;
+    margin-left: 75px;
+    order: 1; /* This ensures the heading comes first */
+}
+
+#about-face {
+    margin-left: 22px; /* Adds some space between the text and the image */
+    width: 130px; /* Adjust the size as needed */
+    height: auto;
+    margin-top: 155px; /* Add some space above the image */
+    align-items: center;
+    order: 2; /* This ensures the image comes second */
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .about-header {
+        flex-direction: column; /* Stack them on smaller screens */
+        align-items: center; /* Center-align the items */
+    }
+
+    #about-face {
+        margin-left: 0; /* Remove the left margin on smaller screens */
+        margin-top: 0px; /* Add some space above the image */
+    }
 }
 
 #about h3 {
+    margin-top: 40px;
     color: #32a852; /* Bright color for subheadings */
     font-size: 1.5em;
 }

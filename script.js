@@ -1,20 +1,14 @@
-
 // Example array of projects
 const projects = [
     {
         name: 'Quantitative Finance: Automated Portfolio Generator',
-        descriptionTemplate: `Creates a portfolio automatically with investments designed to outperform the market without extra risk.
-        The portfolio has increased by <span class="highlight">%RETURN%</span> since the completion of this project: (11/15/2023 - 4/2/2024)(over 19 Weeks/ +3.75% weekly average).
-        Showcases a portfolio weight-distribution system that enhanced returns by +13.25% (over 19 weeks/ +.7% weekly average).
-        Click on the image to go to the GitHub page.`,
-        imageUrl: 'portfolio_results.png',
+        descriptionTemplate: `Creates a stock-portfolio automatically designed to outperform the market without extra risk. The portfolio has increased by <span class="highlight">+%MAX_RISK_RETURN%%</span> since the completion of this project: (11/15/2023 - 4/2/2024)(Over %WEEKS% Weeks/ <span class="highlight">+%MAX_RISK_WEEKLY_AVG%%</span> weekly average). Showcases a portfolio weight-distribution system that enhanced returns by <span class="highlight">+%DIFF_MAX_EQUAL%%</span> (Over %WEEKS% Weeks/ <span class="highlight">+%DIFF_WEEKLY%%</span> weekly average). <span class="highlight2">Click on the image to go to the GitHub page.</span>`,
+        imageUrl: 'newplot.png',
         link: 'https://github.com/CCNY-Analytics-and-Quant/Quantative-Finance-Repo/blob/main/Berry-Cox-Baskets/auto_portfolio_picks.ipynb'
     },
     {
         name: 'Python for Business Analytics: Pizza Restaurant Dashboard',
-        descriptionTemplate: `Took pizza restaurant data and created a dashboard of the best opportunities for success.
-        Provides actionable insights based on order data.
-        Click on the image to visit the website.`,
+        descriptionTemplate: `Took pizza restaurant data and created a dashboard of the best opportunities for success. Provides actionable insights based on order data. <span class="highlight2">Click on the image to visit the website.</span>`,
         imageUrl: 'pizzaproject.jpg',
         link: 'https://jbatistanalytics-3400acb06bb1.herokuapp.com'
     }
@@ -23,31 +17,29 @@ const projects = [
 
 async function fetchDataAndUpdateUI() {
     try {
-        const response = await fetch('https://yc1rg58xdb.execute-api.us-east-2.amazonaws.com/prod/Fetch-Data'
-        );
+        const response = await fetch('https://yc1rg58xdb.execute-api.us-east-2.amazonaws.com/prod/Fetch-Data');
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
         
-        // Assuming data contains "Max Risk Portfolio Returns"
-        const maxRiskPortfolioReturns = data["Max Risk Portfolio Returns"];
-        
-        // Call displayProjects with the specific data you want to display
-        displayProjects(maxRiskPortfolioReturns);
+        displayProjects(data);
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
     }
 }
 
-// Ensure this function is defined in the script tag in your HTML or in a separate JS file that's linked to your HTML.
-document.addEventListener('DOMContentLoaded', function() {
-    fetchDataAndUpdateUI(); // This will fetch data and then update the UI
-});
-
-function displayProjects(maxRiskReturn) {
+function displayProjects(apiData) {
     const projectsContainer = document.getElementById('projects');
     projectsContainer.innerHTML = ''; // Clear existing content
+
+    // Use today's date as the end date
+    const endDate = new Date();
+    const startDate = new Date('11/15/2023');
+    const weeksBetween = Math.round((endDate - startDate) / (7 * 24 * 60 * 60 * 1000));
+
+    // Format the current date as "MM/DD/YYYY"
+    const currentFormattedDate = `${endDate.getMonth() + 1}/${endDate.getDate()}/${endDate.getFullYear()}`;
 
     projects.forEach(project => {
         const projectElement = document.createElement('div');
@@ -61,23 +53,29 @@ function displayProjects(maxRiskReturn) {
 
         // Add clickable project image
         const projectLink = document.createElement('a');
-        projectLink.href = project.link; // Ensure this is a valid URL
+        projectLink.href = project.link;
         projectLink.target = '_blank';
         projectLink.rel = 'noopener noreferrer';
         const projectImg = document.createElement('div');
         projectImg.classList.add('project-img');
         const image = document.createElement('img');
-        image.src = project.imageUrl; // Ensure this is a valid image URL
+        image.src = project.imageUrl;
         image.alt = project.name;
         projectLink.appendChild(image);
         projectImg.appendChild(projectLink);
         projectElement.appendChild(projectImg);
 
-        // Add project description
+        // Add project description with dynamic data replacement
         const projectDescription = document.createElement('p');
         projectDescription.classList.add('project-description');
-        // Replace placeholder with actual data
-        const description = project.descriptionTemplate.replace('%RETURN%', `+${maxRiskReturn.toFixed(2)}%`);
+        let description = project.descriptionTemplate
+            .replace('%MAX_RISK_RETURN%', apiData["Max Risk Portfolio Returns"].toFixed(2))
+            .replace('%WEEKS%', weeksBetween)
+            .replace('%MAX_RISK_WEEKLY_AVG%', apiData["Max Risk Portfolio Average Weekly Returns"].toFixed(2))
+            .replace('%DIFF_MAX_EQUAL%', apiData["Difference in Returns between Max-Risk and Equal-Weight Portfolios"].toFixed(2))
+            .replace('%WEEKS%', weeksBetween)
+            .replace('%DIFF_WEEKLY%', apiData["Difference in Returns between Max-Risk and Equal-Weight Portfolios (Weekly)"].toFixed(2))
+            .replace('11/15/2023 - 4/2/2024', `11/15/2023 - ${currentFormattedDate}`); // Dynamic date range
         projectDescription.innerHTML = description;
         projectElement.appendChild(projectDescription);
 
@@ -87,6 +85,5 @@ function displayProjects(maxRiskReturn) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    fetchDataAndUpdateUI(); // This now both fetches data and displays projects
+    fetchDataAndUpdateUI();
 });
-
