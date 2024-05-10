@@ -3,12 +3,12 @@ const projects = [
     {
         name: 'Quantitative Finance: Automated Portfolio Generator',
         descriptionTemplate: `Creates a stock-portfolio automatically designed to outperform the market without extra risk. The portfolio has increased by <span class="highlight">+%MAX_RISK_RETURN%%</span> since the completion of this project: (11/15/2023 - 4/2/2024)(Over %WEEKS% Weeks/ <span class="highlight">+%MAX_RISK_WEEKLY_AVG%%</span> weekly average). Showcases a portfolio weight-distribution system that enhanced returns by <span class="highlight">+%DIFF_MAX_EQUAL%%</span> (Over %WEEKS% Weeks/ <span class="highlight">+%DIFF_WEEKLY%%</span> weekly average). <span class="highlight2">Click on the image to go to the GitHub page.</span>`,
-        imageUrl: 'newplot.png',
+        imageUrl: 'benchmark_plot.png',
         link: 'https://github.com/CCNY-Analytics-and-Quant/Quantative-Finance-Repo/blob/main/Berry-Cox-Baskets/auto_portfolio_picks.ipynb'
     },
     {
         name: 'Python for Business Analytics: Pizza Restaurant Dashboard',
-        descriptionTemplate: `Took pizza restaurant data and created a dashboard of the best opportunities for success. Provides actionable insights based on order data. <span class="highlight2">Click on the image to visit the website.</span>`,
+        descriptionTemplate: `Sales Dashboard: Designed a Python backend process to visualize and analyze sales data for a pizza restaurant, outputted and designed dashboard with HTML, CSS, JS. <span class="highlight2">Visit the website.</span>`,
         imageUrl: 'pizzaproject.jpg',
         link: 'https://jbatistanalytics-3400acb06bb1.herokuapp.com'
     }
