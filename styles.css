@@ -205,10 +205,7 @@ main {
         align-items: center; /* Center-align the items */
     }
 
-    #about-face {
-        margin-left: 0; /* Remove the left margin on smaller screens */
-        margin-top: 0px; /* Add some space above the image */
-    }
+
 }
 
 #about h3 {

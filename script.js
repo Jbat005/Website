@@ -8,7 +8,7 @@ const projects = [
     },
     {
         name: 'Python for Business Analytics: Pizza Restaurant Dashboard',
-        descriptionTemplate: `Sales Dashboard: Designed a Python backend process to visualize and analyze sales data for a pizza restaurant, outputted and designed dashboard with HTML, CSS, JS. <span class="highlight2">Visit the website.</span>`,
+        descriptionTemplate: `Sales Dashboard: Visualized and analyzed sales data for a pizza restaurant. (Assigned project for a programming course at college.) <span class="highlight2">Visit the website.</span>`,
         imageUrl: 'pizzaproject.jpg',
         link: 'https://jbatistanalytics-3400acb06bb1.herokuapp.com'
     }
