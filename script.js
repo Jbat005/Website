@@ -1,13 +1,13 @@
 // Example array of projects
 const projects = [
     {
-        name: 'Quantitative Finance: Automated Portfolio Generator',
-        descriptionTemplate: `Creates a stock-portfolio automatically designed to outperform the market without extra risk. The portfolio has increased by <span class="highlight">+%MAX_RISK_RETURN%%</span> since the completion of this project: (11/15/2023 - 4/2/2024)(Over %WEEKS% Weeks/ <span class="highlight">+%MAX_RISK_WEEKLY_AVG%%</span> weekly average). Showcases a portfolio weight-distribution system that enhanced returns by <span class="highlight">+%DIFF_MAX_EQUAL%%</span> (Over %WEEKS% Weeks/ <span class="highlight">+%DIFF_WEEKLY%%</span> weekly average). <span class="highlight2">Click on the image to go to the GitHub page.</span>`,
+        name: 'Quant-trading: My Portfolio',
+        descriptionTemplate: `Automatically tracks my stock portfolio. The portfolio is up <span class="highlight">+%MAX_RISK_RETURN%%</span> since 11/15/2023 - 4/2/2024 (Over %WEEKS% Weeks/ <span class="highlight">+%MAX_RISK_WEEKLY_AVG%%</span> weekly average).<span class="highlight2">If you click on the graph, it will direct to GitHub where I show the code I used, with explanations of how I used alpha generators to select my stocks, aswell as show the analysis and plots .</span>`,
         imageUrl: 'benchmark_plot.png',
         link: 'https://github.com/CCNY-Analytics-and-Quant/Quantative-Finance-Repo/blob/main/Berry-Cox-Baskets/auto_portfolio_picks.ipynb'
     },
     {
-        name: 'Python for Business Analytics: Pizza Restaurant Dashboard',
+        name: 'Python Dashboard: Pizza Restaurant Sales',
         descriptionTemplate: `Sales Dashboard: Visualized and analyzed sales data for a pizza restaurant. (Assigned project for a programming course at college.) <span class="highlight2">Visit the website.</span>`,
         imageUrl: 'pizzaproject.jpg',
         link: 'https://jbatistanalytics-3400acb06bb1.herokuapp.com'
