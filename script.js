@@ -1,18 +1,18 @@
 // Example array of projects
 const projects = [
     {
-        name: 'Quant-trading: My Portfolio',
-        descriptionTemplate: `Automatically tracks my stock portfolio. The portfolio is up <span class="highlight">+%MAX_RISK_RETURN%%</span> since 11/15/2023 - 4/2/2024 (Over %WEEKS% Weeks/ <span class="highlight">+%MAX_RISK_WEEKLY_AVG%%</span> weekly average).<span class="highlight2">If you click on the graph, it will direct to GitHub where I show the code I used, with explanations of how I used alpha generators to select my stocks, aswell as show the analysis and plots .</span>`,
-        imageUrl: 'benchmark_plot.png',
-        link: 'https://github.com/CCNY-Analytics-and-Quant/Quantative-Finance-Repo/blob/main/Berry-Cox-Baskets/auto_portfolio_picks.ipynb'
+        name: 'SQL | Python | HTML & CSS | Data Analysis report/presentation.',
+        descriptionTemplate: `I assisted this mock-restaurant increase revenue and cut costs by about <span class="highlight">$258,941.</span><span class="highlight2">Click image to redirect to project website.</span>`,
+        imageUrl: 'SQLPython.png',
+        link: 'https://jbatistdata-6c1297044cbb.herokuapp.com/'
     },
     {
-        name: 'Python Dashboard: Pizza Restaurant Sales',
-        descriptionTemplate: `Sales Dashboard: Visualized and analyzed sales data for a pizza restaurant. (Assigned project for a programming course at college.) <span class="highlight2">Visit the website.</span>`,
-        imageUrl: 'pizzaproject.jpg',
-        link: 'https://jbatistanalytics-3400acb06bb1.herokuapp.com'
+        name: 'Python | AWS Cloud Services| Quant-trading: My Portfolio.' ,
+        descriptionTemplate: `Automatically tracks my stock portfolio using AWS API and Python Backend. The portfolio is up <span class="highlight">+%MAX_RISK_RETURN%%</span> since 11/15/2023 - 4/2/2024 (Over %WEEKS% Weeks/ <span class="highlight">+%MAX_RISK_WEEKLY_AVG%%</span> weekly average).<span class="highlight2">If you click on the graph, it will direct to GitHub where I show the code I used, with explanations of how I used alpha generators to select my stocks, aswell as show the analysis and plots .</span>`,
+        imageUrl: 'newplot.png',
+        link: 'https://github.com/CCNY-Analytics-and-Quant/Quantative-Finance-Repo/blob/main/Berry-Cox-Baskets/auto_portfolio_picks.ipynb'
     }
-    // ... (additional projects) ...
+
 ];
 
 async function fetchDataAndUpdateUI() {
