@@ -4,7 +4,7 @@ const projects = [
         name: 'SQL | Python | HTML & CSS | Data Analysis report/presentation.',
         descriptionTemplate: `I assisted this mock-restaurant increase revenue and cut costs by about <span class="highlight">$258,941.</span><span class="highlight2"> Click image to go to project website.</span>`,
         imageUrl: 'SQLPython.png',
-        link: 'https://jbatistdata-6c1297044cbb.herokuapp.com/'
+        link: 'https://jbatistdata.com/'
     },
     {
         name: 'Python | AWS Cloud Services| Quant-trading: My Portfolio.' ,

@@ -40,7 +40,7 @@ main {
 #greeting p {
     color: #ffffff;
     font-family: 'Montserrat', sans-serif; /* New font family */
-    margin-bottom: 100px;
+    margin-bottom: 45px;
     font-size: 2em;
 }
 
@@ -235,14 +235,14 @@ footer {
     background-color: #1a1a1a; /* Darker shade for footer */
     color: #ffffff;
     text-align: center;
-    padding: 20px 0;
+    padding: 12px 0;
     position: relative;
     bottom: 0;
     width: 100%;
 }
 
 #linkedin-icon, #github-icon {
-    width: 60px; /* Adjust the size as needed */
+    width: 55px; /* Adjust the size as needed */
     height: auto;
     vertical-align: middle;
 }
