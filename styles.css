@@ -45,42 +45,49 @@ main {
 }
 
 
-/*
-.flex-container {
+
+#projects-container {
     display: flex;
-    justify-content: center; 
-    flex-wrap: wrap; 
+    justify-content: center; /* Center the projects container */
+    align-items: flex-start;
+    width: 100%;
 }
 
-
-
-/* Projects Section */
 #projects {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: space-between; /* Ensure even spacing between projects */
+    width: 100%; /* Adjust as needed */
 }
 
 .project {
-    flex-basis: 48%; /* Adjust width as needed */
-    margin-bottom: 20px;
-    text-align: center; /* Center-align the title and description */
+    width: 45%; /* Ensure each project takes up 48% of the container */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    margin: 2%; /* Add some margin between projects */
+    background-color: #121212; /* Example background color */
+    padding: 10px; /* Example padding */
+    border: 1px solid #121212; /* Example border */
 }
 
 .project-title {
-    color: #32a852; /* Green color for the title */
-    font-size: 1.6em; /* Adjust size as needed */
-    margin-bottom: 30px;
-}
+    text-align: center; /* Center the title */
+    font-weight: bold;
+    color: #32a852;
+    font-size: 1.3em;
 
+}
 .project-img {
     width: 100%;
+    height: 100%; /* Ensure the image takes up the full height of the container */
+    height: 395px; /* Set a fixed height */
+    object-fit: cover; /* Maintain aspect ratio and cover the area */
     border-radius: 8px;
 }
 
 .project img {
-    width: 80%;
-    height: auto;
+    width: 100%; /* Ensure the image takes up the full width of the container */
+    height: 100%; /* Ensure the image takes up the full height of the container */
+    height: 395px; /* Set a fixed height */
+    object-fit: cover; /* Maintain aspect ratio and cover the area */
     border-radius: 8px;
 }
 
@@ -180,23 +187,6 @@ main {
     flex-direction: row; /* This ensures they are side by side */
 }
 
-#about h2 {
-    color: #32a852; /* Bright color for headings */
-    font-size: 2.35em;
-    margin-top: 190px;
-    text-align: center;
-    margin-left: 75px;
-    order: 1; /* This ensures the heading comes first */
-}
-
-#about-face {
-    margin-left: 22px; /* Adds some space between the text and the image */
-    width: 130px; /* Adjust the size as needed */
-    height: auto;
-    margin-top: 155px; /* Add some space above the image */
-    align-items: center;
-    order: 2; /* This ensures the image comes second */
-}
 
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {
@@ -212,6 +202,7 @@ main {
     margin-top: 40px;
     color: #32a852; /* Bright color for subheadings */
     font-size: 1.5em;
+    text-align: center;
 }
 
 #about p {
@@ -222,10 +213,21 @@ main {
 
 #about .about-container {
     display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
 }
 
+.about-text {
+    width: 49%;
+    text-align: center;
+}
+
+.about-text2{
+    width: 49%;
+    text-align: center;
+    margin-left:200px;
+}
 
 
 /* Footer */

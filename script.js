@@ -2,13 +2,13 @@
 const projects = [
     {
         name: 'SQL | Python | HTML & CSS | Data Analysis report/presentation.',
-        descriptionTemplate: `I assisted this mock-restaurant increase revenue and cut costs by about <span class="highlight">$258,941.</span><span class="highlight2">Click image to redirect to project website.</span>`,
+        descriptionTemplate: `I assisted this mock-restaurant increase revenue and cut costs by about <span class="highlight">$258,941.</span><span class="highlight2"> Click image to go to project website.</span>`,
         imageUrl: 'SQLPython.png',
         link: 'https://jbatistdata-6c1297044cbb.herokuapp.com/'
     },
     {
         name: 'Python | AWS Cloud Services| Quant-trading: My Portfolio.' ,
-        descriptionTemplate: `Automatically tracks my stock portfolio using AWS API and Python Backend. The portfolio is up <span class="highlight">+%MAX_RISK_RETURN%%</span> since 11/15/2023 - 4/2/2024 (Over %WEEKS% Weeks/ <span class="highlight">+%MAX_RISK_WEEKLY_AVG%%</span> weekly average).<span class="highlight2">If you click on the graph, it will direct to GitHub where I show the code I used, with explanations of how I used alpha generators to select my stocks, aswell as show the analysis and plots .</span>`,
+        descriptionTemplate: `Automatically tracks my stock portfolio using an API and Python Backend. The portfolio is up <span class="highlight">+%MAX_RISK_RETURN%%</span> since November 15, 2023 - Today (Date) (<span class="highlight">+%MAX_RISK_WEEKLY_AVG%%</span>Average over %WEEKS% weeks).<span class="highlight2">Click on the graph to go to the GitHub page (shows the code, research, analysis, and plots).</span>`,
         imageUrl: 'newplot.png',
         link: 'https://github.com/CCNY-Analytics-and-Quant/Quantative-Finance-Repo/blob/main/Berry-Cox-Baskets/auto_portfolio_picks.ipynb'
     }
@@ -75,7 +75,7 @@ function displayProjects(apiData) {
             .replace('%DIFF_MAX_EQUAL%', apiData["Difference in Returns between Max-Risk and Equal-Weight Portfolios"].toFixed(2))
             .replace('%WEEKS%', weeksBetween)
             .replace('%DIFF_WEEKLY%', apiData["Difference in Returns between Max-Risk and Equal-Weight Portfolios (Weekly)"].toFixed(2))
-            .replace('11/15/2023 - 4/2/2024', `11/15/2023 - ${currentFormattedDate}`); // Dynamic date range
+            .replace('November 15, 2023 - Today (Date)', `November 15, 2023 - Today (${currentFormattedDate})`); // Dynamic date range
         projectDescription.innerHTML = description;
         projectElement.appendChild(projectDescription);
 
