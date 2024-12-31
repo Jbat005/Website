@@ -6,6 +6,13 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #181818;
+            color: #e0e0e0;
+        }
+
         #chartsGraphs {
             padding: 20px;
             text-align: center;
@@ -59,9 +66,61 @@
             font-size: 0.9em;
             cursor: pointer;
         }
+
+        /* Hamburger Menu Styles */
+        .hamburger-menu {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+
+        .hamburger-icon {
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #e0e0e0;
+        }
+
+        .menu-links {
+            display: none;
+            position: fixed;
+            top: 40px;
+            left: 10px;
+            background-color: #202020;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            z-index: 1000;
+        }
+
+        .menu-links a {
+            display: block;
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 1em;
+            margin: 5px 0;
+        }
+
+        .menu-links a:hover {
+            background-color: #383838;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
+    <!-- Hamburger Menu -->
+    <div class="hamburger-menu">
+        <span class="hamburger-icon" onclick="toggleMenu()">☰</span>
+        <div class="menu-links" id="menu">
+            <a href="index.html">Home</a>
+            <a href="create-profile.html">Create a Profile</a>
+            <a href="charts-graphs.html">Charts & Graphs</a>
+            <a href="optimized-weights.html">Optimized Weights</a>
+            <a href="support.html">Support</a>
+        </div>
+    </div>
+
     <section id="chartsGraphs">
         <h1>Create and View Your Portfolio</h1>
 
@@ -95,6 +154,11 @@
     </section>
 
     <script>
+        function toggleMenu() {
+            const menu = document.getElementById("menu");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             const stockGrid = document.getElementById("stockGrid");
             const createPortfolioButton = document.getElementById("createPortfolio");
@@ -110,7 +174,7 @@
             const stockMockData = {};
             sp500Stocks.forEach((stock) => {
                 stockMockData[stock] = {
-                    "1m": Array(3).fill(0).map(() => Math.random() * 20 + 90), // Mock data
+                    "1m": Array(3).fill(0).map(() => Math.random() * 20 + 90),
                     "3m": Array(3).fill(0).map(() => Math.random() * 30 + 80),
                     "6m": Array(5).fill(0).map(() => Math.random() * 50 + 70),
                     "1y": Array(4).fill(0).map(() => Math.random() * 60 + 60),
@@ -123,7 +187,11 @@
             };
 
             const selectedStocks = new Set();
-            const activePortfolios = new Set(["SP500", "Premium"]); // Default portfolios
+            const activePortfolios = new Set(["SP500", "Premium"]);
+            const portfolioColors = {};
+            const availableColors = [
+                "#ff6b6b", "#64ffda", "#4db8ff", "#ffc300", "#8e44ad", "#F374F3", "#e74c3c", "#2980b9", "#f39c12", "#2c3e50",
+            ];
 
             let performanceGraph = new Chart(ctx, {
                 type: "line",
@@ -160,6 +228,8 @@
             createPortfolioButton.addEventListener("click", () => {
                 const portfolioName = prompt("Enter portfolio name:");
                 if (!portfolioName) return alert("Portfolio name is required.");
+                if (portfolioColors[portfolioName]) return alert("Portfolio name must be unique.");
+
                 const portfolioDiv = document.createElement("div");
                 portfolioDiv.className = "portfolio";
                 portfolioDiv.innerHTML = `<h3>${portfolioName}</h3><ul>${[...selectedStocks].map((s) => `<li>${s}</li>`).join("")}</ul>`;
@@ -169,10 +239,15 @@
                 deleteIcon.addEventListener("click", () => {
                     savedPortfoliosDiv.removeChild(portfolioDiv);
                     activePortfolios.delete(portfolioName);
+                    delete portfolioColors[portfolioName];
                     updateGraph();
                 });
                 portfolioDiv.appendChild(deleteIcon);
                 savedPortfoliosDiv.appendChild(portfolioDiv);
+
+                const color = availableColors.shift() || "#cccccc";
+                portfolioColors[portfolioName] = color;
+
                 addPortfolioOption(portfolioName, [...selectedStocks]);
             });
 
@@ -205,11 +280,12 @@
                             Array(stockMockData["AAPL"][selectedPeriod].length).fill(0)
                         ).map((sum) => sum / selectedStocks.size);
 
+                    const color = portfolioColors[portfolioName] || (portfolioName === "SP500" ? "#8016CC" : "#F6861E");
                     return {
                         label: portfolioName,
                         data,
-                        borderColor: portfolioName === "SP500" ? "#ff6b6b" : portfolioName === "Premium" ? "#64ffda" : "#4db8ff",
-                        backgroundColor: portfolioName === "SP500" ? "rgba(255, 107, 107, 0.2)" : "rgba(100, 255, 218, 0.2)",
+                        borderColor: color,
+                        backgroundColor: `${color}33`,
                         fill: true,
                     };
                 });
@@ -218,7 +294,6 @@
 
             timePeriodSelector.addEventListener("change", updateGraph);
 
-            // Add SP500 and Premium options
             ["SP500", "Premium"].forEach((name) => addPortfolioOption(name, []));
 
             updateGraph();
