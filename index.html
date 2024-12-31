@@ -4,12 +4,37 @@
     <title>Smart Invest - Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Homepage-specific styles */
+        #homePage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* Full viewport height */
+            text-align: center;
+        }
+
+        .logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .pitch {
+            font-size: 1.2em;
+            max-width: 600px;
+            line-height: 1.6;
+            color: #e0e0e0;
+        }
+    </style>
 </head>
 <body>
     <!-- Hamburger Menu -->
     <div class="hamburger-menu">
         <span class="hamburger-icon" onclick="toggleMenu()">☰</span>
         <div class="menu-links" id="menu">
+            <a href="index.html">Home</a>
             <a href="create-profile.html">Create a Profile</a>
             <a href="charts-graphs.html">Charts & Graphs</a>
             <a href="optimized-weights.html">Optimized Weights</a>
@@ -17,12 +42,15 @@
         </div>
     </div>
 
-    <!-- Home Page Content -->
+    <!-- Main Content -->
     <section id="homePage">
         <img src="logoSI.png" alt="Smart Invest Logo" class="logo">
         <p class="pitch">
-            Welcome to Smart Invest, the ultimate tool for automating and optimizing your investment portfolio.
-            Our cutting-edge algorithm delivers smarter financial growth so you can save time and focus on your goals.
+            <span style="color: #64ffda;">Smart Invest</span> is your all-in-one tool for smarter investing. 
+            Track your portfolio, optimize stock diversification for your own goals, and more.
+        </p>
+        <p class="pitch">
+            Upgrade to premium plans to get access to automatic portfolio creators, powered by real-time data on the latest market trends.
         </p>
     </section>
 
