@@ -4,26 +4,77 @@
     <title>Smart Invest - Charts & Graphs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* Center content on the page */
+        /* Center content */
         #chartsGraphs {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh; /* Full viewport height */
+            padding: 20px;
             text-align: center;
         }
 
-        #chartsGraphs .project-title {
-            font-size: 2em;
-            margin-bottom: 20px;
+        /* Grid for SP500 stock buttons */
+        #stockGrid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
         }
 
-        #chartsGraphs .project-img img {
-            max-width: 100%;
-            height: auto;
+        /* Stock button styles */
+        .stock-button {
+            padding: 10px 15px;
+            font-size: 1em;
+            border: 1px solid #e0e0e0;
             border-radius: 8px;
+            background-color: #202020;
+            color: #e0e0e0;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .stock-button:hover {
+            background-color: #383838;
+        }
+
+        .stock-button.selected {
+            background-color: #64ffda;
+            color: #181818;
+        }
+
+        /* Saved portfolio styles */
+        .portfolio {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin: 15px auto;
+            padding: 10px;
+            max-width: 400px;
+            text-align: left;
+        }
+
+        /* Delete button */
+        .delete-icon {
+            margin: 5px;
+            padding: 5px 10px;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+
+        /* Graph controls */
+        #graphControls {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        #graphControls label {
+            margin-right: 10px;
+            font-size: 1.1em;
+        }
+
+        #graphControls select, #graphControls button {
+            padding: 5px 10px;
+            font-size: 1em;
+            margin: 0 10px;
         }
     </style>
 </head>
@@ -40,19 +91,113 @@
         </div>
     </div>
 
-    <!-- Charts & Graphs Content -->
+    <!-- Charts & Graphs Section -->
     <section id="chartsGraphs">
-        <h3 class="project-title">Portfolio Management & Investments Tracker</h3>
-        <div class="project-img">
-            <img src="newplot2.png" alt="Quant-trading">
+        <h1>Create and View Your Portfolio</h1>
+
+        <!-- Stock Selection -->
+        <div id="stockSelection">
+            <p>Select up to 10 stocks from the SP500:</p>
+            <div id="stockGrid">
+                <!-- Stock options will be dynamically loaded here -->
+            </div>
+        </div>
+        <button type="button" id="createPortfolio">Create Portfolio</button>
+
+        <!-- Saved Portfolios -->
+        <div id="savedPortfolios">
+            <h2>Saved Portfolios</h2>
+            <!-- Saved portfolios will be dynamically displayed here -->
+        </div>
+
+        <!-- Interactive Graph -->
+        <h2>Portfolio Performance</h2>
+        <canvas id="performanceGraph"></canvas>
+        <div id="graphControls">
+            <label for="timePeriod">Select Time Period:</label>
+            <select id="timePeriod">
+                <option value="1m">1 Month</option>
+                <option value="3m">3 Months</option>
+                <option value="6m">6 Months</option>
+                <option value="1y">1 Year</option>
+                <option value="5y">5 Years</option>
+            </select>
+            <button id="updateGraph">Update Graph</button>
         </div>
     </section>
 
     <script>
         function toggleMenu() {
-            const menu = document.getElementById('menu');
-            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+            const menu = document.getElementById("menu");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
         }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const stockGrid = document.getElementById("stockGrid");
+            const createPortfolioButton = document.getElementById("createPortfolio");
+            const savedPortfoliosDiv = document.getElementById("savedPortfolios");
+            const timePeriodSelector = document.getElementById("timePeriod");
+            const updateGraphButton = document.getElementById("updateGraph");
+            const ctx = document.getElementById("performanceGraph").getContext("2d");
+
+            const sp500Stocks = [
+                "AAPL", "MSFT", "GOOGL", "AMZN", "TSLA", "NVDA", "META", "BRK.B", "UNH", "JNJ",
+                "V", "WMT", "PG", "HD", "XOM", "BAC", "DIS", "NFLX", "KO", "PFE"
+            ];
+            const selectedStocks = new Set();
+            const dummyData = {
+                "1m": { labels: ["Week 1", "Week 2", "Week 3", "Week 4"], portfolio: [100, 105, 110, 115] },
+                "3m": { labels: ["Month 1", "Month 2", "Month 3"], portfolio: [100, 110, 120] }
+                // Extend with more data for "6m", "1y", "5y"
+            };
+
+            let performanceGraph = new Chart(ctx, {
+                type: "line",
+                data: { labels: dummyData["1m"].labels, datasets: [{ label: "Your Portfolio", data: dummyData["1m"].portfolio }] },
+                options: { responsive: true, scales: { x: { title: { display: true, text: "Time Period" } }, y: { title: { display: true, text: "Performance (%)" } } } }
+            });
+
+            sp500Stocks.forEach(ticker => {
+                const stockButton = document.createElement("button");
+                stockButton.textContent = ticker;
+                stockButton.className = "stock-button";
+                stockGrid.appendChild(stockButton);
+
+                stockButton.addEventListener("click", () => {
+                    if (selectedStocks.has(ticker)) {
+                        selectedStocks.delete(ticker);
+                        stockButton.classList.remove("selected");
+                    } else if (selectedStocks.size < 10) {
+                        selectedStocks.add(ticker);
+                        stockButton.classList.add("selected");
+                    } else alert("You can select up to 10 stocks.");
+                });
+            });
+
+            createPortfolioButton.addEventListener("click", () => {
+                if (!selectedStocks.size) return alert("Please select at least one stock.");
+                const portfolioName = prompt("Enter portfolio name:", `Portfolio ${Date.now()}`);
+                if (!portfolioName) return alert("Portfolio name is required.");
+                const portfolioDiv = document.createElement("div");
+                portfolioDiv.className = "portfolio";
+                portfolioDiv.innerHTML = `<h3>${portfolioName}</h3><ul>${[...selectedStocks].map(stock => `<li>${stock}</li>`).join("")}</ul>`;
+                const deleteIcon = document.createElement("button");
+                deleteIcon.textContent = "🗑️";
+                deleteIcon.className = "delete-icon";
+                deleteIcon.addEventListener("click", () => savedPortfoliosDiv.removeChild(portfolioDiv));
+                portfolioDiv.appendChild(deleteIcon);
+                savedPortfoliosDiv.appendChild(portfolioDiv);
+                selectedStocks.clear();
+                document.querySelectorAll(".stock-button.selected").forEach(btn => btn.classList.remove("selected"));
+            });
+
+            updateGraphButton.addEventListener("click", () => {
+                const period = timePeriodSelector.value;
+                performanceGraph.data.labels = dummyData[period].labels;
+                performanceGraph.data.datasets[0].data = dummyData[period].portfolio;
+                performanceGraph.update();
+            });
+        });
     </script>
 </body>
 </html>
