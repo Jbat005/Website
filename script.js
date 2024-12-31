@@ -138,3 +138,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Change `useMockData` to `true` for testing with mocked data
     fetchDataAndUpdateUI(true);
 });
+
+function toggleMenu() {
+    const menu = document.getElementById('menu');
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+
+function showPage(pageId) {
+    // Hide all sections
+    document.getElementById('homePage').classList.add('hidden');
+    document.getElementById('chartsGraphs').classList.add('hidden');
+    document.getElementById('optimizedWeights').classList.add('hidden');
+
+    // Show the requested section
+    document.getElementById(pageId).classList.remove('hidden');
+}

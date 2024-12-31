@@ -1,15 +1,11 @@
-/* Global Styles for Dark Mode */
-html, body {
+body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
-    width: 100%;
     font-family: 'Montserrat', sans-serif;
     background-color: #181818;
     color: #e0e0e0;
 }
 
-/* Hamburger Menu */
 .hamburger-menu {
     position: fixed;
     top: 10px;
@@ -24,33 +20,64 @@ html, body {
 }
 
 .menu-links {
-    display: none; /* Initially hidden */
+    display: none;
     position: absolute;
-    top: 40px;
-    left: 10px;
+    top: 10px;
+    left: 50px;
     background-color: #202020;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     padding: 10px;
+    flex-direction: column;
 }
 
 .menu-links a {
-    display: block;
     color: #e0e0e0;
     text-decoration: none;
-    padding: 10px;
-    border-bottom: 1px solid #383838;
+    margin: 5px 0;
     font-size: 1em;
-}
-
-.menu-links a:last-child {
-    border-bottom: none;
 }
 
 .menu-links a:hover {
     background-color: #383838;
+    border-radius: 5px;
 }
 
+#homePage, #chartsGraphs, #optimizedWeights {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.pitch {
+    font-size: 1.2em;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+.menu-links a:hover {
+    background-color: #383838;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 768px) {
+    .menu-links {
+        flex-wrap: wrap; /* Allow links to wrap if needed on smaller screens */
+        padding: 10px;
+    }
+
+    .hamburger-icon {
+        font-size: 2em; /* Make the icon slightly larger for better visibility */
+    }
+}
 
 
 nav a {
