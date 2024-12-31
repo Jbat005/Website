@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Jean Batista | Data Analytics</title>
+    <title>Jean Batista</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
@@ -11,74 +11,54 @@
 </head>
 
 <body>
-    <header>
-        <nav>
-            <!-- Add your navigation links here if needed -->
-        </nav>
-    </header>
 
     <main>
-        <section id="greeting">
-            <h1>Jean Batista (B.A)</h1>
-            <p>batistajean78@gmail.com | 646 275-7462 | New York City</p>
-        </section>
-
-        <section id="projects">
-            <div class="project">
-                <h3 class="project-title">SQL | Python | Data Analysis Report/Presentation.</h3>
-                <div class="project-img">
-                    <img src="SQLPython.png" alt="data_analysis_project">
-                </div>
-                <p class="project-description">I assisted this mock-restaurant increase revenue and cut costs by about $258,941.</p>
-            </div> 
-            <div class="project-separator"></div>
-            <div class="project">
-                <h3 class="project-title">Python | AWS Cloud Services| Quant-trading: My Portfolio.</h3>
-                <div class="project-img">
-                    <img src="newplot.png" alt="Quant-trading">
-                </div>
-                <p class="project-description">Automatically tracks my stock portfolio.</p>
-            </div>
-        </section>
-
-        
-            <section id="about">
-                <div class="about-container">
-                    <div class="about-text">
-                        <h3>ABOUT ME</h3>
-                        <p>- B.A Economics | City College of New York | 2023.</p>
-                        <p>- Experience in Excel | Python | SQL | R | Tableau | AWS Cloud Services | HTML | CSS | JS.</p>
-                        <p>- Fluent in English & Spanish.</p>
-                        <p>- City College of NY Chess Club President, 2023</p>
-                        <p>- Volunteer at Making Strides Against Breast Cancer, 2019</p>
+        <section id="projects-container">
+            <section id="projects">
+                <!-- First project -->
+                <div class="project">
+                    <h3 class="project-title">Portfolio Management & Investments Tracker</h3>
+                    <div class="project-img">
+                        <img src="newplot2.png" alt="Quant-trading">
                     </div>
-                    <div class="about-text2">
-                        <h3>HONORS/AWARDS</h3>
-                        <p>- Recipient of Degree Cum Laude, CCNY, 2023</p>
-                        <p>- Recipient of Dean's List, CCNY, 01/11/2024</p>
-                        <p>- Recipient of Dean's List, CCNY, 06/05/2023</p>
-                        <p>- Recipient of Dean's List, CCNY, 06/01/2022</p>
+                </div> 
+    
+                <div class="project-separator"></div>
+    
+                <!-- Second project -->
+                <div class="project">
+                    <h3 class="project-title">Output</h3>
+                    <div class="project-description-container">
+                        <p class="project-description">
+                            Uses Yahoo Finance data to curate a basket of stocks based on recent financial data.
+                            The curated basket is pushed to the website through the current API.
+                        </p>
+                        <p class="project-description">Example Stock 1</p>
+                        <p class="project-description">Example Stock 2</p>
+                        <p class="project-description">Example Stock 3</p>
+                        <p class="project-description">Example Stock 4</p>
+                        <p class="project-description">
+                            The portfolio is up <span class="highlight">+%MAX_RISK_RETURN%%</span> since November 15, 2023 - Today (Date)
+                            (<span class="highlight">+%MAX_RISK_WEEKLY_AVG%%</span> average over %WEEKS% weeks).
+                        </p>
+                        <p class="project-description">
+                            Returning <span class="highlight">+%DIFF_MAX_SPY%</span> over the SP500 index.
+                        </p>
                     </div>
                 </div>
             </section>
+        </section>
     </main>
+    
 
     <footer>
         <a href="https://www.linkedin.com/in/jbatist005/" target="_blank">
             <img src="linkedin-icon.png" alt="LinkedIn" id="linkedin-icon">
-        </a> <!-- Closing tag added here -->
+        </a>
         <a href="https://github.com/Jbat005" target="_blank">
             <img src="github-icon.png" alt="GitHub" id="github-icon">
         </a>
     </footer>
-
-<!-- Resume Modal -->
-<div id="resumeModal" class="modal">
-    <span class="close">&times;</span>
-    <!-- The iframe where the PDF will be loaded -->
-    <iframe id="pdfViewer" class="modal-content" style="display:block; width: 100%; height: 100%;"></iframe>
-</div>
-    
 
     <script src="script.js"></script>
 </body>

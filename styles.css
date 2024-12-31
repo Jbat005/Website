@@ -1,272 +1,200 @@
-/* Basic Global Styles for Dark Mode */
-body {
-    font-family: 'Roboto', sans-serif;
+/* Global Styles for Dark Mode */
+html, body {
     margin: 0;
     padding: 0;
-    background-color: #121212; /* Dark background */
-    color: #ffffff; /* Light text */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    width: 100%;
+    font-family: 'Montserrat', sans-serif; /* Primary font */
+    background-color: #181818; /* Darker background */
+    color: #e0e0e0; /* Muted light text for readability */
 }
 
-/* Header */
-header {
-    background-color: #1a1a1a; /* Darker shade for header */
-    color: #ffffff;
-    padding: 10px 0;
-    text-align: center;
-}
 
 nav a {
-    color: #ffffff;
-    margin: 0 10px;
+    color: #e0e0e0;
+    margin: 0 15px;
     text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #ff6b6b; /* Highlight color for hover effects */
 }
 
 /* Main Content */
 main {
     padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
-
-/* Greeting Section */
-#greeting {
-    text-align: center;
-}
-
-#greeting h1 {
-    color: #32a852; /* A bright color for headings */
-    font-family: 'Montserrat', sans-serif; /* New font family */
-    font-size: 3em;
-}
-
-#greeting p {
-    color: #ffffff;
-    font-family: 'Montserrat', sans-serif; /* New font family */
-    margin-bottom: 45px;
-    font-size: 2em;
-}
-
-
 
 #projects-container {
     display: flex;
-    justify-content: center; /* Center the projects container */
+    justify-content: center;
     align-items: flex-start;
+    flex-wrap: wrap;
     width: 100%;
 }
 
 #projects {
     display: flex;
-    justify-content: space-between; /* Ensure even spacing between projects */
-    width: 100%; /* Adjust as needed */
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2%;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .project {
-    width: 45%; /* Ensure each project takes up 48% of the container */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-    margin: 2%; /* Add some margin between projects */
-    background-color: #121212; /* Example background color */
-    padding: 10px; /* Example padding */
-    border: 1px solid #121212; /* Example border */
+    flex: 1 1 45%; /* Flex-grow, flex-shrink, and base size */
+    max-width: 45%;
+    box-sizing: border-box;
+    margin: 10px 0;
+    background-color: #202020; /* Slightly lighter than body for cards */
+    padding: 15px;
+    border-radius: 12px; /* Rounded corners for modern look */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project:hover {
+    transform: translateY(-5px); /* Lift effect */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.5); /* Enhanced shadow */
 }
 
 .project-title {
-    text-align: center; /* Center the title */
-    font-weight: bold;
-    color: #32a852;
-    font-size: 1.3em;
-
+    text-align: center;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    color: #64ffda; /* Vibrant green for titles */
+    font-size: 1.4em;
+    margin-bottom: 10px;
 }
-.project-img {
+
+.project-img img {
     width: 100%;
-    height: 100%; /* Ensure the image takes up the full height of the container */
-    height: 395px; /* Set a fixed height */
-    object-fit: cover; /* Maintain aspect ratio and cover the area */
-    border-radius: 8px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
 }
 
-.project img {
-    width: 100%; /* Ensure the image takes up the full width of the container */
-    height: 100%; /* Ensure the image takes up the full height of the container */
-    height: 395px; /* Set a fixed height */
-    object-fit: cover; /* Maintain aspect ratio and cover the area */
-    border-radius: 8px;
+.project-img img:hover {
+    transform: scale(1.05); /* Subtle zoom effect */
 }
 
 .project-description {
-    color: #f1f1f1; /* Green color for the description */
-    margin-top: 20px;
-    text-align: center; /* Align the text to the left */
-    font-size: 1.35em;
+    color: #d6d6d6; /* Slightly muted text color */
+    margin-top: 15px;
+    text-align: center;
+    font-size: 1em;
+    line-height: 1.6;
 }
 
-.project-description ul {
-    padding-left: 20px; /* Adjust the padding to align the bullet points */
-    list-style-position: inside; /* Position bullets inside the content flow */
-}
 .project-description .highlight {
-    font-weight: bold; /* Makes text bold */
-    color: #32a852; /* Changes color to green */
+    font-weight: bold;
+    color: #ff6b6b; /* Vibrant red for emphasis */
 }
 
 .project-description .highlight2 {
-    font-weight: bold; /* Makes text bold */
-    color: #6197EC; /* Changes color to blue */
-}
-
-
-
-/* Add this to ensure the layout does not break on smaller screens */
-@media screen and (max-width: 900px) {
-    #projects {
-        flex-direction: column;
-    }
-
-    .project {
-        flex-basis: 100%;
-    }
-
-    .project-separator {
-        display: none; /* Hide the separator on smaller screens */
-    }
-}
-
-
-
-
-
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 80%; /* Adjust based on desired size */
-    height: 80%; /* Adjust based on desired size */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
-}
-
-/* Modal Content (image) */
-.modal-content {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 800px; /* Adjust based on your image size */
-}
-
-
-/* The Close Button */
-.close {
-    position: absolute;
-    top: 15px;
-    right: 35px;
-    color: #f1f1f1;
-    font-size: 40px;
     font-weight: bold;
-    cursor: pointer;
+    color: #4db8ff; /* Light blue for secondary highlights */
 }
-
-
-/* About Section */
-#about {
-    clear: both; /* Clear floats */
-    width: 95%;
-    /* ... other styles ... */
-}
-
-
-#about h2, #about h3, #about p {
-    font-family: 'Montserrat', sans-serif; /* Consistent font family */
-}
-
-.about-header {
-    display: flex;
-    align-items: center; /* This vertically aligns the items in the middle */
-    justify-content: center; /* This horizontally centers the items */
-    flex-direction: row; /* This ensures they are side by side */
-}
-
-
-/* Responsive adjustments */
-@media screen and (max-width: 768px) {
-    .about-header {
-        flex-direction: column; /* Stack them on smaller screens */
-        align-items: center; /* Center-align the items */
-    }
-
-
-}
-
-#about h3 {
-    margin-top: 40px;
-    color: #32a852; /* Bright color for subheadings */
-    font-size: 1.5em;
-    text-align: center;
-}
-
-#about p {
-    color: #ffffff;
-    line-height: 1.6;
-    font-size: 1.2em;
-}
-
-#about .about-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-}
-
-.about-text {
-    width: 49%;
-    text-align: center;
-}
-
-.about-text2{
-    width: 49%;
-    text-align: center;
-    margin-left:200px;
-}
-
 
 /* Footer */
 footer {
-    background-color: #1a1a1a; /* Darker shade for footer */
-    color: #ffffff;
+    background-color: #242424;
+    color: #e0e0e0;
     text-align: center;
-    padding: 12px 0;
-    position: relative;
+    padding: 4px 0;
+    position: fixed;
     bottom: 0;
     width: 100%;
+    box-sizing: border-box;
+    font-size: 0.9em;
+    font-family: 'Poppins', sans-serif;
 }
 
 #linkedin-icon, #github-icon {
-    width: 55px; /* Adjust the size as needed */
+    width: 30px; /* Adjusted size */
     height: auto;
     vertical-align: middle;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+#linkedin-icon:hover, #github-icon:hover {
+    transform: scale(1.1); /* Subtle enlargement */
+    filter: brightness(1.2); /* Slightly brighter */
 }
 
 footer a {
-    color: #ffffff;
+    color: #e0e0e0;
     text-decoration: none;
     margin: 0 10px;
+    transition: color 0.3s ease;
 }
 
-/* Responsive Design */
-@media screen and (max-width: 600px) {
-    #about .about-container {
-        flex-direction: column;
+footer a:hover {
+    color: #64ffda; /* Match title highlight */
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 1300px) {
+    #projects {
+        flex-direction: column; /* Stack projects vertically */
     }
 
-    #about .about-text, #about .about-image {
-        padding-right: 0;
-        padding-left: 0;
-        text-align: center;
+    .project {
+        flex-basis: 100%; /* Full width for smaller screens */
+        max-width: 100%;
+    }
+
+    .project-img img {
+        width: 100%; /* Scale images within the container */
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    header, footer {
+        padding: 10px 0;
+        font-size: 1.2em;
     }
 
     nav a {
-        display: block;
-        margin-bottom: 10px;
+        margin: 0 8px;
+        font-size: 0.9em;
+    }
+
+    .project-description {
+        font-size: 0.95em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .project-title {
+        font-size: 1.1em;
+    }
+
+    .project-description {
+        font-size: 0.9em;
+    }
+}
+
+/* Adjust centering for desktop version */
+@media screen and (min-width: 769px) {
+    #projects-container {
+        display: flex; /* Enable flexbox */
+        flex-direction: column; /* Stack items vertically */
+        justify-content: center; /* Center vertically */
+        align-items: center; /* Center horizontally */
+        min-height: 100vh; /* Full viewport height */
+        margin: 0; /* Remove any default margin */
+        padding: 0; /* Remove padding to avoid unnecessary spacing */
+    }
+
+    body {
+        margin: 0; /* Ensure no extra margins from the body */
     }
 }

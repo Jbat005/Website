@@ -1,29 +1,60 @@
-// Example array of projects
 const projects = [
     {
-        name: 'SQL | Python | HTML & CSS | Data Analysis report/presentation.',
-        descriptionTemplate: `I assisted this mock-restaurant increase revenue and cut costs by about <span class="highlight">$258,941.</span><span class="highlight2"> Click image to go to project website.</span>`,
-        imageUrl: 'SQLPython.png',
-        link: 'https://jbatistdata.com/'
+        name: 'Portfolio Management & Investments Tracker',
+        imageUrl: 'newplot2.png',
+        link: 'https://github.com/CCNY-Analytics-and-Quant/Quantative-Finance-Repo/blob/main/Berry-Cox-Baskets/auto_portfolio_picks.ipynb'
     },
     {
-        name: 'Python | AWS Cloud Services| Quant-trading: My Portfolio.' ,
-        descriptionTemplate: `Automatically tracks my stock portfolio using an API and Python Backend. The portfolio is up <span class="highlight">+%MAX_RISK_RETURN%%</span> since November 15, 2023 - Today (Date) (<span class="highlight">+%MAX_RISK_WEEKLY_AVG%%</span>Average over %WEEKS% weeks).<span class="highlight2">Click on the graph to go to the GitHub page (shows the code, research, analysis, and plots).</span>`,
-        imageUrl: 'newplot.png',
-        link: 'https://github.com/CCNY-Analytics-and-Quant/Quantative-Finance-Repo/blob/main/Berry-Cox-Baskets/auto_portfolio_picks.ipynb'
+        name: 'Output',
+        descriptionTemplate: `
+            Up <span class="highlight">+%MAX_RISK_RETURN%%</span> since November 15, 2023. (<span class="highlight">+%MAX_RISK_WEEKLY_AVG%%</span> average over %WEEKS% weeks).
+            Returning <span class="highlight">+%DIFF_MAX_SPY%</span> over the SP500 index.`
     }
-
 ];
 
-async function fetchDataAndUpdateUI() {
+async function fetchDataAndUpdateUI(useMockData = false) {
     try {
-        const response = await fetch('https://yc1rg58xdb.execute-api.us-east-2.amazonaws.com/prod/Fetch-Data');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+        if (useMockData) {
+            // Mocked API response
+            const mockedApiData = {
+                "Max Risk Portfolio Returns": 0.25,
+                "Max Risk Portfolio Average Weekly Returns": 0.015,
+                "Difference in Returns between Max-Risk and Equal-Weight Portfolios": 0.05,
+                "Difference in Returns between Max-Risk and Equal-Weight Portfolios (Weekly)": 0.002,
+                "Sp500 Returns": 0.20,
+                "Difference in Returns between Max-Risk and Sp500": 0.05,
+                "Stock_1": "AAPL",
+                "Stock_1_weight": 0.15,
+                "Stock_2": "GOOGL",
+                "Stock_2_weight": 0.12,
+                "Stock_3": "MSFT",
+                "Stock_3_weight": 0.10,
+                "Stock_4": "TSLA",
+                "Stock_4_weight": 0.08,
+                "Stock_5": "AMZN",
+                "Stock_5_weight": 0.05,
+                "Stock_6": "NFLX",
+                "Stock_6_weight": 0.05,
+                "Stock_7": "NVDA",
+                "Stock_7_weight": 0.10,
+                "Stock_8": "META",
+                "Stock_8_weight": 0.08,
+                "Stock_9": "INTC",
+                "Stock_9_weight": 0.07,
+                "Stock_10": "AMD",
+                "Stock_10_weight": 0.05
+            };
+
+            displayProjects(mockedApiData);
+        } else {
+            // Fetch data from the live API
+            const response = await fetch('https://yc1rg58xdb.execute-api.us-east-2.amazonaws.com/prod/Fetch-Data');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            displayProjects(data);
         }
-        const data = await response.json();
-        
-        displayProjects(data);
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
     }
@@ -51,39 +82,59 @@ function displayProjects(apiData) {
         projectTitle.textContent = project.name;
         projectElement.appendChild(projectTitle);
 
-        // Add clickable project image
-        const projectLink = document.createElement('a');
-        projectLink.href = project.link;
-        projectLink.target = '_blank';
-        projectLink.rel = 'noopener noreferrer';
-        const projectImg = document.createElement('div');
-        projectImg.classList.add('project-img');
-        const image = document.createElement('img');
-        image.src = project.imageUrl;
-        image.alt = project.name;
-        projectLink.appendChild(image);
-        projectImg.appendChild(projectLink);
-        projectElement.appendChild(projectImg);
+        // Add project image if available
+        if (project.imageUrl) {
+            const projectImgContainer = document.createElement('div');
+            projectImgContainer.classList.add('project-img');
 
-        // Add project description with dynamic data replacement
-        const projectDescription = document.createElement('p');
-        projectDescription.classList.add('project-description');
-        let description = project.descriptionTemplate
-            .replace('%MAX_RISK_RETURN%', apiData["Max Risk Portfolio Returns"].toFixed(2))
-            .replace('%WEEKS%', weeksBetween)
-            .replace('%MAX_RISK_WEEKLY_AVG%', apiData["Max Risk Portfolio Average Weekly Returns"].toFixed(2))
-            .replace('%DIFF_MAX_EQUAL%', apiData["Difference in Returns between Max-Risk and Equal-Weight Portfolios"].toFixed(2))
-            .replace('%WEEKS%', weeksBetween)
-            .replace('%DIFF_WEEKLY%', apiData["Difference in Returns between Max-Risk and Equal-Weight Portfolios (Weekly)"].toFixed(2))
-            .replace('November 15, 2023 - Today (Date)', `November 15, 2023 - Today (${currentFormattedDate})`); // Dynamic date range
-        projectDescription.innerHTML = description;
-        projectElement.appendChild(projectDescription);
+            const projectImg = document.createElement('img');
+            projectImg.src = project.imageUrl;
+            projectImg.alt = project.name;
 
-        // Append project to the projects container
+            // Add clickable link if available
+            if (project.link) {
+                const projectLink = document.createElement('a');
+                projectLink.href = project.link;
+                projectLink.target = '_blank';
+                projectLink.rel = 'noopener noreferrer';
+                projectLink.appendChild(projectImg);
+                projectImgContainer.appendChild(projectLink);
+            } else {
+                projectImgContainer.appendChild(projectImg);
+            }
+
+            projectElement.appendChild(projectImgContainer);
+        }
+
+        // Add project description
+        if (project.name === 'Output') {
+            const projectDescription = document.createElement('p');
+            projectDescription.classList.add('project-description');
+            let description = project.descriptionTemplate
+                .replace('%MAX_RISK_RETURN%', apiData["Max Risk Portfolio Returns"].toFixed(2))
+                .replace('%WEEKS%', weeksBetween)
+                .replace('%MAX_RISK_WEEKLY_AVG%', apiData["Max Risk Portfolio Average Weekly Returns"].toFixed(2))
+                .replace('%DIFF_MAX_SPY%', apiData["Difference in Returns between Max-Risk and Sp500"].toFixed(2));
+            projectDescription.innerHTML = description;
+            projectElement.appendChild(projectDescription);
+
+            // Add stock information dynamically
+            for (let i = 1; i <= 10; i++) {
+                if (apiData[`Stock_${i}`] && apiData[`Stock_${i}_weight`]) {
+                    const stockInfo = document.createElement('p');
+                    stockInfo.classList.add('project-description');
+                    stockInfo.textContent = `${apiData[`Stock_${i}`]}: ${(apiData[`Stock_${i}_weight`] * 100).toFixed(2)}% Weight`;
+                    projectElement.appendChild(stockInfo);
+                }
+            }
+        }
+
+        // Append project to the container
         projectsContainer.appendChild(projectElement);
     });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    fetchDataAndUpdateUI();
+    // Change `useMockData` to `true` for testing with mocked data
+    fetchDataAndUpdateUI(true);
 });
