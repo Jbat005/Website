@@ -6,13 +6,21 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* Center content */
         #chartsGraphs {
             padding: 20px;
             text-align: center;
         }
 
-        /* Grid for SP500 stock buttons */
+        #performanceGraph {
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        #graphControls {
+            margin: 20px 0;
+            text-align: center;
+        }
+
         #stockGrid {
             display: flex;
             flex-wrap: wrap;
@@ -21,8 +29,7 @@
             margin: 20px 0;
         }
 
-        /* Stock button styles */
-        .stock-button {
+        .stock-button, .portfolio-option {
             padding: 10px 15px;
             font-size: 1em;
             border: 1px solid #e0e0e0;
@@ -30,19 +37,13 @@
             background-color: #202020;
             color: #e0e0e0;
             cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
         }
 
-        .stock-button:hover {
-            background-color: #383838;
-        }
-
-        .stock-button.selected {
+        .stock-button.selected, .portfolio-option.selected {
             background-color: #64ffda;
             color: #181818;
         }
 
-        /* Saved portfolio styles */
         .portfolio {
             border: 1px solid #e0e0e0;
             border-radius: 8px;
@@ -52,46 +53,15 @@
             text-align: left;
         }
 
-        /* Delete button */
         .delete-icon {
             margin: 5px;
             padding: 5px 10px;
             font-size: 0.9em;
             cursor: pointer;
         }
-
-        /* Graph controls */
-        #graphControls {
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        #graphControls label {
-            margin-right: 10px;
-            font-size: 1.1em;
-        }
-
-        #graphControls select, #graphControls button {
-            padding: 5px 10px;
-            font-size: 1em;
-            margin: 0 10px;
-        }
     </style>
 </head>
 <body>
-    <!-- Hamburger Menu -->
-    <div class="hamburger-menu">
-        <span class="hamburger-icon" onclick="toggleMenu()">☰</span>
-        <div class="menu-links" id="menu">
-            <a href="index.html">Home</a>
-            <a href="create-profile.html">Create a Profile</a>
-            <a href="charts-graphs.html">Charts & Graphs</a>
-            <a href="optimized-weights.html">Optimized Weights</a>
-            <a href="support.html">Support</a>
-        </div>
-    </div>
-
-    <!-- Charts & Graphs Section -->
     <section id="chartsGraphs">
         <h1>Create and View Your Portfolio</h1>
 
@@ -99,15 +69,14 @@
         <div id="stockSelection">
             <p>Select up to 10 stocks from the SP500:</p>
             <div id="stockGrid">
-                <!-- Stock options will be dynamically loaded here -->
+                <!-- Stock options dynamically added -->
             </div>
         </div>
-        <button type="button" id="createPortfolio">Create Portfolio</button>
+        <button id="createPortfolio">Create Portfolio</button>
 
         <!-- Saved Portfolios -->
         <div id="savedPortfolios">
             <h2>Saved Portfolios</h2>
-            <!-- Saved portfolios will be dynamically displayed here -->
         </div>
 
         <!-- Interactive Graph -->
@@ -120,83 +89,139 @@
                 <option value="3m">3 Months</option>
                 <option value="6m">6 Months</option>
                 <option value="1y">1 Year</option>
-                <option value="5y">5 Years</option>
             </select>
-            <button id="updateGraph">Update Graph</button>
+            <div id="portfolioOptions"></div>
         </div>
     </section>
 
     <script>
-        function toggleMenu() {
-            const menu = document.getElementById("menu");
-            menu.style.display = menu.style.display === "block" ? "none" : "block";
-        }
-
         document.addEventListener("DOMContentLoaded", () => {
             const stockGrid = document.getElementById("stockGrid");
             const createPortfolioButton = document.getElementById("createPortfolio");
             const savedPortfoliosDiv = document.getElementById("savedPortfolios");
+            const portfolioOptionsDiv = document.getElementById("portfolioOptions");
             const timePeriodSelector = document.getElementById("timePeriod");
-            const updateGraphButton = document.getElementById("updateGraph");
             const ctx = document.getElementById("performanceGraph").getContext("2d");
 
             const sp500Stocks = [
-                "AAPL", "MSFT", "GOOGL", "AMZN", "TSLA", "NVDA", "META", "BRK.B", "UNH", "JNJ",
-                "V", "WMT", "PG", "HD", "XOM", "BAC", "DIS", "NFLX", "KO", "PFE"
+                "AAPL", "MSFT", "GOOGL", "AMZN", "TSLA", "META", "NFLX", "NVDA", "DIS", "JPM", "WMT", "PFE", "XOM", "KO", "PG",
+                "HD", "V", "BAC", "UNH", "INTC"
             ];
-            const selectedStocks = new Set();
+            const stockMockData = {};
+            sp500Stocks.forEach((stock) => {
+                stockMockData[stock] = {
+                    "1m": Array(3).fill(0).map(() => Math.random() * 20 + 90), // Mock data
+                    "3m": Array(3).fill(0).map(() => Math.random() * 30 + 80),
+                    "6m": Array(5).fill(0).map(() => Math.random() * 50 + 70),
+                    "1y": Array(4).fill(0).map(() => Math.random() * 60 + 60),
+                };
+            });
+
             const dummyData = {
-                "1m": { labels: ["Week 1", "Week 2", "Week 3", "Week 4"], portfolio: [100, 105, 110, 115] },
-                "3m": { labels: ["Month 1", "Month 2", "Month 3"], portfolio: [100, 110, 120] }
-                // Extend with more data for "6m", "1y", "5y"
+                SP500: { "1m": [100, 102, 104], "3m": [100, 105, 108], "6m": [100, 110, 115], "1y": [100, 120, 130] },
+                Premium: { "1m": [100, 105, 110], "3m": [100, 115, 125], "6m": [100, 120, 130], "1y": [100, 140, 150] },
             };
+
+            const selectedStocks = new Set();
+            const activePortfolios = new Set(["SP500", "Premium"]); // Default portfolios
 
             let performanceGraph = new Chart(ctx, {
                 type: "line",
-                data: { labels: dummyData["1m"].labels, datasets: [{ label: "Your Portfolio", data: dummyData["1m"].portfolio }] },
-                options: { responsive: true, scales: { x: { title: { display: true, text: "Time Period" } }, y: { title: { display: true, text: "Performance (%)" } } } }
+                data: {
+                    labels: [],
+                    datasets: [],
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: { title: { display: true, text: "Time Period" } },
+                        y: { title: { display: true, text: "Performance (%)" } },
+                    },
+                },
             });
 
-            sp500Stocks.forEach(ticker => {
-                const stockButton = document.createElement("button");
-                stockButton.textContent = ticker;
-                stockButton.className = "stock-button";
-                stockGrid.appendChild(stockButton);
+            sp500Stocks.forEach((ticker) => {
+                const button = document.createElement("button");
+                button.textContent = ticker;
+                button.className = "stock-button";
+                stockGrid.appendChild(button);
 
-                stockButton.addEventListener("click", () => {
+                button.addEventListener("click", () => {
                     if (selectedStocks.has(ticker)) {
                         selectedStocks.delete(ticker);
-                        stockButton.classList.remove("selected");
+                        button.classList.remove("selected");
                     } else if (selectedStocks.size < 10) {
                         selectedStocks.add(ticker);
-                        stockButton.classList.add("selected");
+                        button.classList.add("selected");
                     } else alert("You can select up to 10 stocks.");
                 });
             });
 
             createPortfolioButton.addEventListener("click", () => {
-                if (!selectedStocks.size) return alert("Please select at least one stock.");
-                const portfolioName = prompt("Enter portfolio name:", `Portfolio ${Date.now()}`);
+                const portfolioName = prompt("Enter portfolio name:");
                 if (!portfolioName) return alert("Portfolio name is required.");
                 const portfolioDiv = document.createElement("div");
                 portfolioDiv.className = "portfolio";
-                portfolioDiv.innerHTML = `<h3>${portfolioName}</h3><ul>${[...selectedStocks].map(stock => `<li>${stock}</li>`).join("")}</ul>`;
+                portfolioDiv.innerHTML = `<h3>${portfolioName}</h3><ul>${[...selectedStocks].map((s) => `<li>${s}</li>`).join("")}</ul>`;
                 const deleteIcon = document.createElement("button");
                 deleteIcon.textContent = "🗑️";
                 deleteIcon.className = "delete-icon";
-                deleteIcon.addEventListener("click", () => savedPortfoliosDiv.removeChild(portfolioDiv));
+                deleteIcon.addEventListener("click", () => {
+                    savedPortfoliosDiv.removeChild(portfolioDiv);
+                    activePortfolios.delete(portfolioName);
+                    updateGraph();
+                });
                 portfolioDiv.appendChild(deleteIcon);
                 savedPortfoliosDiv.appendChild(portfolioDiv);
-                selectedStocks.clear();
-                document.querySelectorAll(".stock-button.selected").forEach(btn => btn.classList.remove("selected"));
+                addPortfolioOption(portfolioName, [...selectedStocks]);
             });
 
-            updateGraphButton.addEventListener("click", () => {
-                const period = timePeriodSelector.value;
-                performanceGraph.data.labels = dummyData[period].labels;
-                performanceGraph.data.datasets[0].data = dummyData[period].portfolio;
+            function addPortfolioOption(name, stocks) {
+                const button = document.createElement("button");
+                button.textContent = name;
+                button.className = "portfolio-option";
+                portfolioOptionsDiv.appendChild(button);
+
+                button.addEventListener("click", () => {
+                    if (activePortfolios.has(name)) {
+                        activePortfolios.delete(name);
+                        button.classList.remove("selected");
+                    } else {
+                        activePortfolios.add(name);
+                        button.classList.add("selected");
+                    }
+                    updateGraph();
+                });
+            }
+
+            const updateGraph = () => {
+                const selectedPeriod = timePeriodSelector.value;
+                performanceGraph.data.labels = Array(stockMockData["AAPL"][selectedPeriod].length).fill(0).map((_, i) => `Point ${i + 1}`);
+                performanceGraph.data.datasets = Array.from(activePortfolios).map((portfolioName) => {
+                    const data =
+                        dummyData[portfolioName]?.[selectedPeriod] ||
+                        Array.from(selectedStocks).reduce(
+                            (avg, stock) => avg.map((v, i) => v + stockMockData[stock][selectedPeriod][i]),
+                            Array(stockMockData["AAPL"][selectedPeriod].length).fill(0)
+                        ).map((sum) => sum / selectedStocks.size);
+
+                    return {
+                        label: portfolioName,
+                        data,
+                        borderColor: portfolioName === "SP500" ? "#ff6b6b" : portfolioName === "Premium" ? "#64ffda" : "#4db8ff",
+                        backgroundColor: portfolioName === "SP500" ? "rgba(255, 107, 107, 0.2)" : "rgba(100, 255, 218, 0.2)",
+                        fill: true,
+                    };
+                });
                 performanceGraph.update();
-            });
+            };
+
+            timePeriodSelector.addEventListener("change", updateGraph);
+
+            // Add SP500 and Premium options
+            ["SP500", "Premium"].forEach((name) => addPortfolioOption(name, []));
+
+            updateGraph();
         });
     </script>
 </body>
