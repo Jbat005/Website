@@ -2,12 +2,55 @@
 html, body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-x: hidden;
     width: 100%;
-    font-family: 'Montserrat', sans-serif; /* Primary font */
-    background-color: #181818; /* Darker background */
-    color: #e0e0e0; /* Muted light text for readability */
+    font-family: 'Montserrat', sans-serif;
+    background-color: #181818;
+    color: #e0e0e0;
 }
+
+/* Hamburger Menu */
+.hamburger-menu {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+}
+
+.hamburger-icon {
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #e0e0e0;
+}
+
+.menu-links {
+    display: none; /* Initially hidden */
+    position: absolute;
+    top: 40px;
+    left: 10px;
+    background-color: #202020;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+}
+
+.menu-links a {
+    display: block;
+    color: #e0e0e0;
+    text-decoration: none;
+    padding: 10px;
+    border-bottom: 1px solid #383838;
+    font-size: 1em;
+}
+
+.menu-links a:last-child {
+    border-bottom: none;
+}
+
+.menu-links a:hover {
+    background-color: #383838;
+}
+
 
 
 nav a {

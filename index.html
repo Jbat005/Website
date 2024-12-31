@@ -11,6 +11,16 @@
 </head>
 
 <body>
+    <!-- Hamburger Menu -->
+    <div class="hamburger-menu">
+        <span class="hamburger-icon" onclick="toggleMenu()">☰</span>
+        <div class="menu-links" id="menu">
+            <a href="#">Create a Profile</a>
+            <a href="#">Charts & Graphs</a>
+            <a href="#">Optimized Weights</a>
+            <a href="#">Support</a>
+        </div>
+    </div>
 
     <main>
         <section id="projects-container">
@@ -49,17 +59,12 @@
             </section>
         </section>
     </main>
-    
 
-    <footer>
-        <a href="https://www.linkedin.com/in/jbatist005/" target="_blank">
-            <img src="linkedin-icon.png" alt="LinkedIn" id="linkedin-icon">
-        </a>
-        <a href="https://github.com/Jbat005" target="_blank">
-            <img src="github-icon.png" alt="GitHub" id="github-icon">
-        </a>
-    </footer>
-
-    <script src="script.js"></script>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
 </body>
 </html>
