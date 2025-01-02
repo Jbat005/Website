@@ -3,9 +3,66 @@
 <head>
     <title>Smart Invest - Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Link to external CSS (optional if you have a separate styles.css) -->
     <link rel="stylesheet" href="styles.css">
+
     <style>
-        /* Homepage-specific styles */
+        /* ------------ GLOBAL STYLES ------------ */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #181818;
+            color: #e0e0e0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #e0e0e0;
+        }
+
+        /* ------------ HAMBURGER MENU STYLES ------------ */
+        .hamburger-menu {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+
+        .hamburger-icon {
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #e0e0e0;
+            user-select: none; /* Prevent double-click text selection */
+        }
+
+        .menu-links {
+            display: none;
+            position: fixed;
+            top: 40px;
+            left: 10px;
+            background-color: #202020;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            z-index: 1000;
+        }
+
+        .menu-links a {
+            display: block;
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 1em;
+            margin: 5px 0;
+        }
+
+        .menu-links a:hover {
+            background-color: #383838;
+            border-radius: 5px;
+        }
+
+        /* ------------ HOMEPAGE-SPECIFIC STYLES ------------ */
         #homePage {
             display: flex;
             flex-direction: column;
@@ -13,6 +70,7 @@
             justify-content: center;
             height: 100vh; /* Full viewport height */
             text-align: center;
+            padding: 0 20px; /* Some padding for smaller screens */
         }
 
         .logo {
@@ -30,6 +88,7 @@
     </style>
 </head>
 <body>
+
     <!-- Hamburger Menu -->
     <div class="hamburger-menu">
         <span class="hamburger-icon" onclick="toggleMenu()">☰</span>
@@ -55,10 +114,12 @@
     </section>
 
     <script>
+        // Toggle the hamburger menu
         function toggleMenu() {
             const menu = document.getElementById('menu');
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         }
     </script>
+
 </body>
 </html>
