@@ -213,7 +213,7 @@
          * ---------------------------------- */
         async function fetchStockData(ticker) {
             try {
-                const response = await fetch(`http://localhost:3000/api/stocks/${ticker}`);
+                const response = await fetch(`https://my-vercel-api-lx6f.vercel.app/api/stocks/${ticker}`);
                 if (!response.ok) {
                     throw new Error(`Error fetching stock data for ${ticker}`);
                 }
