@@ -1,11 +1,10 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 <head>
     <title>Smart Invest - Create Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- If you have an external CSS file, you can still include it:
-    <link rel="stylesheet" href="styles.css"> -->
+    <!-- External CSS can be included if needed -->
+    <!-- <link rel="stylesheet" href="styles.css"> -->
     <style>
         /* Basic Reset & Body Style */
         * {
@@ -26,23 +25,40 @@
             position: relative;
             background-color: #202020;
             padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
+
         .hamburger-icon {
             font-size: 1.5em;
             cursor: pointer;
+            user-select: none;
         }
+
         .menu-links {
             display: none;
             flex-direction: column;
             margin-top: 10px;
+            width: 100%;
+            background-color: #202020;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            padding: 10px 0;
+            z-index: 1000;
         }
+
         .menu-links a {
             color: #e0e0e0;
             text-decoration: none;
-            padding: 5px 0;
+            padding: 10px 20px;
+            display: block;
         }
+
         .menu-links a:hover {
-            color: #64ffda;
+            background-color: #64ffda;
+            color: #181818;
         }
 
         /* Show the menu when it’s toggled on small screens */
@@ -52,19 +68,25 @@
             }
         }
 
-        /* Desktop: show menu links inline, if you want */
+        /* Desktop: show menu links inline, hide hamburger icon */
         @media (min-width: 769px) {
             .hamburger-icon {
-                display: none; /* hide icon on larger screens if you wish */
+                display: none; /* hide icon on larger screens */
             }
             .menu-links {
                 display: flex;
-                gap: 20px;
+                flex-direction: row;
+                position: static;
+                background-color: transparent;
+                padding: 0;
+            }
+            .menu-links a {
+                padding: 0 15px;
             }
         }
 
-        /* Center content on the page */
-        #createProfile {
+        /* Section Styling */
+        #createProfileSection {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -73,7 +95,7 @@
             text-align: center;
             padding: 20px;
         }
-        #createProfile h1 {
+        #createProfileSection h1 {
             font-size: 2em;
             margin: 20px 0;
         }
@@ -147,6 +169,13 @@
         .logged-in-container h2 {
             margin-bottom: 10px;
         }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            #createProfileSection {
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -164,7 +193,7 @@
     </div>
 
     <!-- Create Profile & Auth Section -->
-    <section id="createProfile">
+    <section id="createProfileSection">
         <h1>Create Your Profile</h1>
 
         <!-- Registration Form -->
@@ -230,6 +259,8 @@
         if (currentUser) {
             showElement(loggedInContainer);
             loggedInUserSpan.textContent = currentUser;
+            hideElement(document.getElementById("registerContainer"));
+            hideElement(document.getElementById("loginContainer"));
         }
 
         // Register new user
@@ -248,7 +279,11 @@
             if (!users) {
                 users = {};
             } else {
-                users = JSON.parse(users);
+                try {
+                    users = JSON.parse(users);
+                } catch (e) {
+                    users = {};
+                }
             }
 
             // Check if user already exists
@@ -288,7 +323,11 @@
                 loginMessage.style.color = "#ff7373";
                 return;
             }
-            users = JSON.parse(users);
+            try {
+                users = JSON.parse(users);
+            } catch (e) {
+                users = {};
+            }
 
             // Check credentials
             if (users[userId] && users[userId] === password) {
@@ -299,6 +338,10 @@
                 loggedInUserSpan.textContent = userId;
 
                 showElement(loggedInContainer);
+
+                // Hide registration and login forms
+                hideElement(document.getElementById("registerContainer"));
+                hideElement(document.getElementById("loginContainer"));
 
                 // Clear login fields
                 loginUserIdInput.value = "";
@@ -314,6 +357,8 @@
             localStorage.removeItem("loggedInUser");
             loggedInUserSpan.textContent = "";
             hideElement(loggedInContainer);
+            showElement(document.getElementById("registerContainer"));
+            showElement(document.getElementById("loginContainer"));
         });
 
         // Helper functions

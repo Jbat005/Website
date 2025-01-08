@@ -3,20 +3,101 @@
 <head>
     <title>Smart Invest - Optimized Weights</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Link to external CSS (optional if you have a separate styles.css) -->
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Center the container on the page */
-        body, html {
+        /* ------------ GLOBAL STYLES ------------ */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
             height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-family: Arial, sans-serif;
             background-color: #181818;
+            color: #e0e0e0;
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
             color: #e0e0e0;
         }
 
+        /* ------------ HAMBURGER MENU STYLES ------------ */
+        .hamburger-menu {
+            position: relative;
+            background-color: #202020;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .hamburger-icon {
+            font-size: 1.5em;
+            cursor: pointer;
+            user-select: none;
+            color: #e0e0e0;
+        }
+
+        .menu-links {
+            display: none;
+            flex-direction: column;
+            margin-top: 10px;
+            width: 100%;
+            background-color: #202020;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            padding: 10px 0;
+            z-index: 1000;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+            font-size: 1em;
+        }
+
+        .menu-links a:hover {
+            background-color: #64ffda;
+            color: #181818;
+        }
+
+        /* Show the menu when it’s toggled on small screens */
+        @media (max-width: 768px) {
+            .menu-links {
+                display: none; /* Toggled via JS */
+            }
+        }
+
+        /* Desktop: show menu links inline, hide hamburger icon */
+        @media (min-width: 769px) {
+            .hamburger-icon {
+                display: none; /* hide icon on larger screens */
+            }
+            .menu-links {
+                display: flex;
+                flex-direction: row;
+                position: static;
+                background-color: transparent;
+                padding: 0;
+                box-shadow: none;
+                border: none;
+            }
+            .menu-links a {
+                padding: 0 15px;
+            }
+        }
+
+        /* ------------ OPTIMIZED WEIGHTS PAGE STYLES ------------ */
         #optimizedWeights {
             width: 100%;
             max-width: 600px;
@@ -25,6 +106,7 @@
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
             text-align: center;
+            margin: 50px auto; /* Center the container horizontally with some top margin */
         }
 
         .project-description {
@@ -39,45 +121,11 @@
             color: #64ffda; /* Highlight color */
         }
 
-        .hamburger-menu {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            z-index: 1000;
-        }
-
-        .hamburger-icon {
-            font-size: 1.5em;
-            cursor: pointer;
-            color: #e0e0e0;
-        }
-
-        .menu-links {
-            display: none;
-            position: fixed;
-            top: 40px;
-            left: 10px;
-            background-color: #202020;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .menu-links a {
-            display: block;
-            color: #e0e0e0;
-            text-decoration: none;
-            margin-bottom: 10px;
-        }
-
-        .menu-links a:hover {
-            color: #64ffda;
-        }
-
-        @media screen and (max-width: 768px) {
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
             #optimizedWeights {
-                width: 90%;
                 padding: 15px;
+                margin: 30px auto;
             }
             .hamburger-icon {
                 font-size: 2em;
@@ -106,11 +154,27 @@
     </section>
 
     <script>
+        // Toggle the menu for small screens
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Close the menu when clicking outside (optional enhancement)
+        window.addEventListener('click', function(event) {
+            const menu = document.getElementById('menu');
+            const hamburger = document.querySelector('.hamburger-icon');
+            if (!hamburger.contains(event.target) && !menu.contains(event.target)) {
+                menu.style.display = 'none';
+            }
+        });
+
         const projects = [
             {
                 name: 'Output',
                 descriptionTemplate: `
-                    Up <span class="highlight">+%MAX_RISK_RETURN%%</span> since November 15, 2023. (<span class="highlight">+%MAX_RISK_WEEKLY_AVG%%</span> average over %WEEKS% weeks).
+                    Up <span class="highlight">+%MAX_RISK_RETURN%%</span> since November 15, 2023. 
+                    (<span class="highlight">+%MAX_RISK_WEEKLY_AVG%%</span> average over %WEEKS% weeks).
                     Returning <span class="highlight">+%DIFF_MAX_SPY%</span> over the SP500 index.`
             }
         ];
@@ -203,11 +267,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             fetchDataAndUpdateUI(true); // Use mock data for local testing
         });
-
-        function toggleMenu() {
-            const menu = document.getElementById('menu');
-            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-        }
     </script>
 </body>
 </html>

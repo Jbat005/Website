@@ -25,6 +25,71 @@
             max-width: 600px;
             line-height: 1.6;
         }
+
+        /* Hamburger Menu */
+        .hamburger-menu {
+            position: relative;
+            background-color: #202020;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .hamburger-icon {
+            font-size: 1.5em;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .menu-links {
+            display: none;
+            flex-direction: column;
+            margin-top: 10px;
+            width: 100%;
+            background-color: #202020;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .menu-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+        }
+
+        .menu-links a:hover {
+            background-color: #64ffda;
+            color: #181818;
+        }
+
+        /* Show the menu when it’s toggled on small screens */
+        @media (max-width: 768px) {
+            .menu-links {
+                display: none; /* Toggled via JS */
+            }
+        }
+
+        /* Desktop: show menu links inline, hide hamburger icon */
+        @media (min-width: 769px) {
+            .hamburger-icon {
+                display: none; /* hide icon on larger screens */
+            }
+            .menu-links {
+                display: flex;
+                flex-direction: row;
+                position: static;
+                background-color: transparent;
+                padding: 0;
+            }
+            .menu-links a {
+                padding: 0 15px;
+            }
+        }
     </style>
 </head>
 <body>

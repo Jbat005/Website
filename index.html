@@ -22,44 +22,69 @@
         }
 
         /* ------------ HAMBURGER MENU STYLES ------------ */
+        /* Hamburger Menu */
         .hamburger-menu {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            z-index: 1000;
+            position: relative;
+            background-color: #202020;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .hamburger-icon {
             font-size: 1.5em;
             cursor: pointer;
-            color: #e0e0e0;
-            user-select: none; /* Prevent double-click text selection */
+            user-select: none;
         }
 
         .menu-links {
             display: none;
-            position: fixed;
-            top: 40px;
-            left: 10px;
+            flex-direction: column;
+            margin-top: 10px;
+            width: 100%;
             background-color: #202020;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            padding: 10px;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            padding: 10px 0;
             z-index: 1000;
         }
 
         .menu-links a {
-            display: block;
             color: #e0e0e0;
             text-decoration: none;
-            padding: 10px;
-            font-size: 1em;
-            margin: 5px 0;
+            padding: 10px 20px;
+            display: block;
         }
 
         .menu-links a:hover {
-            background-color: #383838;
-            border-radius: 5px;
+            background-color: #64ffda;
+            color: #181818;
+        }
+
+        /* Show the menu when it’s toggled on small screens */
+        @media (max-width: 768px) {
+            .menu-links {
+                display: none; /* Toggled via JS */
+            }
+        }
+
+        /* Desktop: show menu links inline, hide hamburger icon */
+        @media (min-width: 769px) {
+            .hamburger-icon {
+                display: none; /* hide icon on larger screens */
+            }
+            .menu-links {
+                display: flex;
+                flex-direction: row;
+                position: static;
+                background-color: transparent;
+                padding: 0;
+            }
+            .menu-links a {
+                padding: 0 15px;
+            }
         }
 
         /* ------------ HOMEPAGE-SPECIFIC STYLES ------------ */
