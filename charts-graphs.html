@@ -18,20 +18,17 @@
             text-align: center;
         }
 
-        /* Container for the chart, allowing it to be larger but responsive */
         #graphContainer {
             width: 90%;
             max-width: 1000px; 
             margin: 20px auto;
         }
 
-        /* Make the canvas fill the container width & set a default height */
         #performanceGraph {
             width: 100%;
             height: 500px;
         }
 
-        /* On narrow screens, reduce chart height */
         @media (max-width: 600px) {
             #performanceGraph {
                 height: 300px;
@@ -74,69 +71,63 @@
             padding: 10px;
             max-width: 400px;
             text-align: left;
+            position: relative;
         }
 
-        .delete-icon {
+        .portfolio.editing {
+            outline: 1px dashed #64ffda;
+        }
+
+        .portfolio h3 {
+            margin-top: 0;
+        }
+
+        .edit-icon, .delete-icon, .save-icon {
             margin: 5px;
             padding: 5px 10px;
             font-size: 0.9em;
             cursor: pointer;
         }
 
-        .hamburger-menu {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            z-index: 1000;
+        .stock-weight-list {
+            list-style-type: none;
+            padding-left: 0;
         }
 
-        .hamburger-icon {
-            font-size: 1.5em;
-            cursor: pointer;
+        .stock-weight-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .weight-label {
+            margin-right: 10px;
+        }
+
+        .weight-input-inline,
+        .weight-input {
+            width: 60px;
+            margin-left: 5px;
+            margin-right: 5px;
+            text-align: center;
+            background-color: #303030;
             color: #e0e0e0;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
         }
 
-        .menu-links {
+        .validation-message {
+            color: red;
             display: none;
-            position: fixed;
-            top: 40px;
-            left: 10px;
-            background-color: #202020;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            padding: 10px;
-            z-index: 1000;
         }
 
-        .menu-links a {
-            display: block;
-            color: #e0e0e0;
-            text-decoration: none;
-            padding: 10px;
-            font-size: 1em;
-            margin: 5px 0;
-        }
-
-        .menu-links a:hover {
-            background-color: #383838;
-            border-radius: 5px;
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 
 <body>
-    <!-- Hamburger Menu -->
-    <div class="hamburger-menu">
-        <span class="hamburger-icon">☰</span>
-        <div class="menu-links" id="menu">
-            <a href="index.html">Home</a>
-            <a href="create-profile.html">Create a Profile</a>
-            <a href="charts-graphs.html">Charts & Graphs</a>
-            <a href="optimized-weights.html">Optimized Weights</a>
-            <a href="support.html">Support</a>
-        </div>
-    </div>
-
     <section id="chartsGraphs">
         <h1>Create and View Your Portfolio</h1>
         <div id="stockSelection">
@@ -145,11 +136,17 @@
                 <!-- Stock options dynamically added -->
             </div>
         </div>
+        <div id="portfolioWeights">
+            <h3>Adjust Portfolio Weights</h3>
+            <!-- Dynamic weight inputs will be added here -->
+        </div>
         <button id="createPortfolio">Create Portfolio</button>
+        <p id="weightValidationMessage" class="validation-message">Weights must add up to 100%.</p>
+
         <div id="savedPortfolios">
             <h2>Saved Portfolios</h2>
+            <!-- Portfolios appended here -->
         </div>
-        <h2>Portfolio Performance (Percent Change)</h2>
 
         <div id="graphContainer">
             <canvas id="performanceGraph"></canvas>
@@ -163,92 +160,35 @@
                 <option value="6m">6 Months</option>
                 <option value="1y">1 Year</option>
             </select>
-            <div id="portfolioOptions"></div>
+            <div id="portfolioOptions">
+                <h3>Select Portfolios to Compare:</h3>
+                <!-- Portfolio toggle buttons will be added here -->
+            </div>
         </div>
     </section>
 
     <script>
     document.addEventListener("DOMContentLoaded", () => {
-
-        /* ----------------------------------
-         * Hamburger Menu Toggle
-         * ---------------------------------- */
-        function toggleMenu() {
-            const menu = document.getElementById('menu');
-            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-        }
-        document.querySelector('.hamburger-icon').addEventListener("click", toggleMenu);
-
-        /* ----------------------------------
-         * Helper: getPeriodStart
-         * Returns a Date object for how far 
-         * back we want to filter data
-         * ---------------------------------- */
-        function getPeriodStart(value) {
-            const now = new Date();
-            const periodStart = new Date(now); // clone
-
-            switch (value) {
-                case '1m':
-                    periodStart.setMonth(periodStart.getMonth() - 1);
-                    break;
-                case '3m':
-                    periodStart.setMonth(periodStart.getMonth() - 3);
-                    break;
-                case '6m':
-                    periodStart.setMonth(periodStart.getMonth() - 6);
-                    break;
-                case '1y':
-                    periodStart.setFullYear(periodStart.getFullYear() - 1);
-                    break;
-                default:
-                    periodStart.setMonth(periodStart.getMonth() - 1);
-            }
-            return periodStart;
-        }
-
-        /* ----------------------------------
-         * Fetch stock data from server
-         * (Expects { ticker, prices: [{date, close}, ...] })
-         * ---------------------------------- */
-        async function fetchStockData(ticker) {
-            try {
-                const response = await fetch(`https://my-vercel-api-lx6f.vercel.app/api/stocks/${ticker}`);
-                if (!response.ok) {
-                    throw new Error(`Error fetching stock data for ${ticker}`);
-                }
-                return await response.json();
-            } catch (error) {
-                console.error(`Error fetching data for ${ticker}:`, error);
-                return null;
-            }
-        }
-
-        /* ----------------------------------
-         * DOM references & global variables
-         * ---------------------------------- */
         const stockGrid = document.getElementById("stockGrid");
         const createPortfolioButton = document.getElementById("createPortfolio");
         const savedPortfoliosDiv = document.getElementById("savedPortfolios");
+        const portfolioWeightsDiv = document.getElementById("portfolioWeights");
         const portfolioOptionsDiv = document.getElementById("portfolioOptions");
-        const timePeriodSelector = document.getElementById("timePeriod");
+        const weightValidationMessage = document.getElementById("weightValidationMessage");
         const ctx = document.getElementById("performanceGraph").getContext("2d");
+        const timePeriodSelector = document.getElementById("timePeriod");
 
-        // Example tickers
-        const sp500Stocks = ["AAPL", "MSFT", "GOOGL", "AMZN", "TSLA", "META", "NVDA", "INTC", "AMD", "IBM","QCOM", "SHOP", "UBER", "LYFT", "PINS", "SNAP", "TWTR", "FB", "NFLX", "DIS",  "GM", "F" ];
-
-        // Track user selections & active portfolios
+        const sp500Stocks = ["AAPL", "MSFT", "GOOGL", "AMZN", "TSLA", "META", "NVDA", "INTC", "AMD", "IBM"];
+        // A set of selected tickers for the "currently building" portfolio
         const selectedStocks = new Set();
+        // A dictionary for storing stock weights (ticker => weight)
+        const stockWeights = {};
+        // The list of all saved portfolios
         let activePortfolios = [];
-        const portfolioColors = {};
+        // Portfolios chosen to display on the chart
+        let displayedPortfolios = [];
 
-        // Predefined colors (fallback to random if we run out)
-        const availableColors = ["#ff6b6b", "#64ffda", "#4db8ff", "#ffc300", "#8e44ad"];
-
-        /* ----------------------------------
-         * Initialize Chart.js
-         * Y-axis labeled "Performance (%)"
-         * ---------------------------------- */
+        // Initialize the Chart.js line chart
         let performanceGraph = new Chart(ctx, {
             type: "line",
             data: {
@@ -259,126 +199,21 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
-                    x: { 
-                        title: { display: true, text: "Date" } 
-                    },
-                    y: {
-                        title: { display: true, text: "Performance (%)" }
-                    }
+                    x: { title: { display: true, text: "Date" } },
+                    y: { title: { display: true, text: "Performance (%)" } },
                 },
             },
         });
 
-        function getRandomColor() {
-            const letters = "0123456789ABCDEF";
-            return "#" + Array.from({ length: 6 }, () => letters[Math.floor(Math.random() * 16)]).join("");
-        }
-
-        /* ----------------------------------
-         * updateGraph
-         *  - filters data by the time period
-         *  - normalizes each ticker to 0% at 
-         *    the earliest date in the range
-         * ---------------------------------- */
-        async function updateGraph() {
-            // Clear out old data
-            performanceGraph.data.labels = [];
-            performanceGraph.data.datasets = [];
-
-            if (activePortfolios.length === 0) {
-                performanceGraph.update();
-                return;
-            }
-
-            // Figure out time range
-            const periodValue = timePeriodSelector.value;
-            const periodStart = getPeriodStart(periodValue);
-
-            // We use the first portfolio's first ticker to define the date labels
-            const firstPortfolio = activePortfolios[0];
-            if (!firstPortfolio.stocks || firstPortfolio.stocks.length === 0) {
-                performanceGraph.update();
-                return;
-            }
-
-            const labelTicker = firstPortfolio.stocks[0];
-            const labelData = await fetchStockData(labelTicker);
-
-            let dateLabels = [];
-            if (labelData && Array.isArray(labelData.prices)) {
-                // Filter data to >= periodStart
-                const filtered = labelData.prices.filter(entry => {
-                    const d = new Date(entry.date);
-                    return d >= periodStart;
-                });
-                // Convert to short date strings
-                dateLabels = filtered.map(entry => new Date(entry.date).toLocaleDateString());
-            }
-
-            performanceGraph.data.labels = dateLabels;
-
-            // Build each portfolio's dataset
-            for (const portfolio of activePortfolios) {
-                const portfolioName = portfolio.name;
-                const tickers = portfolio.stocks;
-                const color = portfolioColors[portfolioName] || getRandomColor();
-
-                // An array of 0's for however many date labels we have
-                const portfolioData = Array(dateLabels.length).fill(0);
-
-                // For each ticker in the portfolio
-                for (const ticker of tickers) {
-                    const stockData = await fetchStockData(ticker);
-                    if (stockData && Array.isArray(stockData.prices)) {
-                        // Filter to same date range
-                        const filtered = stockData.prices.filter(entry => {
-                            const d = new Date(entry.date);
-                            return d >= periodStart;
-                        });
-
-                        if (filtered.length > 0) {
-                            // baselineClose is the first close in that filtered array
-                            const baselineClose = filtered[0].close;
-
-                            // For each date index, compute % from baseline
-                            filtered.slice(0, portfolioData.length).forEach((priceObj, i) => {
-                                const pctChange = ((priceObj.close - baselineClose) / baselineClose) * 100;
-                                portfolioData[i] += pctChange;
-                            });
-                        }
-                    }
-                }
-
-                // If multiple tickers, average the % changes
-                if (tickers.length > 0) {
-                    portfolioData.forEach((val, i, arr) => {
-                        arr[i] = val / tickers.length;
-                    });
-                }
-
-                // Add this dataset to the chart
-                performanceGraph.data.datasets.push({
-                    label: portfolioName,
-                    data: portfolioData,
-                    borderColor: color,
-                    backgroundColor: color + "33",
-                    fill: true,
-                });
-            }
-
-            performanceGraph.update();
-        }
-
-        /* ----------------------------------
-         * Build stock selection buttons
-         * ---------------------------------- */
-        sp500Stocks.forEach(ticker => {
+        // Create stock selection buttons
+        sp500Stocks.forEach((ticker) => {
             const button = document.createElement("button");
             button.textContent = ticker;
             button.className = "stock-button";
             stockGrid.appendChild(button);
 
             button.addEventListener("click", () => {
+                // Toggle selection
                 if (selectedStocks.has(ticker)) {
                     selectedStocks.delete(ticker);
                     button.classList.remove("selected");
@@ -388,93 +223,329 @@
                 } else {
                     alert("You can select up to 10 stocks.");
                 }
+
+                // Recalculate weights so they sum to 100%
+                recalcEqualStockWeights();
+                // Re-render the numeric inputs
+                renderWeightInputs();
             });
         });
 
-        /* ----------------------------------
-         * Create a new portfolio
-         * ---------------------------------- */
+        /**
+         *  Recalculate weights so that all selected stocks share 100% equally.
+         *  e.g., if 3 stocks are selected, each becomes 100/3 = 33.33...
+         */
+        function recalcEqualStockWeights() {
+            if (selectedStocks.size === 0) return;
+            const equalWeight = 100 / selectedStocks.size;
+
+            selectedStocks.forEach((ticker) => {
+                stockWeights[ticker] = equalWeight;
+            });
+        }
+
+        /**
+         * Renders the weight inputs for the currently selected stocks
+         * so the user can still override them if desired.
+         */
+        function renderWeightInputs() {
+            portfolioWeightsDiv.innerHTML = "<h3>Adjust Portfolio Weights</h3>";
+
+            selectedStocks.forEach((ticker) => {
+                const label = document.createElement("label");
+                label.className = "weight-label";
+                const value = stockWeights[ticker] 
+                    ? parseFloat(stockWeights[ticker]).toFixed(2) 
+                    : "0";
+
+                label.innerHTML = `
+                    ${ticker}: 
+                    <input 
+                        type="number" 
+                        class="weight-input" 
+                        data-ticker="${ticker}" 
+                        value="${value}" 
+                        min="0" 
+                        max="100" 
+                        step="0.01"
+                    /> %
+                `;
+                portfolioWeightsDiv.appendChild(label);
+            });
+        }
+
+        // Create a new portfolio from the currently selected stocks and weights
         createPortfolioButton.addEventListener("click", () => {
+            // Read the weights from the inputs
+            const inputs = document.querySelectorAll(".weight-input");
+            let totalWeight = 0;
+
+            inputs.forEach((input) => {
+                const ticker = input.dataset.ticker;
+                const value = parseFloat(input.value) || 0;
+                if (value >= 0) {
+                    stockWeights[ticker] = value;
+                    totalWeight += value;
+                }
+            });
+
+            if (Math.round(totalWeight) !== 100) {
+                // If you prefer to allow a slight float margin of error, you can do a check with a small epsilon
+                weightValidationMessage.style.display = "block";
+                return;
+            }
+            weightValidationMessage.style.display = "none";
+
             const portfolioName = prompt("Enter portfolio name:");
             if (!portfolioName) {
                 return alert("Portfolio name is required.");
             }
-            if (portfolioColors[portfolioName]) {
-                return alert("Portfolio name must be unique.");
-            }
 
-            // DOM element for the portfolio
-            const portfolioDiv = document.createElement("div");
-            portfolioDiv.className = "portfolio";
-            portfolioDiv.innerHTML = `
-                <h3>${portfolioName}</h3>
-                <ul>${[...selectedStocks].map(s => `<li>${s}</li>`).join("")}</ul>
-            `;
-
-            // A delete icon to remove the portfolio
-            const deleteIcon = document.createElement("button");
-            deleteIcon.textContent = "🗑️";
-            deleteIcon.className = "delete-icon";
-            deleteIcon.addEventListener("click", () => {
-                savedPortfoliosDiv.removeChild(portfolioDiv);
-                activePortfolios = activePortfolios.filter(p => p.name !== portfolioName);
-                updateGraph();
-            });
-            portfolioDiv.appendChild(deleteIcon);
-
-            savedPortfoliosDiv.appendChild(portfolioDiv);
-
-            // Assign or pick a color
-            const color = availableColors.shift() || "#cccccc";
-            portfolioColors[portfolioName] = color;
-
-            // Make it active
-            activePortfolios.push({
+            const portfolio = {
                 name: portfolioName,
-                stocks: [...selectedStocks]
-            });
+                stocks: Array.from(selectedStocks),
+                weights: { ...stockWeights },
+            };
 
-            // Add toggle button below chart
-            addPortfolioOption(portfolioName);
+            // Add to the saved list
+            activePortfolios.push(portfolio);
 
-            // Re-render the chart
-            updateGraph();
+            // Re-render
+            renderSavedPortfolios();
+            renderPortfolioOptions();
         });
 
-        /* ----------------------------------
-         * Add a toggle button for the portfolio
-         * ---------------------------------- */
-        function addPortfolioOption(name) {
-            const button = document.createElement("button");
-            button.textContent = name;
-            button.className = "portfolio-option";
-            portfolioOptionsDiv.appendChild(button);
+        // Renders all saved portfolios
+        function renderSavedPortfolios() {
+            savedPortfoliosDiv.innerHTML = "<h2>Saved Portfolios</h2>";
 
-            button.addEventListener("click", () => {
-                const idx = activePortfolios.findIndex(p => p.name === name);
+            activePortfolios.forEach((portfolio, index) => {
+                const portfolioDiv = document.createElement("div");
+                portfolioDiv.className = "portfolio";
+                portfolioDiv.dataset.index = index;
 
-                if (idx !== -1) {
-                    // Currently active, so remove it
-                    activePortfolios.splice(idx, 1);
-                    button.classList.remove("selected");
-                } else {
-                    // Re-add it (in a real app, you'd store the original ticker set somewhere safe)
-                    activePortfolios.push({
-                        name,
-                        stocks: [...selectedStocks]
-                    });
-                    button.classList.add("selected");
-                }
+                // Construct the markup
+                portfolioDiv.innerHTML = `
+                    <h3>${portfolio.name}</h3>
+                    <ul class="stock-weight-list">
+                        ${portfolio.stocks
+                            .map(
+                                (stock) => 
+                                    `<li>${stock}: ${portfolio.weights[stock].toFixed(2)}%</li>`
+                            )
+                            .join("")}
+                    </ul>
+                    <button class="edit-icon" data-index="${index}">✏️ Edit</button>
+                    <button class="delete-icon" data-index="${index}">🗑️ Delete</button>
+                `;
 
-                updateGraph();
+                // DELETE button
+                portfolioDiv.querySelector(".delete-icon").addEventListener("click", () => {
+                    activePortfolios.splice(index, 1);
+                    renderSavedPortfolios();
+                    renderPortfolioOptions();
+                });
+
+                // EDIT button (inline editing)
+                portfolioDiv.querySelector(".edit-icon").addEventListener("click", () => {
+                    enableInlineEdit(index);
+                });
+
+                savedPortfoliosDiv.appendChild(portfolioDiv);
             });
         }
 
-        // Re-render whenever time period changes
-        timePeriodSelector.addEventListener("change", updateGraph);
+        // Inline edit logic: switch the portfolio item into "editing" mode
+        function enableInlineEdit(index) {
+            const portfolio = activePortfolios[index];
+            const portfolioDiv = savedPortfoliosDiv.querySelector(`.portfolio[data-index="${index}"]`);
+            portfolioDiv.classList.add("editing");
 
-        // Initial load
-        updateGraph();
+            // Replace name with an input
+            const nameHeading = portfolioDiv.querySelector("h3");
+            const nameInput = document.createElement("input");
+            nameInput.type = "text";
+            nameInput.value = portfolio.name;
+            nameInput.style.width = "80%";
+            nameInput.addEventListener("input", (e) => {
+                portfolio.name = e.target.value;
+            });
+            nameHeading.parentNode.replaceChild(nameInput, nameHeading);
+
+            // Replace the stock list with inline inputs
+            const ul = portfolioDiv.querySelector(".stock-weight-list");
+            ul.innerHTML = "";
+            portfolio.stocks.forEach((stock) => {
+                const li = document.createElement("li");
+                li.innerHTML = `
+                    ${stock}: 
+                    <input 
+                        type="number" 
+                        class="weight-input-inline" 
+                        data-stock="${stock}" 
+                        value="${portfolio.weights[stock].toFixed(2)}" 
+                        min="0" 
+                        max="100" 
+                        step="0.01"
+                    /> %
+                `;
+                ul.appendChild(li);
+            });
+
+            // Hide edit button, create save button
+            const editButton = portfolioDiv.querySelector(".edit-icon");
+            editButton.classList.add("hidden");
+            const saveButton = document.createElement("button");
+            saveButton.textContent = "💾 Save";
+            saveButton.className = "save-icon";
+            saveButton.addEventListener("click", () => {
+                saveInlineEdit(index);
+            });
+            portfolioDiv.insertBefore(saveButton, editButton.nextSibling);
+        }
+
+        // Saving after inline edit
+        function saveInlineEdit(index) {
+            const portfolio = activePortfolios[index];
+            const portfolioDiv = savedPortfoliosDiv.querySelector(`.portfolio[data-index="${index}"]`);
+
+            // Get updated name
+            const nameInput = portfolioDiv.querySelector('input[type="text"]');
+            portfolio.name = nameInput.value;
+
+            // Get updated weights
+            const weightInputs = portfolioDiv.querySelectorAll(".weight-input-inline");
+            let totalWeight = 0;
+            weightInputs.forEach((input) => {
+                const stock = input.dataset.stock;
+                const val = parseFloat(input.value) || 0;
+                portfolio.weights[stock] = val;
+                totalWeight += val;
+            });
+
+            // Check if weights sum to 100
+            if (Math.round(totalWeight) !== 100) {
+                alert("Weights must add up to 100%. Please adjust before saving.");
+                return;
+            }
+
+            // Exit editing mode
+            portfolioDiv.classList.remove("editing");
+            const saveButton = portfolioDiv.querySelector(".save-icon");
+            const editButton = portfolioDiv.querySelector(".edit-icon");
+            editButton.classList.remove("hidden");
+            if (saveButton) saveButton.remove();
+
+            // Restore the h3
+            const newH3 = document.createElement("h3");
+            newH3.textContent = portfolio.name;
+            nameInput.parentNode.replaceChild(newH3, nameInput);
+
+            // Rebuild the UL
+            const ul = portfolioDiv.querySelector(".stock-weight-list");
+            ul.innerHTML = portfolio.stocks
+                .map((stock) => `<li>${stock}: ${portfolio.weights[stock].toFixed(2)}%</li>`)
+                .join("");
+
+            // Rerender portfolio list and comparison buttons
+            renderSavedPortfolios();
+            renderPortfolioOptions();
+        }
+
+        // Render portfolio toggles for chart
+        function renderPortfolioOptions() {
+            portfolioOptionsDiv.innerHTML = "<h3>Select Portfolios to Compare:</h3>";
+
+            activePortfolios.forEach((portfolio) => {
+                const button = document.createElement("button");
+                button.textContent = portfolio.name;
+                button.className = "portfolio-option";
+                portfolioOptionsDiv.appendChild(button);
+
+                button.addEventListener("click", () => {
+                    if (displayedPortfolios.includes(portfolio)) {
+                        displayedPortfolios = displayedPortfolios.filter((p) => p !== portfolio);
+                        button.classList.remove("selected");
+                    } else {
+                        displayedPortfolios.push(portfolio);
+                        button.classList.add("selected");
+                    }
+                    updateGraphWithPortfolios();
+                });
+            });
+        }
+
+        // Mock fetch function to get stock data
+        async function fetchStockData(ticker) {
+            try {
+                const response = await fetch(`https://my-vercel-api-lx6f.vercel.app/api/stocks/${ticker}`);
+                if (!response.ok) throw new Error(`Error fetching stock data for ${ticker}`);
+                return await response.json();
+            } catch (error) {
+                console.error(error);
+                return null;
+            }
+        }
+
+        // Build the chart for all displayed portfolios
+        async function updateGraphWithPortfolios() {
+            performanceGraph.data.labels = [];
+            performanceGraph.data.datasets = [];
+
+            const periodValue = timePeriodSelector.value;
+            const today = new Date();
+            const periodStart = new Date(today);
+
+            switch (periodValue) {
+                case "1m":
+                    periodStart.setMonth(today.getMonth() - 1);
+                    break;
+                case "3m":
+                    periodStart.setMonth(today.getMonth() - 3);
+                    break;
+                case "6m":
+                    periodStart.setMonth(today.getMonth() - 6);
+                    break;
+                case "1y":
+                    periodStart.setFullYear(today.getFullYear() - 1);
+                    break;
+            }
+
+            const dateLabels = new Set();
+
+            for (const portfolio of displayedPortfolios) {
+                const portfolioReturns = {};
+
+                for (const ticker of portfolio.stocks) {
+                    const data = await fetchStockData(ticker);
+                    if (data && data.prices) {
+                        data.prices.forEach((price) => {
+                            const date = new Date(price.date).toLocaleDateString();
+                            if (new Date(price.date) >= periodStart) {
+                                dateLabels.add(date);
+                                // Weighted sum
+                                portfolioReturns[date] =
+                                    (portfolioReturns[date] || 0) +
+                                    (price.close * portfolio.weights[ticker]) / 100;
+                            }
+                        });
+                    }
+                }
+
+                performanceGraph.data.datasets.push({
+                    label: portfolio.name,
+                    data: Array.from(dateLabels)
+                        .sort((a, b) => new Date(a) - new Date(b))
+                        .map((date) => portfolioReturns[date] || 0),
+                    borderColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+                    backgroundColor: "rgba(100, 255, 218, 0.2)",
+                    fill: true,
+                });
+            }
+
+            performanceGraph.data.labels = Array.from(dateLabels).sort((a, b) => new Date(a) - new Date(b));
+            performanceGraph.update();
+        }
     });
     </script>
 </body>
