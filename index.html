@@ -5,15 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Link to external CSS (optional if you have a separate styles.css) -->
-    <link rel="stylesheet" href="styles.css">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
 
     <style>
         /* ------------ GLOBAL STYLES ------------ */
-        body {
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             font-family: Arial, sans-serif;
             background-color: #181818;
             color: #e0e0e0;
+            margin: 0;
         }
 
         a {
@@ -22,7 +28,6 @@
         }
 
         /* ------------ HAMBURGER MENU STYLES ------------ */
-        /* Hamburger Menu */
         .hamburger-menu {
             position: relative;
             background-color: #202020;
@@ -36,6 +41,7 @@
             font-size: 1.5em;
             cursor: pointer;
             user-select: none;
+            color: #e0e0e0;
         }
 
         .menu-links {
@@ -49,6 +55,8 @@
             left: 0;
             padding: 10px 0;
             z-index: 1000;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
         .menu-links a {
@@ -56,6 +64,7 @@
             text-decoration: none;
             padding: 10px 20px;
             display: block;
+            font-size: 1em;
         }
 
         .menu-links a:hover {
@@ -81,6 +90,8 @@
                 position: static;
                 background-color: transparent;
                 padding: 0;
+                box-shadow: none;
+                border: none;
             }
             .menu-links a {
                 padding: 0 15px;
@@ -93,9 +104,10 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh; /* Full viewport height */
+            height: calc(100vh - 60px); /* Adjust height considering the menu */
             text-align: center;
-            padding: 0 20px; /* Some padding for smaller screens */
+            padding: 20px;
+            margin: 0 auto; /* Center the container horizontally */
         }
 
         .logo {
@@ -110,13 +122,29 @@
             line-height: 1.6;
             color: #e0e0e0;
         }
+
+        @media (max-width: 768px) {
+            #homePage {
+                height: calc(100vh - 50px); /* Adjust height for smaller menus */
+                padding: 15px;
+            }
+            .hamburger-icon {
+                font-size: 2em;
+            }
+        }
+
+        /* ------------ ACTIVE LINK STYLING ------------ */
+        .menu-links a.active {
+            background-color: #64ffda;
+            color: #181818;
+        }
     </style>
 </head>
 <body>
 
     <!-- Hamburger Menu -->
     <div class="hamburger-menu">
-        <span class="hamburger-icon" onclick="toggleMenu()">☰</span>
+        <span class="hamburger-icon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
         <div class="menu-links" id="menu">
             <a href="index.html">Home</a>
             <a href="create-profile.html">Create a Profile</a>
@@ -129,21 +157,41 @@
     <!-- Main Content -->
     <section id="homePage">
         <img src="logoSI.png" alt="Smart Invest Logo" class="logo">
-        <p class="pitch" style="font-size: 1.1em;">
+        <p class="pitch">
             <span style="color: #64ffda;">Smart Invest</span> is your all-in-one tool for smarter investing. 
             Track your portfolio, Monte Carlo simulate your investments, and more.
         </p>
-        <p class="pitch" style="font-size: 1.1em;">
+        <p class="pitch">
             Create an account to get access to automatic portfolio creators, and more.
         </p>
     </section>
 
     <script>
-        // Toggle the hamburger menu
+        // Toggle the menu for small screens
         function toggleMenu() {
             const menu = document.getElementById('menu');
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         }
+
+        // Accessibility: Allow toggling menu with keyboard
+        const hamburgerIcon = document.querySelector('.hamburger-icon');
+        hamburgerIcon.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                toggleMenu();
+            }
+        });
+
+        // Active Link Highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split("/").pop();
+            const menuLinks = document.querySelectorAll('.menu-links a');
+            menuLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
     </script>
 
 </body>

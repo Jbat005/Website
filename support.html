@@ -3,30 +3,31 @@
 <head>
     <title>Smart Invest - Support</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Link to external CSS (optional if you have a separate styles.css) -->
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+
     <style>
-        /* Center content on the page */
-        #support {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh; /* Full viewport height */
-            text-align: center;
+        /* ------------ GLOBAL STYLES ------------ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        #support h1 {
-            font-size: 2em;
-            margin-bottom: 20px;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #181818;
+            color: #e0e0e0;
+            margin: 0;
         }
 
-        #support p {
-            font-size: 1.2em;
-            max-width: 600px;
-            line-height: 1.6;
+        a {
+            text-decoration: none;
+            color: #e0e0e0;
         }
 
-        /* Hamburger Menu */
+        /* ------------ HAMBURGER MENU STYLES ------------ */
         .hamburger-menu {
             position: relative;
             background-color: #202020;
@@ -34,25 +35,30 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000; /* Ensure the menu stays on top */
         }
 
         .hamburger-icon {
             font-size: 1.5em;
             cursor: pointer;
             user-select: none;
+            color: #e0e0e0;
         }
 
         .menu-links {
             display: none;
             flex-direction: column;
-            margin-top: 10px;
             width: 100%;
             background-color: #202020;
             position: absolute;
             top: 50px;
             left: 0;
             padding: 10px 0;
-            z-index: 1000;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
         .menu-links a {
@@ -60,6 +66,7 @@
             text-decoration: none;
             padding: 10px 20px;
             display: block;
+            font-size: 1em;
         }
 
         .menu-links a:hover {
@@ -85,17 +92,61 @@
                 position: static;
                 background-color: transparent;
                 padding: 0;
+                border-radius: 0;
+                box-shadow: none;
             }
             .menu-links a {
                 padding: 0 15px;
             }
+        }
+
+        /* ------------ SUPPORT PAGE STYLES ------------ */
+        #support {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 60px); /* Adjust height considering the menu */
+            text-align: center;
+            padding: 20px;
+            margin: 60px auto 50px auto; /* Top margin accounts for the hamburger menu */
+            max-width: 800px; /* Optional: limit the width for better readability */
+        }
+
+        #support h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        #support p {
+            font-size: 1.2em;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            #support {
+                height: calc(100vh - 50px); /* Adjust height for smaller menus */
+                padding: 15px;
+                margin: 50px auto 30px auto; /* Adjust margins for smaller screens */
+            }
+            .hamburger-icon {
+                font-size: 2em;
+            }
+        }
+
+        /* ------------ ACTIVE LINK STYLING ------------ */
+        .menu-links a.active {
+            background-color: #64ffda;
+            color: #181818;
         }
     </style>
 </head>
 <body>
     <!-- Hamburger Menu -->
     <div class="hamburger-menu">
-        <span class="hamburger-icon" onclick="toggleMenu()">☰</span>
+        <span class="hamburger-icon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
         <div class="menu-links" id="menu">
             <a href="index.html">Home</a>
             <a href="create-profile.html">Create a Profile</a>
@@ -108,14 +159,35 @@
     <!-- Support Content -->
     <section id="support">
         <h1>Support</h1>
-        <p>Need help? Contact us at batistajean78@gmail.com.</p>
+        <p>Need help? Contact us at <a href="mailto:batistajean78@gmail.com">batistajean78@gmail.com</a>.</p>
     </section>
 
     <script>
+        // Toggle the menu for small screens
         function toggleMenu() {
             const menu = document.getElementById('menu');
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         }
+
+        // Accessibility: Allow toggling menu with keyboard
+        const hamburgerIcon = document.querySelector('.hamburger-icon');
+        hamburgerIcon.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                toggleMenu();
+            }
+        });
+
+        // Active Link Highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split("/").pop();
+            const menuLinks = document.querySelectorAll('.menu-links a');
+            menuLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
     </script>
 </body>
 </html>
