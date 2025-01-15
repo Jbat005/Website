@@ -3,9 +3,13 @@
 <head>
     <title>Smart Invest - Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Link to external CSS (optional if you have a separate styles.css) -->
-    <!-- <link rel="stylesheet" href="styles.css"> -->
+
+    <!-- Example: a Google Font for a modern heading style (optional) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Open+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
 
     <style>
         /* ------------ GLOBAL STYLES ------------ */
@@ -15,13 +19,13 @@
             box-sizing: border-box;
         }
 
+        /* Use the Montserrat / Open Sans fonts if loaded */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #181818;
+            font-family: 'Open Sans', Arial, sans-serif;
+            background: #181818;
             color: #e0e0e0;
             margin: 0;
         }
-
         a {
             text-decoration: none;
             color: #e0e0e0;
@@ -66,16 +70,15 @@
             display: block;
             font-size: 1em;
         }
-
         .menu-links a:hover {
             background-color: #64ffda;
             color: #181818;
         }
 
-        /* Show the menu when it’s toggled on small screens */
+        /* Show the menu toggled on small screens */
         @media (max-width: 768px) {
             .menu-links {
-                display: none; /* Toggled via JS */
+                display: none; /* toggled via JS */
             }
         }
 
@@ -98,50 +101,98 @@
             }
         }
 
-        /* ------------ HOMEPAGE-SPECIFIC STYLES ------------ */
-        #homePage {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: calc(100vh - 60px); /* Adjust height considering the menu */
-            text-align: center;
-            padding: 20px;
-            margin: 0 auto; /* Center the container horizontally */
-        }
-
-        .logo {
-            width: 150px;
-            height: auto;
-            margin-bottom: 20px;
-        }
-
-        .pitch {
-            font-size: 1.2em;
-            max-width: 600px;
-            line-height: 1.6;
-            color: #e0e0e0;
-        }
-
-        @media (max-width: 768px) {
-            #homePage {
-                height: calc(100vh - 50px); /* Adjust height for smaller menus */
-                padding: 15px;
-            }
-            .hamburger-icon {
-                font-size: 2em;
-            }
-        }
-
-        /* ------------ ACTIVE LINK STYLING ------------ */
+        /* ACTIVE LINK STYLING */
         .menu-links a.active {
             background-color: #64ffda;
             color: #181818;
         }
+
+        /* ------------ HERO SECTION STYLES ------------ */
+        #homeHero {
+            /* dark gradient background to emulate the screenshot's style */
+            background: linear-gradient(to bottom, #1d2b3a, #0e1318 80%);
+            min-height: calc(100vh - 60px); /* account for the menu height */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        /* The top heading - big and bold like "Institutional-Grade Options Market Data" */
+        .hero-heading {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+        @media (min-width: 768px) {
+            .hero-heading {
+                font-size: 3rem;
+            }
+        }
+
+        /* Subheading or descriptive text */
+        .hero-subheading {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.15rem;
+            color: #b5b5b5;
+            max-width: 700px;
+            margin: 0 auto 25px auto;
+            line-height: 1.6;
+        }
+
+        /* CTA buttons */
+        .cta-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        .cta-button {
+            background-color: #64ffda; /* your brand highlight */
+            color: #181818;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background 0.2s ease;
+        }
+        .cta-button:hover {
+            background-color: #52dab8;
+        }
+
+        /* An example screenshot or logo container */
+        .hero-image {
+            width: 80%;
+            max-width: 600px;
+            margin: 40px auto 0 auto;
+        }
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Additional spacing for your pitch paragraphs if you want to keep them */
+        .pitch {
+            font-size: 1.1em;
+            max-width: 600px;
+            line-height: 1.6;
+            color: #e0e0e0;
+            margin-top: 30px;
+        }
+
     </style>
 </head>
 <body>
-
     <!-- Hamburger Menu -->
     <div class="hamburger-menu">
         <span class="hamburger-icon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
@@ -154,12 +205,55 @@
         </div>
     </div>
 
-    <!-- Main Content -->
-    <section id="homePage">
-        <img src="logoSI.png" alt="Smart Invest Logo" class="logo">
+    <!-- HERO SECTION -->
+    <section id="homeHero">
+        <!-- LOGO or brand name -->
+        <!-- If you have a new logo, place it here or keep the old one -->
+        <img src="logoSI.png" alt="Smart Invest Logo" style="width: 120px; margin-bottom: 20px;">
+
+        <!-- Large Hero Heading (mimic "Institutional-Grade Options Market Data") -->
+        <h1 class="hero-heading">
+            Smarter Investing, Simplified
+        </h1>
+
+        <!-- Subheading (like the screenshot's descriptive text) -->
+        <p class="hero-subheading">
+            Discover how top investors manage portfolios using real-time data, 
+            Monte Carlo simulations, and advanced analytics. All in one place.
+        </p>
+
+        <!-- CTA Buttons (like "Start Your Free Trial" / "Product Demo") -->
+        <div class="cta-buttons">
+            <button class="cta-button" onclick="location.href='create-profile.html'">
+                Get Started
+            </button>
+            <button class="cta-button" style="background-color: #4d86ff; color: #ffffff;"
+                    onclick="location.href='charts-graphs.html'">
+                View Demo
+            </button>
+        </div>
+
+        <!-- Optional: a sample image or screenshot -->
+        <div class="hero-image"><!-- HTML -->
+            <img src="mr_shy.png" alt="Platform Screenshot" class="demo-img"/>
+        </div>
+            
+            <!-- CSS -->
+        <style>
+        .hero-image img.demo-img {
+            width: 50%;        /* Adjust percentage or use px to control image width */
+            opacity: 0.45;      /* 0.0 is fully transparent; 1.0 is fully opaque */
+            display: block;    /* So it centers nicely with margin: 0 auto if desired */
+            margin: 0 auto;
+        }
+        </style>
+        </div>
+        
+
+        <!-- If you want to keep your pitch paragraphs below -->
         <p class="pitch">
-            <span style="color: #64ffda;">Smart Invest</span> is your all-in-one tool for smarter investing. 
-            Track your portfolio, Monte Carlo simulate your investments, and more.
+            <span style="color: #64ffda;">Smart Invest</span> is your all-in-one tool 
+            for smarter investing. Track your portfolio, Monte Carlo simulate your investments, and more.
         </p>
         <p class="pitch">
             Create an account to get access to automatic portfolio creators, and more.
@@ -193,6 +287,5 @@
             });
         });
     </script>
-
 </body>
 </html>
