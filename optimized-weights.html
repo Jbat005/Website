@@ -277,13 +277,13 @@
       }
 
       try {
-        const response = await fetch('/api/run-monte-carlo', { // Updated to relative URL
+        const response = await fetch('http://localhost:3000/api/run-monte-carlo', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             tickers,
             period: '1y',
-            num_portfolios: 50000, // Consider reducing this number for performance
+            num_portfolios: 50000,
           }),
         });
         if (!response.ok) {
