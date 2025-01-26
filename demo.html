@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Better Invest - Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Open+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+        /* ------------ GLOBAL STYLES (same as home) ------------ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Open Sans', Arial, sans-serif;
+            background: #181818;
+            color: #e0e0e0;
+            margin: 0;
+        }
+        a {
+            text-decoration: none;
+            color: #e0e0e0;
+        }
+
+        /* ------------ HAMBURGER MENU STYLES (same as home) ------------ */
+        .hamburger-menu {
+            position: relative;
+            background-color: #202020;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .hamburger-icon {
+            font-size: 1.5em;
+            cursor: pointer;
+            user-select: none;
+            color: #e0e0e0;
+        }
+        .menu-links {
+            display: none;
+            flex-direction: column;
+            margin-top: 10px;
+            width: 100%;
+            background-color: #202020;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            padding: 10px 0;
+            z-index: 1000;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        .menu-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+            font-size: 1em;
+        }
+        .menu-links a:hover {
+            background-color: #64ffda;
+            color: #181818;
+        }
+        @media (max-width: 768px) {
+            .menu-links {
+                display: none; /* toggled via JS */
+            }
+        }
+        @media (min-width: 769px) {
+            .hamburger-icon {
+                display: none; /* hide icon on larger screens */
+            }
+            .menu-links {
+                display: flex;
+                flex-direction: row;
+                position: static;
+                background-color: transparent;
+                padding: 0;
+                box-shadow: none;
+                border: none;
+            }
+            .menu-links a {
+                padding: 0 15px;
+            }
+        }
+        .menu-links a.active {
+            background-color: #64ffda;
+            color: #181818;
+        }
+
+        /* ------------ DEMO PAGE MAIN SECTION ------------ */
+        .demo-hero {
+            background: linear-gradient(to bottom, #1d2b3a, #0e1318 80%);
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .demo-heading {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+        @media (min-width: 768px) {
+            .demo-heading {
+                font-size: 3rem;
+            }
+        }
+        .demo-subheading {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.15rem;
+            color: #b5b5b5;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ------------ VIDEO DEMO SECTION ------------ */
+        .video-demo-section {
+            background-color: #181818;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Placeholder box for your future video */
+        .video-placeholder {
+            width: 80%;
+            max-width: 800px;
+            height: 450px; /* typical 16:9 ratio placeholder */
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .demo-description {
+            max-width: 800px;
+            text-align: left;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #b5b5b5;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Hamburger Menu (same as home) -->
+    <div class="hamburger-menu">
+        <span class="hamburger-icon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
+        <div class="menu-links" id="menu">
+            <a href="index.html">Home</a>
+            <a href="create-profile.html">Create a Profile</a>
+            <a href="charts-graphs.html">Portfolio Visualizer</a>
+            <a href="optimized-weights.html">Monte Carlo</a>
+            <a href="demo.html" class="active">Demo</a>
+            <a href="support.html">Support</a>
+        </div>
+    </div>
+
+    <!-- MAIN DEMO SECTION -->
+    <section class="demo-hero">
+        <h1 class="demo-heading">Product Demo</h1>
+        <p class="demo-subheading">
+            Explore the power of Better Invest through our interactive demo. 
+            Below you’ll find a walkthrough video showcasing core features, 
+            real-time data analytics, and actionable insights in action.
+        </p>
+    </section>
+
+    <!-- VIDEO DEMO PLACEHOLDER SECTION -->
+    <section class="video-demo-section">
+        <div class="video-placeholder">
+            <!-- Here is where you'll embed your actual video (e.g., YouTube iframe or HTML5 video) -->
+            Demo Video.
+        </div>
+        <p class="demo-description">
+            In this demonstration, you’ll see how to navigate our platform, interpret Monte Carlo 
+            results, set alerts for buy/sell signals, and even automate your strategy with our 
+            bot-trading algorithms. Once you’re ready, sign up to experience these features firsthand.
+        </p>
+    </section>
+
+    <script>
+        // Toggle the menu for small screens
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Accessibility: Allow toggling menu with keyboard
+        const hamburgerIcon = document.querySelector('.hamburger-icon');
+        hamburgerIcon.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                toggleMenu();
+            }
+        });
+
+        // Active Link Highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split("/").pop();
+            const menuLinks = document.querySelectorAll('.menu-links a');
+            menuLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
