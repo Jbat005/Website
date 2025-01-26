@@ -1,26 +1,35 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Smart Invest - create Profile</title>
+    <title>Better Invest - Create Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- External CSS can be included if needed -->
-    <!-- <link rel="stylesheet" href="styles.css"> -->
+    
+    <!-- Google Fonts: Montserrat & Open Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Open+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
     <style>
-        /* Basic Reset & Body Style */
+        /* ------------ GLOBAL STYLES ------------ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
-            font-family: Arial, sans-serif;
-            background-color: #181818;
+            font-family: 'Open Sans', Arial, sans-serif;
+            background: #181818;
             color: #e0e0e0;
             margin: 0;
         }
+        a {
+            text-decoration: none;
+            color: #e0e0e0;
+        }
 
-        /* Hamburger Menu */
+        /* ------------ HAMBURGER MENU STYLES ------------ */
         .hamburger-menu {
             position: relative;
             background-color: #202020;
@@ -29,13 +38,12 @@
             align-items: center;
             justify-content: space-between;
         }
-
         .hamburger-icon {
             font-size: 1.5em;
             cursor: pointer;
             user-select: none;
+            color: #e0e0e0;
         }
-
         .menu-links {
             display: none;
             flex-direction: column;
@@ -47,24 +55,25 @@
             left: 0;
             padding: 10px 0;
             z-index: 1000;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
-
         .menu-links a {
             color: #e0e0e0;
             text-decoration: none;
             padding: 10px 20px;
             display: block;
+            font-size: 1em;
         }
-
         .menu-links a:hover {
             background-color: #64ffda;
             color: #181818;
         }
 
-        /* Show the menu when it’s toggled on small screens */
+        /* Show the menu toggled on small screens */
         @media (max-width: 768px) {
             .menu-links {
-                display: none; /* Toggled via JS */
+                display: none; /* toggled via JS */
             }
         }
 
@@ -79,28 +88,46 @@
                 position: static;
                 background-color: transparent;
                 padding: 0;
+                box-shadow: none;
+                border: none;
             }
             .menu-links a {
                 padding: 0 15px;
             }
         }
 
-        /* Section Styling */
+        /* ACTIVE LINK STYLING */
+        .menu-links a.active {
+            background-color: #64ffda;
+            color: #181818;
+        }
+
+        /* ------------ CREATE PROFILE SECTION ------------ */
         #createProfileSection {
+            /* Using a similar gradient style to unify design */
+            background: linear-gradient(to bottom, #1d2b3a, #0e1318 80%);
+            min-height: calc(100vh - 50px); /* account for the menu height */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            min-height: 100vh; 
             text-align: center;
-            padding: 20px;
+            padding: 40px 20px;
         }
         #createProfileSection h1 {
-            font-size: 2em;
-            margin: 20px 0;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 30px;
+        }
+        @media (min-width: 768px) {
+            #createProfileSection h1 {
+                font-size: 3rem;
+            }
         }
 
-        /* Container for the forms */
+        /* Authentication Container */
         .auth-container {
             max-width: 400px;
             width: 100%;
@@ -111,14 +138,17 @@
             text-align: left;
         }
         .auth-container h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
             margin-bottom: 10px;
+            color: #64ffda;
         }
         .auth-container label {
             display: block;
             margin: 10px 0 5px;
+            font-weight: 600;
         }
-
-        /* Inputs */
         .auth-container input[type="text"],
         .auth-container input[type="password"] {
             width: 100%;
@@ -130,8 +160,6 @@
             background-color: #303030;
             color: #e0e0e0;
         }
-
-        /* Buttons */
         .auth-container button {
             padding: 10px 20px;
             background-color: #64ffda;
@@ -140,23 +168,16 @@
             border-radius: 4px;
             cursor: pointer;
             margin-top: 10px;
+            font-weight: 600;
         }
-
         .auth-container button:hover {
             background-color: #52dab8;
         }
 
-        /* Message & hidden elements */
         .message {
             margin-top: 10px;
             font-weight: bold;
-            color: #ff7373; /* red error color */
         }
-        .hidden {
-            display: none;
-        }
-
-        /* Logged in container styling */
         .logged-in-container {
             max-width: 400px;
             width: 100%;
@@ -167,32 +188,38 @@
             text-align: left;
         }
         .logged-in-container h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: #64ffda;
             margin-bottom: 10px;
+        }
+        .hidden {
+            display: none;
         }
 
         /* Responsive adjustments */
         @media (max-width: 600px) {
             #createProfileSection {
-                padding: 10px;
+                padding: 20px 10px;
             }
         }
     </style>
 </head>
 <body>
-
     <!-- Hamburger Menu -->
     <div class="hamburger-menu">
-        <span class="hamburger-icon" onclick="toggleMenu()">☰</span>
+        <span class="hamburger-icon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
         <div class="menu-links" id="menu">
             <a href="index.html">Home</a>
-            <a href="create-profile.html">Create a Profile</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="create-profile.html" class="active">Create a Profile</a>
             <a href="charts-graphs.html">Portfolio Visualizer</a>
             <a href="optimized-weights.html">Monte Carlo</a>
+            <a href="demo.html">Demo</a>
             <a href="support.html">Support</a>
         </div>
     </div>
 
-    <!-- Create Profile & Auth Section -->
+    <!-- CREATE PROFILE & AUTH SECTION -->
     <section id="createProfileSection">
         <h1>Create Your Profile</h1>
 
@@ -234,12 +261,32 @@
         // Toggle the menu for small screens
         function toggleMenu() {
             const menu = document.getElementById('menu');
-            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
         }
 
-        // ---------------
+        // Accessibility: allow toggling menu with keyboard
+        const hamburgerIcon = document.querySelector('.hamburger-icon');
+        hamburgerIcon.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                toggleMenu();
+            }
+        });
+
+        // Highlight the active menu link on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split("/").pop();
+            const menuLinks = document.querySelectorAll('.menu-links a');
+            menuLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // -----------------
         // AUTH LOGIC
-        // ---------------
+        // -----------------
         const regUserIdInput     = document.getElementById("regUserId");
         const regPasswordInput   = document.getElementById("regPassword");
         const btnRegister        = document.getElementById("btnRegister");
@@ -265,7 +312,7 @@
 
         // Register new user
         btnRegister.addEventListener("click", () => {
-            const userId = regUserIdInput.value.trim();
+            const userId   = regUserIdInput.value.trim();
             const password = regPasswordInput.value.trim();
 
             if (!userId || !password) {
@@ -307,7 +354,7 @@
 
         // Login user
         btnLogin.addEventListener("click", () => {
-            const userId = loginUserIdInput.value.trim();
+            const userId   = loginUserIdInput.value.trim();
             const password = loginPasswordInput.value.trim();
 
             if (!userId || !password) {
@@ -332,14 +379,11 @@
             // Check credentials
             if (users[userId] && users[userId] === password) {
                 localStorage.setItem("loggedInUser", userId);
-
                 loginMessage.textContent = "Login successful!";
                 loginMessage.style.color = "#64ffda";
                 loggedInUserSpan.textContent = userId;
 
                 showElement(loggedInContainer);
-
-                // Hide registration and login forms
                 hideElement(document.getElementById("registerContainer"));
                 hideElement(document.getElementById("loginContainer"));
 

@@ -4,7 +4,7 @@
     <title>Better Invest - Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Google Fonts -->
+    <!-- Example: a Google Font for a modern heading style (optional) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Open+Sans:wght@400;600&display=swap"
@@ -19,7 +19,6 @@
             box-sizing: border-box;
         }
 
-        /* Use the Montserrat / Open Sans fonts if loaded */
         body {
             font-family: 'Open Sans', Arial, sans-serif;
             background: #181818;
@@ -40,14 +39,12 @@
             align-items: center;
             justify-content: space-between;
         }
-
         .hamburger-icon {
             font-size: 1.5em;
             cursor: pointer;
             user-select: none;
             color: #e0e0e0;
         }
-
         .menu-links {
             display: none;
             flex-direction: column;
@@ -62,7 +59,6 @@
             border-radius: 0 0 8px 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
-
         .menu-links a {
             color: #e0e0e0;
             text-decoration: none;
@@ -101,7 +97,6 @@
             }
         }
 
-        /* ACTIVE LINK STYLING */
         .menu-links a.active {
             background-color: #64ffda;
             color: #181818;
@@ -117,7 +112,6 @@
             padding: 30px 20px;
             text-align: center;
         }
-
         .hero-heading {
             font-family: 'Montserrat', sans-serif;
             font-weight: 900;
@@ -131,7 +125,6 @@
                 font-size: 3rem;
             }
         }
-
         .hero-subheading {
             font-family: 'Open Sans', sans-serif;
             font-size: 1.15rem;
@@ -140,7 +133,6 @@
             margin: 0 auto 25px auto;
             line-height: 1.6;
         }
-
         .cta-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -163,7 +155,6 @@
         .cta-button:hover {
             background-color: #52dab8;
         }
-
         .hero-image {
             width: 80%;
             max-width: 600px;
@@ -174,16 +165,6 @@
             height: auto;
             display: block;
         }
-
-        .pitch {
-            font-size: 1.1em;
-            max-width: 600px;
-            line-height: 1.6;
-            color: #e0e0e0;
-            margin-top: 30px;
-        }
-
-        /* Specific styling for the .demo-img within hero-image */
         .hero-image img.demo-img {
             width: 50%;
             opacity: 0.45;
@@ -199,7 +180,6 @@
             padding: 60px 20px;
             color: #e0e0e0;
         }
-
         .features-container {
             display: flex;
             flex-wrap: wrap;
@@ -209,7 +189,6 @@
             margin: 0 auto;
             gap: 40px;
         }
-
         .phone-mockup-wrapper {
             position: relative;
             flex: 1 1 350px;
@@ -220,7 +199,6 @@
             max-width: 450px;
             margin: 0 auto;
         }
-
         .circle-background {
             position: absolute;
             width: 400px;
@@ -229,7 +207,6 @@
             border-radius: 50%;
             z-index: 0;
         }
-
         .phone-mockup {
             position: relative;
             z-index: 1;
@@ -237,13 +214,11 @@
             max-width: 300px;
             object-fit: contain;
         }
-
         .features-text {
             flex: 1 1 400px;
             max-width: 600px;
             margin: 0 auto;
         }
-
         .features-heading {
             font-family: 'Montserrat', sans-serif;
             font-weight: 900;
@@ -251,38 +226,32 @@
             margin-bottom: 10px;
             color: #ffffff;
         }
-
         .features-subheading {
             font-size: 1rem;
             color: #b5b5b5;
             margin-bottom: 30px;
             line-height: 1.5;
         }
-
         .feature-item {
             display: flex;
             align-items: flex-start;
             margin-bottom: 20px;
         }
-
         .feature-icon {
             font-size: 2rem;
             margin-right: 15px;
         }
-
         .feature-info h3 {
             font-weight: 700;
             font-size: 1.2rem;
             margin-bottom: 5px;
-            color: #64ffda;
+            color: #64ffda; /* accent color */
         }
-
         .feature-info p {
             font-size: 0.95rem;
             line-height: 1.4;
             color: #e0e0e0;
         }
-
         @media (max-width: 768px) {
             .features-container {
                 flex-direction: column;
@@ -293,7 +262,6 @@
                 height: 300px;
             }
         }
-
     </style>
 </head>
 <body>
@@ -302,6 +270,7 @@
         <span class="hamburger-icon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
         <div class="menu-links" id="menu">
             <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
             <a href="create-profile.html">Create a Profile</a>
             <a href="charts-graphs.html">Portfolio Visualizer</a>
             <a href="optimized-weights.html">Monte Carlo</a>
@@ -312,26 +281,21 @@
 
     <!-- HERO SECTION -->
     <section id="homeHero">
-        <!-- LOGO or brand name -->
         <img src="logoSI.png" alt="Smart Invest Logo" style="width: 120px; margin-bottom: 20px;">
 
-        <!-- Large Hero Heading -->
         <h1 class="hero-heading">
             Better Investing, Simplified
         </h1>
 
-        <!-- Subheading -->
         <p class="hero-subheading">
             Discover how top investors manage portfolios using real-time data, 
             Monte Carlo simulations, and advanced analytics. All in one place.
         </p>
 
-        <!-- CTA Buttons -->
         <div class="cta-buttons">
             <button class="cta-button" onclick="location.href='create-profile.html'">
                 Get Started
             </button>
-            <!-- Updated button to go to demo.html -->
             <button class="cta-button" style="background-color: #4d86ff; color: #ffffff;"
                     onclick="location.href='demo.html'">
                 View Demo
@@ -345,8 +309,6 @@
     ========================== -->
     <section class="features-section">
       <div class="features-container">
-
-        <!-- Phone Mockup + Circular Background -->
         <div class="phone-mockup-wrapper">
           <div class="circle-background"></div>
           <img 
@@ -355,15 +317,12 @@
             alt="App on Mobile Phone" 
           />
         </div>
-
-        <!-- Key Features Text / Icons -->
         <div class="features-text">
           <h2 class="features-heading">Key Features <span>🔑</span></h2>
           <p class="features-subheading">
             Unlock powerful tools to boost your investing potential—here’s how:
           </p>
 
-          <!-- Feature #1: Monte Carlo Simulations -->
           <div class="feature-item">
             <div class="feature-icon">📈</div>
             <div class="feature-info">
@@ -377,7 +336,6 @@
             </div>
           </div>
 
-          <!-- Feature #2: Buy & Sell Notifications -->
           <div class="feature-item">
             <div class="feature-icon">🚀</div>
             <div class="feature-info">
@@ -391,7 +349,6 @@
             </div>
           </div>
 
-          <!-- Feature #3: Technical Analysis & Bot Trading -->
           <div class="feature-item">
             <div class="feature-icon">🤖</div>
             <div class="feature-info">
@@ -405,18 +362,15 @@
             </div>
           </div>
         </div>
-
       </div>
     </section>
 
     <script>
-        // Toggle the menu for small screens
         function toggleMenu() {
             const menu = document.getElementById('menu');
-            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
         }
 
-        // Accessibility: Allow toggling menu with keyboard
         const hamburgerIcon = document.querySelector('.hamburger-icon');
         hamburgerIcon.addEventListener('keydown', function(event) {
             if (event.key === 'Enter' || event.key === ' ') {
@@ -425,7 +379,6 @@
             }
         });
 
-        // Active Link Highlighting
         document.addEventListener('DOMContentLoaded', function() {
             const currentPage = window.location.pathname.split("/").pop();
             const menuLinks = document.querySelectorAll('.menu-links a');

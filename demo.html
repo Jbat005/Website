@@ -4,7 +4,7 @@
     <title>Better Invest - Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Montserrat & Open Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Open+Sans:wght@400;600&display=swap"
@@ -12,7 +12,7 @@
     />
 
     <style>
-        /* ------------ GLOBAL STYLES (same as home) ------------ */
+        /* ------------ GLOBAL STYLES ------------ */
         * {
             margin: 0;
             padding: 0;
@@ -29,7 +29,7 @@
             color: #e0e0e0;
         }
 
-        /* ------------ HAMBURGER MENU STYLES (same as home) ------------ */
+        /* ------------ HAMBURGER MENU STYLES (matching home page) ------------ */
         .hamburger-menu {
             position: relative;
             background-color: #202020;
@@ -91,16 +91,21 @@
                 padding: 0 15px;
             }
         }
+        /* Highlight active link */
         .menu-links a.active {
             background-color: #64ffda;
             color: #181818;
         }
 
-        /* ------------ DEMO PAGE MAIN SECTION ------------ */
-        .demo-hero {
+        /* ------------ DEMO HERO SECTION ------------ */
+        #demoHero {
             background: linear-gradient(to bottom, #1d2b3a, #0e1318 80%);
-            padding: 60px 20px;
+            /* Removed min-height and justify-content to reduce vertical space */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
+            padding: 30px 20px;
         }
         .demo-heading {
             font-family: 'Montserrat', sans-serif;
@@ -120,7 +125,7 @@
             font-size: 1.15rem;
             color: #b5b5b5;
             max-width: 700px;
-            margin: 0 auto;
+            margin: 0 auto 25px auto;
             line-height: 1.6;
         }
 
@@ -131,9 +136,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            text-align: center;
         }
-
-        /* Placeholder box for your future video */
         .video-placeholder {
             width: 80%;
             max-width: 800px;
@@ -147,23 +151,22 @@
             border-radius: 8px;
             margin-bottom: 20px;
         }
-
         .demo-description {
             max-width: 800px;
-            text-align: left;
             font-size: 1rem;
             line-height: 1.6;
             color: #b5b5b5;
+            text-align: left;
         }
-
     </style>
 </head>
 <body>
-    <!-- Hamburger Menu (same as home) -->
+    <!-- Hamburger Menu -->
     <div class="hamburger-menu">
         <span class="hamburger-icon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
         <div class="menu-links" id="menu">
             <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
             <a href="create-profile.html">Create a Profile</a>
             <a href="charts-graphs.html">Portfolio Visualizer</a>
             <a href="optimized-weights.html">Monte Carlo</a>
@@ -172,8 +175,8 @@
         </div>
     </div>
 
-    <!-- MAIN DEMO SECTION -->
-    <section class="demo-hero">
+    <!-- DEMO HERO SECTION -->
+    <section id="demoHero">
         <h1 class="demo-heading">Product Demo</h1>
         <p class="demo-subheading">
             Explore the power of Better Invest through our interactive demo. 
@@ -182,10 +185,10 @@
         </p>
     </section>
 
-    <!-- VIDEO DEMO PLACEHOLDER SECTION -->
+    <!-- VIDEO DEMO SECTION -->
     <section class="video-demo-section">
         <div class="video-placeholder">
-            <!-- Here is where you'll embed your actual video (e.g., YouTube iframe or HTML5 video) -->
+            <!-- Embed your actual video here (e.g., YouTube iframe or HTML5 video) -->
             Demo Video.
         </div>
         <p class="demo-description">
@@ -202,7 +205,7 @@
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         }
 
-        // Accessibility: Allow toggling menu with keyboard
+        // Accessibility: toggle menu with keyboard
         const hamburgerIcon = document.querySelector('.hamburger-icon');
         hamburgerIcon.addEventListener('keydown', function(event) {
             if (event.key === 'Enter' || event.key === ' ') {
