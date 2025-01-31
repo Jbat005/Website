@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Better Invest - Portfolio Visualizer</title>
+    <title>Better Invest - Portfolio Management</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Include Chart.js -->
+    <!-- Include Chart.js (if needed, but not used on this page) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Google Fonts: Montserrat & Open Sans -->
@@ -105,14 +105,14 @@
         }
 
         /* ------------ MAIN SECTION STYLES ------------ */
-        #chartsGraphs {
+        #portfolioManagement {
             /* Use a gradient background like your other pages */
             background: linear-gradient(to bottom, #1d2b3a, #0e1318 80%);
             min-height: calc(100vh - 50px); /* account for the menu height */
             padding: 40px 20px;
             text-align: center;
         }
-        #chartsGraphs h1 {
+        #portfolioManagement h1 {
             font-family: 'Montserrat', sans-serif;
             font-weight: 900;
             font-size: 2rem;
@@ -120,7 +120,7 @@
             margin-bottom: 30px;
         }
         @media (min-width: 768px) {
-            #chartsGraphs h1 {
+            #portfolioManagement h1 {
                 font-size: 3rem;
             }
         }
@@ -129,38 +129,6 @@
         button, .stock-button, .portfolio-option {
             font-family: 'Open Sans', sans-serif;
             font-weight: 600;
-        }
-
-        /* Container for the main chart and controls */
-        #graphContainer {
-            width: 90%;
-            max-width: 1000px; 
-            margin: 20px auto;
-        }
-        #performanceGraph {
-            width: 100%;
-            height: 500px;
-            background-color: #202020; /* optional to highlight chart area */
-            border-radius: 8px;
-            padding: 10px;
-        }
-        @media (max-width: 600px) {
-            #performanceGraph {
-                height: 300px;
-            }
-        }
-
-        /* Graph Controls */
-        #graphControls {
-            margin: 20px 0;
-            text-align: center;
-        }
-        #graphControls select {
-            padding: 8px;
-            background-color: #202020;
-            color: #e0e0e0;
-            border-radius: 4px;
-            border: 1px solid #444;
         }
 
         /* Stock Grid for selecting SP500 stocks */
@@ -273,7 +241,7 @@
             border-radius: 4px;
         }
 
-        /* Portfolio Buttons for Chart Comparison */
+        /* Portfolio Buttons for Chart Comparison (not used on this page) */
         .portfolio-option {
             padding: 10px 15px;
             font-size: 1em;
@@ -292,6 +260,22 @@
         .hidden {
             display: none;
         }
+
+        /* Reset Button (not used on this page) */
+        .reset-button {
+            padding: 8px 15px;
+            background-color: #ff6464;
+            color: #181818;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .reset-button:hover {
+            background-color: #e60000;
+        }
     </style>
 </head>
 
@@ -303,17 +287,19 @@
             <a href="index.html">Home</a>
             <a href="dashboard.html">Dashboard</a>
             <a href="create-profile.html">Create a Profile</a>
-            <a href="momentum-factors.html">Momentum Factors</a>
-            <a href="charts-graphs.html" class="active">Portfolio Visualizer</a>
-            <a href="optimized-weights.html">Monte Carlo</a>
+            <a href="momentum-factors.html">RoboTrader</a>
+            <a href="portfolio.html" class="active">Portfolio Management</a>
+            <a href="optimized-weights.html">Simulated Strategies</a>
             <a href="demo.html">Demo</a>
             <a href="support.html">Support</a>
+            <a href="create-profile.html">Create a Profile</a>
+            
         </div>
     </div>
 
-    <!-- MAIN SECTION: Create & View Portfolio, Graph -->
-    <section id="chartsGraphs">
-        <h1>Create and View Your Portfolio</h1>
+    <!-- MAIN SECTION: Create & View Portfolio -->
+    <section id="portfolioManagement">
+        <h1>Create and Manage Your Portfolio</h1>
 
         <div id="stockSelection">
             <p>Select up to 10 stocks from the SP500:</p>
@@ -332,24 +318,6 @@
         <div id="savedPortfolios">
             <h2>Saved Portfolios</h2>
             <!-- Portfolios appended here -->
-        </div>
-
-        <div id="graphContainer">
-            <canvas id="performanceGraph"></canvas>
-        </div>
-
-        <div id="graphControls">
-            <label for="timePeriod">Select Time Period:</label>
-            <select id="timePeriod">
-                <option value="1m">1 Month</option>
-                <option value="3m">3 Months</option>
-                <option value="6m">6 Months</option>
-                <option value="1y">1 Year</option>
-            </select>
-            <div id="portfolioOptions">
-                <h3>Select Portfolios to Compare:</h3>
-                <!-- Portfolio toggle buttons will be added here -->
-            </div>
         </div>
     </section>
 
@@ -380,19 +348,13 @@
             });
         });
 
-        // ------------------------------
-        // The rest of your Chart.js logic
-        // (unchanged from original code)
-        // ------------------------------
+        // Portfolio Management JavaScript
         document.addEventListener("DOMContentLoaded", () => {
             const stockGrid = document.getElementById("stockGrid");
             const createPortfolioButton = document.getElementById("createPortfolio");
             const savedPortfoliosDiv = document.getElementById("savedPortfolios");
             const portfolioWeightsDiv = document.getElementById("portfolioWeights");
-            const portfolioOptionsDiv = document.getElementById("portfolioOptions");
             const weightValidationMessage = document.getElementById("weightValidationMessage");
-            const ctx = document.getElementById("performanceGraph").getContext("2d");
-            const timePeriodSelector = document.getElementById("timePeriod");
 
             const sp500Stocks = ["AAPL", "MSFT", "GOOGL", "AMZN", "TSLA", "META", "NVDA", "INTC", "AMD", "IBM", "NFLX", "QCOM", "EA", "UBER", "ABNB", "COIN"];
             // A set of selected tickers for the "currently building" portfolio
@@ -401,25 +363,15 @@
             const stockWeights = {};
             // The list of all saved portfolios
             let activePortfolios = [];
-            // Portfolios chosen to display on the chart
-            let displayedPortfolios = [];
 
-            // Initialize the Chart.js line chart
-            let performanceGraph = new Chart(ctx, {
-                type: "line",
-                data: {
-                    labels: [],
-                    datasets: [],
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { title: { display: true, text: "Date" } },
-                        y: { title: { display: true, text: "Performance (%)" } },
-                    },
-                },
-            });
+            // Load Portfolios on Page Load
+            function initializePage() {
+                const currentUser = localStorage.getItem("loggedInUser");
+                if (currentUser) {
+                    loadPortfolios();
+                    renderSavedPortfolios();
+                }
+            }
 
             // Create stock selection buttons
             sp500Stocks.forEach((ticker) => {
@@ -540,7 +492,6 @@
                 activePortfolios.push(portfolio);
                 savePortfolios();
                 renderSavedPortfolios();
-                renderPortfolioOptions();
             });
 
             function savePortfolios() {
@@ -594,7 +545,6 @@
                             activePortfolios.splice(index, 1);
                             savePortfolios();
                             renderSavedPortfolios();
-                            renderPortfolioOptions();
                         }
                     });
                     // EDIT
@@ -652,70 +602,6 @@
                     saveInlineEdit(index);
                 });
                 portfolioDiv.insertBefore(saveButton, editButton.nextSibling);
-                highlightPortfolioStocksForEdit(index);
-            }
-
-            function highlightPortfolioStocksForEdit(index) {
-                const portfolio = activePortfolios[index];
-                document.querySelectorAll(".stock-button").forEach((btn) => {
-                    btn.classList.remove("selected-in-edit");
-                    btn.onclick = null;
-                });
-                document.querySelectorAll(".stock-button").forEach((btn) => {
-                    const ticker = btn.textContent;
-                    if (portfolio.stocks.includes(ticker)) {
-                        btn.classList.add("selected-in-edit");
-                    }
-                    btn.addEventListener("click", function toggleStockInEdit() {
-                        if (portfolio.stocks.includes(ticker)) {
-                            portfolio.stocks = portfolio.stocks.filter((s) => s !== ticker);
-                            portfolio.weights[ticker] = 0;
-                            btn.classList.remove("selected-in-edit");
-                        } else {
-                            if (portfolio.stocks.length < 10) {
-                                portfolio.stocks.push(ticker);
-                                portfolio.weights[ticker] = 0;
-                                btn.classList.add("selected-in-edit");
-                            } else {
-                                alert("A portfolio can have up to 10 stocks.");
-                            }
-                        }
-                        recalcEqualStockWeightsForEdit(index);
-                        renderWeightInputsForEdit(index);
-                    });
-                });
-            }
-
-            function recalcEqualStockWeightsForEdit(index) {
-                const portfolio = activePortfolios[index];
-                if (portfolio.stocks.length === 0) return;
-                const equalWeight = 100 / portfolio.stocks.length;
-                portfolio.stocks.forEach((ticker) => {
-                    portfolio.weights[ticker] = equalWeight;
-                });
-            }
-
-            function renderWeightInputsForEdit(index) {
-                const portfolio = activePortfolios[index];
-                const portfolioDiv = savedPortfoliosDiv.querySelector(`.portfolio[data-index="${index}"]`);
-                const ul = portfolioDiv.querySelector(".stock-weight-list");
-                ul.innerHTML = "";
-                portfolio.stocks.forEach((stock) => {
-                    const li = document.createElement("li");
-                    li.innerHTML = `
-                        ${stock}: 
-                        <input 
-                            type="number" 
-                            class="weight-input-inline" 
-                            data-stock="${stock}" 
-                            value="${portfolio.weights[stock].toFixed(2)}" 
-                            min="0" 
-                            max="100" 
-                            step="0.01"
-                        /> %
-                    `;
-                    ul.appendChild(li);
-                });
             }
 
             function saveInlineEdit(index) {
@@ -756,121 +642,6 @@
 
                 savePortfolios();
                 renderSavedPortfolios();
-                renderPortfolioOptions();
-                resetStockGridListeners();
-            }
-
-            function resetStockGridListeners() {
-                document.querySelectorAll(".stock-button").forEach((btn) => {
-                    const ticker = btn.textContent;
-                    btn.onclick = () => {
-                        if (selectedStocks.has(ticker)) {
-                            selectedStocks.delete(ticker);
-                            btn.classList.remove("selected");
-                        } else if (selectedStocks.size < 10) {
-                            selectedStocks.add(ticker);
-                            btn.classList.add("selected");
-                        } else {
-                            alert("You can select up to 10 stocks.");
-                        }
-                        recalcEqualStockWeights();
-                        renderWeightInputs();
-                    };
-                });
-            }
-
-            function renderPortfolioOptions() {
-                portfolioOptionsDiv.innerHTML = "<h3>Select Portfolios to Compare:</h3>";
-                activePortfolios.forEach((portfolio) => {
-                    const button = document.createElement("button");
-                    button.textContent = portfolio.name;
-                    button.className = "portfolio-option";
-                    portfolioOptionsDiv.appendChild(button);
-
-                    button.addEventListener("click", () => {
-                        if (displayedPortfolios.includes(portfolio)) {
-                            displayedPortfolios = displayedPortfolios.filter((p) => p !== portfolio);
-                            button.classList.remove("selected");
-                        } else {
-                            displayedPortfolios.push(portfolio);
-                            button.classList.add("selected");
-                        }
-                        updateGraphWithPortfolios();
-                    });
-                });
-            }
-
-            async function fetchStockData(ticker) {
-                try {
-                    const response = await fetch(`https://my-vercel-api-lx6f.vercel.app/api/stocks/${ticker}`);
-                    if (!response.ok) throw new Error(`Error fetching stock data for ${ticker}`);
-                    return await response.json();
-                } catch (error) {
-                    console.error(error);
-                    return null;
-                }
-            }
-
-            async function updateGraphWithPortfolios() {
-                performanceGraph.data.labels = [];
-                performanceGraph.data.datasets = [];
-                const periodValue = timePeriodSelector.value;
-                const today = new Date();
-                const periodStart = new Date(today);
-
-                switch (periodValue) {
-                    case "1m":
-                        periodStart.setMonth(today.getMonth() - 1);
-                        break;
-                    case "3m":
-                        periodStart.setMonth(today.getMonth() - 3);
-                        break;
-                    case "6m":
-                        periodStart.setMonth(today.getMonth() - 6);
-                        break;
-                    case "1y":
-                        periodStart.setFullYear(today.getFullYear() - 1);
-                        break;
-                }
-
-                const dateLabels = new Set();
-                for (const portfolio of displayedPortfolios) {
-                    const portfolioReturns = {};
-                    for (const ticker of portfolio.stocks) {
-                        const data = await fetchStockData(ticker);
-                        if (data && data.prices) {
-                            data.prices.forEach((price) => {
-                                const date = new Date(price.date).toLocaleDateString();
-                                if (new Date(price.date) >= periodStart) {
-                                    dateLabels.add(date);
-                                    portfolioReturns[date] =
-                                        (portfolioReturns[date] || 0) +
-                                        (price.close * portfolio.weights[ticker]) / 100;
-                                }
-                            });
-                        }
-                    }
-                    performanceGraph.data.datasets.push({
-                        label: portfolio.name,
-                        data: Array.from(dateLabels)
-                            .sort((a, b) => new Date(a) - new Date(b))
-                            .map((date) => portfolioReturns[date] || 0),
-                        borderColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
-                        backgroundColor: "rgba(100, 255, 218, 0.2)",
-                        fill: true,
-                    });
-                }
-                performanceGraph.data.labels = Array.from(dateLabels).sort((a, b) => new Date(a) - new Date(b));
-                performanceGraph.update();
-            }
-
-            function initializePage() {
-                const currentUser = localStorage.getItem("loggedInUser");
-                if (currentUser) {
-                    loadPortfolios();
-                    renderSavedPortfolios();
-                    renderPortfolioOptions();
-                }
             }
 
             initializePage();

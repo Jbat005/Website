@@ -4,7 +4,10 @@
     <title>Better Invest - Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Fonts -->
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Fonts: Montserrat & Open Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Open+Sans:wght@400;600&display=swap"
@@ -12,7 +15,7 @@
     />
 
     <style>
-        /* ------------ GLOBAL STYLES (same as index) ------------ */
+        /* ------------ GLOBAL STYLES ------------ */
         * {
             margin: 0;
             padding: 0;
@@ -29,7 +32,7 @@
             color: #e0e0e0;
         }
 
-        /* ------------ HAMBURGER MENU STYLES (same as index) ------------ */
+        /* ------------ HAMBURGER MENU STYLES ------------ */
         .hamburger-menu {
             position: relative;
             background-color: #202020;
@@ -69,14 +72,18 @@
             background-color: #64ffda;
             color: #181818;
         }
+
+        /* Show the menu toggled on small screens */
         @media (max-width: 768px) {
             .menu-links {
                 display: none; /* toggled via JS */
             }
         }
+
+        /* Desktop: show menu links inline, hide hamburger icon */
         @media (min-width: 769px) {
             .hamburger-icon {
-                display: none;
+                display: none; /* hide icon on larger screens */
             }
             .menu-links {
                 display: flex;
@@ -91,6 +98,8 @@
                 padding: 0 15px;
             }
         }
+
+        /* ACTIVE LINK STYLING */
         .menu-links a.active {
             background-color: #64ffda;
             color: #181818;
@@ -123,7 +132,26 @@
             padding: 30px 20px;
         }
 
-        /* Example: Cards/Boxes for at-a-glance info */
+        /* Portfolio Selection */
+        #portfolioSelection {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        #portfolioSelection label {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+        #portfolioSelection select {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #444;
+            background-color: #202020;
+            color: #e0e0e0;
+            font-size: 1em;
+        }
+
+        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -151,8 +179,8 @@
             color: #b5b5b5;
         }
 
-        /* Example: Recent Transactions */
-        .transactions-section {
+        /* Performance / Graph Section */
+        .performance-section {
             margin-bottom: 40px;
         }
         .section-heading {
@@ -161,6 +189,79 @@
             font-size: 1.5rem;
             margin-bottom: 15px;
             color: #ffffff;
+        }
+
+        /* Container for the main chart and controls */
+        #graphContainer {
+            width: 90%;
+            max-width: 1000px; 
+            margin: 20px auto;
+        }
+        #performanceGraph {
+            width: 100%;
+            height: 500px;
+            background-color: #202020; /* optional to highlight chart area */
+            border-radius: 8px;
+            padding: 10px;
+        }
+        @media (max-width: 600px) {
+            #performanceGraph {
+                height: 300px;
+            }
+        }
+
+        /* Graph Controls */
+        #graphControls {
+            margin: 20px 0;
+            text-align: center;
+        }
+        #graphControls select {
+            padding: 8px;
+            background-color: #202020;
+            color: #e0e0e0;
+            border-radius: 4px;
+            border: 1px solid #444;
+            margin-left: 10px;
+        }
+
+        /* Portfolio Buttons for Chart Comparison */
+        .portfolio-option {
+            padding: 10px 15px;
+            font-size: 1em;
+            border-radius: 8px;
+            margin: 5px;
+            background-color: #202020;
+            color: #e0e0e0;
+            border: 1px solid #e0e0e0;
+            cursor: pointer;
+        }
+        .portfolio-option.selected {
+            background-color: #64ffda;
+            color: #181818;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .reset-button {
+            padding: 8px 15px;
+            background-color: #ff6464;
+            color: #181818;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .reset-button:hover {
+            background-color: #e60000;
+        }
+
+        /* Recent Transactions */
+        .transactions-section {
+            margin-bottom: 40px;
         }
         table {
             width: 100%;
@@ -182,23 +283,7 @@
             background-color: #2a2a2a;
         }
 
-        /* Example: Performance/Chart Placeholder */
-        .performance-section {
-            margin-bottom: 40px;
-        }
-        .chart-placeholder {
-            width: 100%;
-            height: 350px;
-            background-color: #333;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-            font-size: 1.2rem;
-        }
-
-        /* Example: Notifications/Alerts */
+        /* Notifications/Alerts */
         .notifications-section .notification-item {
             background-color: #202020;
             border-radius: 8px;
@@ -218,12 +303,12 @@
         <div class="menu-links" id="menu">
             <a href="index.html">Home</a>
             <a href="dashboard.html" class="active">Dashboard</a>
-            <a href="create-profile.html">Create a Profile</a>
-            <a href="momentum-factors.html">Momentum Factors</a>
-            <a href="charts-graphs.html">Portfolio Visualizer</a>
-            <a href="optimized-weights.html">Monte Carlo</a>
+            <a href="momentum-factors.html">RoboTrader</a>
+            <a href="portfolio.html">Portfolio Management</a>
+            <a href="optimized-weights.html">Simulated Strategies</a>
             <a href="demo.html">Demo</a>
             <a href="support.html">Support</a>
+            <a href="create-profile.html">Create a Profile</a>
         </div>
     </div>
 
@@ -238,30 +323,55 @@
 
     <!-- Dashboard Content -->
     <div class="dashboard-content">
+        <!-- Portfolio Selection -->
+        <div id="portfolioSelection">
+            <label for="selectedPortfolio">Select a Portfolio:</label>
+            <select id="selectedPortfolio">
+                <option value="" disabled selected>-- Choose Portfolio --</option>
+                <!-- Options will be populated by JavaScript -->
+            </select>
+        </div>
+
         <!-- Stats Grid (Balance, Gains, etc.) -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-title">Portfolio Value</div>
-                <div class="stat-value">$123,456</div>
-                <div class="stat-sub">Updated: 1 min ago</div>
+                <div class="stat-value" id="portfolioValue">$0.00</div>
+                <div class="stat-sub" id="portfolioUpdated">Updated: N/A</div>
             </div>
             <div class="stat-card">
                 <div class="stat-title">Daily Change</div>
-                <div class="stat-value">+2.45%</div>
+                <div class="stat-value" id="dailyChange">0.00%</div>
                 <div class="stat-sub">Compared to yesterday</div>
             </div>
             <div class="stat-card">
                 <div class="stat-title">Total Return</div>
-                <div class="stat-value">+ $8,950</div>
+                <div class="stat-value" id="totalReturn">$0.00</div>
                 <div class="stat-sub">Since account creation</div>
             </div>
         </div>
 
-        <!-- Performance / Chart Placeholder -->
+        <!-- Performance / Graph Section -->
         <div class="performance-section">
             <h2 class="section-heading">Performance Chart</h2>
-            <div class="chart-placeholder">
-                Chart Placeholder
+
+            <div id="graphContainer">
+                <canvas id="performanceGraph"></canvas>
+            </div>
+
+            <div id="graphControls">
+                <button id="resetGraph" class="reset-button">Reset Graph</button>
+                <label for="timePeriod">Select Time Period:</label>
+                <select id="timePeriod">
+                    <option value="1m">1 Month</option>
+                    <option value="3m">3 Months</option>
+                    <option value="6m">6 Months</option>
+                    <option value="1y">1 Year</option>
+                </select>
+                <div id="portfolioOptions">
+                    <h3>Select Portfolios to Compare:</h3>
+                    <!-- Portfolio toggle buttons will be added here -->
+                </div>
             </div>
         </div>
 
@@ -330,7 +440,7 @@
             menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
         }
 
-        // Accessibility: toggle menu with keyboard
+        // Accessibility: allow toggling menu with keyboard
         const hamburgerIcon = document.querySelector('.hamburger-icon');
         hamburgerIcon.addEventListener('keydown', function(event) {
             if (event.key === 'Enter' || event.key === ' ') {
@@ -348,6 +458,274 @@
                     link.classList.add('active');
                 }
             });
+        });
+
+        // ------------------------------
+        // Chart.js and Graph Functionality
+        // ------------------------------
+        document.addEventListener("DOMContentLoaded", () => {
+            const performanceGraphCtx = document.getElementById("performanceGraph").getContext("2d");
+            const performanceGraph = new Chart(performanceGraphCtx, {
+                type: "line",
+                data: {
+                    labels: [],
+                    datasets: [],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { title: { display: true, text: "Date" } },
+                        y: { title: { display: true, text: "Performance (%)" } },
+                    },
+                },
+            });
+
+            const timePeriodSelector = document.getElementById("timePeriod");
+            const resetGraphButton = document.getElementById("resetGraph");
+            const portfolioOptionsDiv = document.getElementById("portfolioOptions");
+            const portfolioSelection = document.getElementById("selectedPortfolio");
+
+            // Stats Elements
+            const portfolioValueElem = document.getElementById("portfolioValue");
+            const portfolioUpdatedElem = document.getElementById("portfolioUpdated");
+            const dailyChangeElem = document.getElementById("dailyChange");
+            const totalReturnElem = document.getElementById("totalReturn");
+
+            // The list of all saved portfolios
+            let activePortfolios = [];
+            // Portfolios chosen to display on the chart
+            let displayedPortfolios = [];
+
+            function resetGraph() {
+                // Clear displayed portfolios
+                displayedPortfolios = [];
+
+                // Clear chart data
+                performanceGraph.data.labels = [];
+                performanceGraph.data.datasets = [];
+                performanceGraph.update();
+
+                // Unselect all portfolio buttons
+                document.querySelectorAll('.portfolio-option').forEach(btn => {
+                    btn.classList.remove('selected');
+                });
+
+                // Reset portfolio selection dropdown
+                portfolioSelection.value = "";
+                resetStats();
+            }
+
+            // Add event listener for the reset button
+            resetGraphButton.addEventListener('click', resetGraph);
+
+            function loadPortfolios() {
+                const currentUser = localStorage.getItem("loggedInUser");
+                if (!currentUser) return;
+                let userPortfolios = localStorage.getItem(`portfolios_${currentUser}`);
+                if (userPortfolios) {
+                    activePortfolios = JSON.parse(userPortfolios);
+                } else {
+                    activePortfolios = [];
+                }
+            }
+
+            function renderPortfolioOptions() {
+                portfolioOptionsDiv.innerHTML = "<h3>Select Portfolios to Compare:</h3>";
+                activePortfolios.forEach((portfolio) => {
+                    const button = document.createElement("button");
+                    button.textContent = portfolio.name;
+                    button.className = "portfolio-option";
+                    portfolioOptionsDiv.appendChild(button);
+
+                    button.addEventListener("click", () => {
+                        if (displayedPortfolios.includes(portfolio)) {
+                            displayedPortfolios = displayedPortfolios.filter((p) => p !== portfolio);
+                            button.classList.remove('selected');
+                        } else {
+                            displayedPortfolios.push(portfolio);
+                            button.classList.add('selected');
+                        }
+                        updateGraphWithPortfolios();
+                    });
+                });
+            }
+
+            function populatePortfolioSelection() {
+                portfolioSelection.innerHTML = '<option value="" disabled selected>-- Choose Portfolio --</option>';
+                activePortfolios.forEach((portfolio, index) => {
+                    const option = document.createElement("option");
+                    option.value = index;
+                    option.textContent = portfolio.name;
+                    portfolioSelection.appendChild(option);
+                });
+            }
+
+            portfolioSelection.addEventListener('change', (e) => {
+                const selectedIndex = e.target.value;
+                if (selectedIndex === "") {
+                    resetStats();
+                    resetGraph();
+                    return;
+                }
+                const selectedPortfolio = activePortfolios[selectedIndex];
+                updateStats(selectedPortfolio);
+                // Reset graph to show only the selected portfolio
+                displayedPortfolios = [selectedPortfolio];
+                updateGraphWithPortfolios();
+                // Update portfolio option buttons
+                document.querySelectorAll('.portfolio-option').forEach(btn => {
+                    if (btn.textContent === selectedPortfolio.name) {
+                        btn.classList.add('selected');
+                    } else {
+                        btn.classList.remove('selected');
+                    }
+                });
+            });
+
+            function resetStats() {
+                portfolioValueElem.textContent = "$0.00";
+                portfolioUpdatedElem.textContent = "Updated: N/A";
+                dailyChangeElem.textContent = "0.00%";
+                totalReturnElem.textContent = "$0.00";
+            }
+
+            function updateStats(portfolio) {
+                // Placeholder logic to update stats based on the selected portfolio
+                // Replace this with actual data retrieval logic as needed
+                // For demonstration, we'll use dummy data
+
+                // Example: Calculate Portfolio Value as the sum of (current price * shares)
+                // This requires actual current prices, which would typically come from an API
+                // Here, we'll simulate with random values
+
+                // Simulated data
+                const portfolioValue = simulatePortfolioValue(portfolio);
+                const dailyChange = simulateDailyChange();
+                const totalReturn = simulateTotalReturn();
+
+                portfolioValueElem.textContent = `$${portfolioValue.toLocaleString()}`;
+                portfolioUpdatedElem.textContent = `Updated: ${new Date().toLocaleTimeString()}`;
+                dailyChangeElem.textContent = `${dailyChange.toFixed(2)}%`;
+                totalReturnElem.textContent = `$${totalReturn.toLocaleString()}`;
+            }
+
+            function simulatePortfolioValue(portfolio) {
+                // Simulate portfolio value based on number of stocks
+                return 10000 + portfolio.stocks.length * 500;
+            }
+
+            function simulateDailyChange() {
+                // Simulate daily change between -5% to +5%
+                return (Math.random() * 10 - 5);
+            }
+
+            function simulateTotalReturn() {
+                // Simulate total return between $-5000 to +$5000
+                return Math.random() * 10000 - 5000;
+            }
+
+            async function fetchStockData(ticker, startDate) {
+                try {
+                    const response = await fetch(
+                        `https://my-vercel-api-lx6f.vercel.app/api/stocks/${ticker}?start=${startDate.toISOString()}`
+                    );
+                    if (!response.ok) throw new Error(`Error fetching stock data for ${ticker}`);
+                    return await response.json();
+                } catch (error) {
+                    console.error(error);
+                    return null;
+                }
+            }
+
+            async function updateGraphWithPortfolios() {
+                performanceGraph.data.labels = [];
+                performanceGraph.data.datasets = [];
+                const periodValue = timePeriodSelector.value;
+                const today = new Date();
+                const periodStart = new Date(today);
+
+                // Calculate time period
+                switch (periodValue) {
+                    case "1m": periodStart.setMonth(today.getMonth() - 1); break;
+                    case "3m": periodStart.setMonth(today.getMonth() - 3); break;
+                    case "6m": periodStart.setMonth(today.getMonth() - 6); break;
+                    case "1y": periodStart.setFullYear(today.getFullYear() - 1); break;
+                }
+
+                const dateLabels = new Set();
+                const colors = [
+                    '#64ffda', '#ff6464', '#6495ff', '#ff64c8', 
+                    '#c8ff64', '#9664ff', '#64ffc8', '#ff9664'
+                ];
+
+                for (const [index, portfolio] of displayedPortfolios.entries()) {
+                    const portfolioReturns = {};
+                    let initialValue = null;
+
+                    for (const ticker of portfolio.stocks) {
+                        const data = await fetchStockData(ticker, periodStart);
+                        if (data && data.prices) {
+                            data.prices.forEach((price) => {
+                                const date = new Date(price.date).toLocaleDateString();
+                                if (new Date(price.date) >= periodStart) {
+                                    dateLabels.add(date);
+                                    // Calculate weighted value
+                                    const weightedValue = (price.close * portfolio.weights[ticker]) / 100;
+                                    portfolioReturns[date] = (portfolioReturns[date] || 0) + weightedValue;
+                                }
+                            });
+                        }
+                    }
+
+                    // Convert to percentage change array
+                    const sortedDates = Array.from(dateLabels).sort((a, b) => new Date(a) - new Date(b));
+                    const values = sortedDates.map(date => portfolioReturns[date] || 0);
+                    const baseValue = values[0] || 1; // Prevent division by zero
+                    
+                    // Calculate percentage changes relative to first value
+                    const percentageChanges = values.map(value => 
+                        ((value - baseValue) / baseValue * 100).toFixed(2)
+                    );
+
+                    // Create dataset with unique color
+                    performanceGraph.data.datasets.push({
+                        label: portfolio.name,
+                        data: percentageChanges,
+                        borderColor: colors[index % colors.length],
+                        backgroundColor: colors[index % colors.length] + '40', // Add alpha channel
+                        fill: {
+                            target: 'origin',
+                            above: colors[index % colors.length] + '20',  // Lighter fill above
+                            below: colors[index % colors.length] + '20'   // Same for below
+                        },
+                        tension: 0.3,
+                        pointRadius: 0
+                    });
+                }
+
+                // Set labels and update chart
+                performanceGraph.data.labels = Array.from(dateLabels).sort((a, b) => new Date(a) - new Date(b));
+                performanceGraph.options.scales.y.ticks.callback = function(value) {
+                    return value + '%';
+                };
+                performanceGraph.update();
+            }
+
+            function initializePage() {
+                const currentUser = localStorage.getItem("loggedInUser");
+                if (currentUser) {
+                    loadPortfolios();
+                    renderPortfolioOptions();
+                    populatePortfolioSelection();
+                }
+            }
+
+            // Event listener for time period change
+            timePeriodSelector.addEventListener('change', updateGraphWithPortfolios);
+
+            // Initialize the page
+            initializePage();
         });
     </script>
 </body>
