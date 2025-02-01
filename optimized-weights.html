@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>  
 <html>
 <head>
   <title>Better Invest - Monte Carlo</title>
@@ -58,7 +58,6 @@
       background-color: #64ffda;
       color: #181818;
     }
-
     @media (min-width: 769px) {
       .hamburger-icon {
         display: none;
@@ -82,19 +81,20 @@
     #optimizedWeights {
       background: linear-gradient(to bottom, #1d2b3a, #0e1318 80%);
       text-align: center;
-      padding: 30px 20px;
+      padding: 40px 20px;
     }
     .mc-heading {
       font-family: 'Montserrat', sans-serif;
       font-weight: 900;
       font-size: 2rem;
       color: #ffffff;
+      margin-bottom: 10px;
     }
     .mc-subheading {
       font-size: 1.15rem;
       color: #b5b5b5;
       max-width: 700px;
-      margin: 0 auto;
+      margin: 0 auto 30px auto;
     }
 
     /* Portfolio Cards */
@@ -104,7 +104,7 @@
       gap: 20px;
       justify-content: center;
       max-width: 1200px;
-      margin: 30px auto 0 auto;
+      margin: 0 auto;
     }
     .portfolio-card {
       background-color: #202020;
@@ -113,6 +113,11 @@
       width: 300px;
       padding: 20px;
       text-align: left;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .portfolio-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     }
     .portfolio-card h3 {
       font-size: 1.3rem;
@@ -120,21 +125,162 @@
       margin-bottom: 10px;
       color: #64ffda;
     }
+    .monte-carlo-button {
+      background-color: #64ffda;
+      color: #181818;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+    .monte-carlo-button:hover {
+      background-color: #52e0c4;
+    }
 
-    /* Simulation Results */
+    /* Simulation Results - New Aesthetic Styles */
     #simulationResult {
-      margin-top: 40px;
+      margin: 40px auto 0 auto;
       max-width: 700px;
       width: 100%;
       background-color: #202020;
       border: 1px solid #3a3a3a;
       border-radius: 8px;
-      padding: 20px;
+      padding: 30px;
       text-align: left;
       display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    /* Headings for simulation results */
+    .sim-result-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #3a3a3a;
+      padding-bottom: 10px;
+    }
+    .sim-section {
+      margin-bottom: 20px;
+    }
+    .sim-section h5 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.25rem;
+      color: #64ffda;
+      margin-bottom: 5px;
+    }
+    .sim-section p {
+      margin-bottom: 10px;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+    .sim-section ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .sim-section ul li {
+      padding: 4px 0;
+      font-size: 0.95rem;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .sim-section ul li:last-child {
+      border-bottom: none;
     }
     .text-danger {
       color: #ff7373;
+    }
+    /* Style for Apply buttons */
+    .apply-button {
+      background-color: #64ffda;
+      color: #181818;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      margin: 10px 5px 0 5px;
+      transition: background-color 0.2s;
+    }
+    .apply-button:hover {
+      background-color: #52e0c4;
+    }
+    .apply-msg {
+      margin-top: 10px;
+      font-size: 0.95rem;
+      color: #64ffda;
+    }
+
+    /* ------------ FULLSCREEN SPINNER & CHECKMARK OVERLAYS ------------ */
+    .fullscreen-spinner-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(24, 24, 24, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      display: none;
+    }
+    .spinner {
+      border: 6px solid #3a3a3a;
+      border-top: 6px solid #64ffda;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .fullscreen-checkmark-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(24, 24, 24, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2500;
+      display: none;
+    }
+    /* SVG Checkmark styles */
+    .checkmark {
+      width: 80px;
+      height: 80px;
+    }
+    .checkmark__circle {
+      stroke: #64ffda;
+      stroke-dasharray: 166;
+      stroke-dashoffset: 166;
+      stroke-width: 2;
+      fill: none;
+      animation: strokeCircle 0.6s ease-in-out forwards;
+    }
+    .checkmark__check {
+      stroke: #64ffda;
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      stroke-width: 2;
+      fill: none;
+      animation: strokeCheck 0.3s 0.6s ease-in-out forwards;
+    }
+    @keyframes strokeCircle {
+      100% { stroke-dashoffset: 0; }
+    }
+    @keyframes strokeCheck {
+      100% { stroke-dashoffset: 0; }
     }
   </style>
 </head>
@@ -155,6 +301,19 @@
     </div>
   </div>
 
+  <!-- Fullscreen Spinner Overlay -->
+  <div class="fullscreen-spinner-overlay" id="spinnerOverlay">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Fullscreen Checkmark Overlay -->
+  <div class="fullscreen-checkmark-overlay" id="checkmarkOverlay">
+    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+      <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+      <path class="checkmark__check" d="M14 27l7 7 16-16"/>
+    </svg>
+  </div>
+
   <!-- MONTE CARLO SECTION -->
   <section id="optimizedWeights">
     <h1 class="mc-heading">Run Monte Carlo Simulation</h1>
@@ -165,11 +324,18 @@
   </section>
 
   <script>
+    // Global variables to store simulation results and current portfolio index
+    let currentPortfolioIndex = null;
+    let currentMinPortfolio = null;
+    let currentMaxPortfolio = null;
+
+    // Toggle navigation menu
     function toggleMenu() {
       const menu = document.getElementById('menu');
       menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
     }
 
+    // Load portfolios from localStorage
     function loadUserPortfolios() {
       const currentUser = localStorage.getItem('loggedInUser');
       if (!currentUser) return [];
@@ -177,6 +343,7 @@
       return data ? JSON.parse(data) : [];
     }
 
+    // Render portfolio cards
     function renderPortfolios() {
       const portfolioList = document.getElementById('portfolioList');
       portfolioList.innerHTML = '';
@@ -206,41 +373,147 @@
       });
     }
 
+    // Fetch helper with timeout
+    function fetchWithTimeout(url, options = {}, timeout = 10000) {
+      return Promise.race([
+        fetch(url, options),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Request timed out')), timeout)
+        )
+      ]);
+    }
+
+    // Run Monte Carlo simulation and update UI with formatted results
     async function runMonteCarlo(portfolioIndex) {
+      // Store current portfolio index for later use
+      currentPortfolioIndex = portfolioIndex;
+
+      // Show spinner overlay
+      document.getElementById('spinnerOverlay').style.display = 'flex';
       const resultContainer = document.getElementById('simulationResult');
-      resultContainer.style.display = 'block';
-      resultContainer.innerHTML = `<h4>Running simulation...</h4>`;
+      resultContainer.style.display = 'none';
 
       const portfolios = loadUserPortfolios();
       const portfolio = portfolios[portfolioIndex];
       const tickers = portfolio.stocks || [];
 
       try {
-        const response = await fetch('https://monte-carlo-api.fly.dev/api/run_monte_carlo', {
+        const response = await fetchWithTimeout('https://monte-carlo-api.fly.dev/api/run_monte_carlo', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ tickers, num_portfolios: 50000 }),
-        });
+        }, 25000);
 
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
         const data = await response.json();
+
+        // Hide spinner overlay
+        document.getElementById('spinnerOverlay').style.display = 'none';
+
+        // Check for API error
         if (data.error) {
+          resultContainer.style.display = 'block';
           resultContainer.innerHTML = `<h4 class="text-danger">Simulation error: ${data.error}</h4>`;
+          resultContainer.scrollIntoView({ behavior: 'smooth' });
           return;
         }
 
-        const { MinVolPortfolio, MaxSharpePortfolio } = data;
-        let html = `<h4>Monte Carlo on: ${tickers.join(', ')}</h4>`;
-        html += `<h5>Minimum Volatility Portfolio</h5>`;
-        html += `<p>Return: ${(MinVolPortfolio.return * 100).toFixed(2)}%, Volatility: ${(MinVolPortfolio.volatility * 100).toFixed(2)}%</p>`;
+        // Store simulation results for later use
+        currentMinPortfolio = data.MinVolPortfolio;
+        currentMaxPortfolio = data.MaxSharpePortfolio;
 
-        html += `<h5>Maximum Sharpe Portfolio</h5>`;
-        html += `<p>Return: ${(MaxSharpePortfolio.return * 100).toFixed(2)}%, Volatility: ${(MaxSharpePortfolio.volatility * 100).toFixed(2)}%</p>`;
+        // Show checkmark overlay briefly
+        const checkmarkOverlay = document.getElementById('checkmarkOverlay');
+        checkmarkOverlay.style.display = 'flex';
+        setTimeout(() => {
+          checkmarkOverlay.style.display = 'none';
+          resultContainer.style.display = 'block';
 
-        resultContainer.innerHTML = html;
+          // Build formatted simulation results with Apply buttons for each portfolio
+          let html = `
+            <div class="sim-result-title">Monte Carlo Simulation Results</div>
+            <p style="margin-bottom:20px; font-size:1rem;">Portfolio: <strong>${tickers.join(', ')}</strong></p>
+            <div class="sim-section">
+              <h5>Minimum Risk Portfolio</h5>
+              <p>Return: <strong>${(currentMinPortfolio.return * 100).toFixed(2)}%</strong> &nbsp;&nbsp; Volatility: <strong>${(currentMinPortfolio.volatility * 100).toFixed(2)}%</strong></p>
+              <ul>`;
+          Object.entries(currentMinPortfolio.weights).forEach(([ticker, weight]) => {
+            // Display with 4 decimal places for more precision
+            html += `<li>${ticker}: ${(weight * 100).toFixed(4)}%</li>`;
+          });
+          html += `
+              </ul>
+              <div style="text-align:center;">
+                <button class="apply-button" onclick="applyPortfolio('min')">Apply Minimum Risk Portfolio</button>
+              </div>
+            </div>
+            <div class="sim-section">
+              <h5>Maximum Risk/Return Portfolio</h5>
+              <p>Return: <strong>${(currentMaxPortfolio.return * 100).toFixed(2)}%</strong> &nbsp;&nbsp; Volatility: <strong>${(currentMaxPortfolio.volatility * 100).toFixed(2)}%</strong></p>
+              <ul>`;
+          Object.entries(currentMaxPortfolio.weights).forEach(([ticker, weight]) => {
+            // Display with 4 decimal places for more precision
+            html += `<li>${ticker}: ${(weight * 100).toFixed(4)}%</li>`;
+          });
+          html += `
+              </ul>
+              <div style="text-align:center;">
+                <button class="apply-button" onclick="applyPortfolio('max')">Apply Maximum Risk/Return Portfolio</button>
+              </div>
+            </div>
+            <div id="applyMsg" class="apply-msg"></div>
+          `;
+          resultContainer.innerHTML = html;
+
+          // Scroll smoothly to the results
+          resultContainer.scrollIntoView({ behavior: 'smooth' });
+        }, 1000);
+
       } catch (err) {
         console.error('Error:', err);
+        document.getElementById('spinnerOverlay').style.display = 'none';
+        resultContainer.style.display = 'block';
         resultContainer.innerHTML = `<h4 class="text-danger">Request failed: ${err.message}</h4>`;
+        resultContainer.scrollIntoView({ behavior: 'smooth' });
       }
+    }
+
+    // Apply the selected portfolio weights to the user's saved portfolio
+    function applyPortfolio(type) {
+      const portfolios = loadUserPortfolios();
+      if (currentPortfolioIndex === null || !portfolios[currentPortfolioIndex]) {
+        alert('Error: Portfolio not found.');
+        return;
+      }
+      const currentUser = localStorage.getItem('loggedInUser');
+      if (!currentUser) {
+        alert('You must be logged in to update your portfolio.');
+        return;
+      }
+
+      // Determine which new weight distribution to use
+      let newWeights;
+      if (type === 'min') {
+        newWeights = currentMinPortfolio.weights;
+      } else if (type === 'max') {
+        newWeights = currentMaxPortfolio.weights;
+      } else {
+        alert('Invalid portfolio type.');
+        return;
+      }
+
+      // Update the selected portfolio's weights in the saved list
+      portfolios[currentPortfolioIndex].weights = newWeights;
+      localStorage.setItem(`portfolios_${currentUser}`, JSON.stringify(portfolios));
+
+      // Display a success message
+      const msgEl = document.getElementById('applyMsg');
+      msgEl.textContent = 'Portfolio updated successfully!';
+      setTimeout(() => {
+        msgEl.textContent = '';
+      }, 3000);
     }
 
     document.addEventListener('DOMContentLoaded', renderPortfolios);
