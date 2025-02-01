@@ -4,12 +4,9 @@
   <title>Better Invest - Monte Carlo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Google Fonts: Montserrat & Open Sans -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Open+Sans:wght@400;600&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
 
   <style>
     /* ------------ GLOBAL STYLES ------------ */
@@ -29,9 +26,8 @@
       color: #e0e0e0;
     }
 
-    /* ------------ HAMBURGER MENU STYLES (matching home page) ------------ */
+    /* ------------ HAMBURGER MENU ------------ */
     .hamburger-menu {
-      position: relative;
       background-color: #202020;
       padding: 10px;
       display: flex;
@@ -41,71 +37,50 @@
     .hamburger-icon {
       font-size: 1.5em;
       cursor: pointer;
-      user-select: none;
       color: #e0e0e0;
     }
     .menu-links {
       display: none;
       flex-direction: column;
-      margin-top: 10px;
-      width: 100%;
       background-color: #202020;
+      padding: 10px 0;
       position: absolute;
+      width: 100%;
       top: 50px;
       left: 0;
-      padding: 10px 0;
       z-index: 1000;
-      border-radius: 0 0 8px 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     }
     .menu-links a {
-      color: #e0e0e0;
-      text-decoration: none;
       padding: 10px 20px;
       display: block;
-      font-size: 1em;
     }
     .menu-links a:hover {
       background-color: #64ffda;
       color: #181818;
     }
-    @media (max-width: 768px) {
-      .menu-links {
-        display: none; /* toggled via JS */
-      }
-    }
+
     @media (min-width: 769px) {
       .hamburger-icon {
-        display: none; /* hide icon on larger screens */
+        display: none;
       }
       .menu-links {
         display: flex;
         flex-direction: row;
         position: static;
         background-color: transparent;
-        padding: 0;
-        box-shadow: none;
-        border: none;
       }
       .menu-links a {
         padding: 0 15px;
       }
     }
-    /* ACTIVE LINK HIGHLIGHT */
     .menu-links a.active {
       background-color: #64ffda;
       color: #181818;
     }
 
-    /* ------------ MONTE CARLO PAGE SECTION (matching home page style) ------------ */
+    /* ------------ MONTE CARLO SECTION ------------ */
     #optimizedWeights {
       background: linear-gradient(to bottom, #1d2b3a, #0e1318 80%);
-      /* Make it fill at least the full viewport height minus the menu bar */
-      min-height: calc(100vh - 60px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
       text-align: center;
       padding: 30px 20px;
     }
@@ -114,24 +89,15 @@
       font-weight: 900;
       font-size: 2rem;
       color: #ffffff;
-      margin-bottom: 20px;
-      line-height: 1.3;
-    }
-    @media (min-width: 768px) {
-      .mc-heading {
-        font-size: 3rem;
-      }
     }
     .mc-subheading {
-      font-family: 'Open Sans', sans-serif;
       font-size: 1.15rem;
       color: #b5b5b5;
       max-width: 700px;
-      margin: 0 auto 25px auto;
-      line-height: 1.6;
+      margin: 0 auto;
     }
 
-    /* Portfolio listing (no Bootstrap columns) */
+    /* Portfolio Cards */
     .portfolio-list {
       display: flex;
       flex-wrap: wrap;
@@ -154,26 +120,6 @@
       margin-bottom: 10px;
       color: #64ffda;
     }
-    .portfolio-card p {
-      margin-bottom: 15px;
-      line-height: 1.4;
-    }
-
-    /* Monte Carlo Button */
-    .monte-carlo-button {
-      background-color: #64ffda;
-      color: #181818;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    }
-    .monte-carlo-button:hover {
-      background-color: #52dab8;
-    }
 
     /* Simulation Results */
     #simulationResult {
@@ -185,23 +131,10 @@
       border-radius: 8px;
       padding: 20px;
       text-align: left;
-      display: none; /* default hidden until results come in */
-    }
-    #simulationResult h4 {
-      color: #64ffda;
-      margin-bottom: 10px;
-    }
-    /* The Chart (if used) can go below in the same container */
-    #weightsChart {
-      margin-top: 20px;
+      display: none;
     }
     .text-danger {
       color: #ff7373;
-    }
-
-    /* Ensure the code wraps nicely if you embed text data */
-    #simulationResult {
-      white-space: pre-wrap;
     }
   </style>
 </head>
@@ -209,13 +142,7 @@
 <body>
   <!-- HAMBURGER MENU -->
   <div class="hamburger-menu">
-    <span
-      class="hamburger-icon"
-      onclick="toggleMenu()"
-      aria-label="Toggle navigation menu"
-      role="button"
-      tabindex="0"
-    >☰</span>
+    <span class="hamburger-icon" onclick="toggleMenu()">☰</span>
     <div class="menu-links" id="menu">
       <a href="index.html">Home</a>
       <a href="dashboard.html">Dashboard</a>
@@ -228,69 +155,26 @@
     </div>
   </div>
 
-  <!-- MAIN MONTE CARLO SECTION -->
+  <!-- MONTE CARLO SECTION -->
   <section id="optimizedWeights">
     <h1 class="mc-heading">Run Monte Carlo Simulation</h1>
-    <p class="mc-subheading">
-      Select a portfolio below to run a Monte Carlo simulations,
-      to find Low Risk &amp; Max Risk strategies.
-    </p>
+    <p class="mc-subheading">Select a portfolio below to run a Monte Carlo simulation.</p>
 
-    <!-- Portfolios (cards) -->
-    <div class="portfolio-list" id="portfolioList">
-      <!-- Portfolio cards inserted here via JS -->
-    </div>
-
-    <!-- Results Container -->
-    <div id="simulationResult">
-      <!-- This section is filled dynamically -->
-    </div>
+    <div class="portfolio-list" id="portfolioList"></div>
+    <div id="simulationResult"></div>
   </section>
 
-  <!-- Optionally include Chart.js if you want bar charts of weights -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"
-  ></script>
-
   <script>
-    /***********************************************
-     * NAV MENU TOGGLE
-    ***********************************************/
     function toggleMenu() {
       const menu = document.getElementById('menu');
       menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
     }
-    const hamburgerIcon = document.querySelector('.hamburger-icon');
-    hamburgerIcon.addEventListener('keydown', function (event) {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        toggleMenu();
-      }
-    });
-    document.addEventListener('DOMContentLoaded', function () {
-      const currentPage = window.location.pathname.split('/').pop();
-      const menuLinks = document.querySelectorAll('.menu-links a');
-      menuLinks.forEach((link) => {
-        if (link.getAttribute('href') === currentPage) {
-          link.classList.add('active');
-        }
-      });
-    });
 
-    /***********************************************
-     * MONTE CARLO LOGIC
-    ***********************************************/
     function loadUserPortfolios() {
       const currentUser = localStorage.getItem('loggedInUser');
       if (!currentUser) return [];
       const data = localStorage.getItem(`portfolios_${currentUser}`);
-      if (!data) return [];
-      try {
-        return JSON.parse(data);
-      } catch (err) {
-        console.error('Error parsing portfolios:', err);
-        return [];
-      }
+      return data ? JSON.parse(data) : [];
     }
 
     function renderPortfolios() {
@@ -299,16 +183,11 @@
 
       const portfolios = loadUserPortfolios();
       if (!portfolios.length) {
-        portfolioList.innerHTML = `
-          <div>
-            <p style="text-align:center;">No portfolios found. Please create one in the Portfolio Visualizer page.</p>
-          </div>
-        `;
+        portfolioList.innerHTML = `<p>No portfolios found. Create one in the Portfolio Visualizer.</p>`;
         return;
       }
 
       portfolios.forEach((portfolio, idx) => {
-        // Create a card-like div
         const card = document.createElement('div');
         card.className = 'portfolio-card';
         card.innerHTML = `
@@ -329,130 +208,42 @@
 
     async function runMonteCarlo(portfolioIndex) {
       const resultContainer = document.getElementById('simulationResult');
-      resultContainer.style.display = 'block'; 
+      resultContainer.style.display = 'block';
       resultContainer.innerHTML = `<h4>Running simulation...</h4>`;
 
       const portfolios = loadUserPortfolios();
-      if (!portfolios[portfolioIndex]) {
-        resultContainer.innerHTML = `<h4 class="text-danger">Invalid portfolio index.</h4>`;
-        return;
-      }
       const portfolio = portfolios[portfolioIndex];
       const tickers = portfolio.stocks || [];
-      if (!tickers.length) {
-        resultContainer.innerHTML = `<h4 class="text-danger">No stocks in this portfolio.</h4>`;
-        return;
-      }
 
       try {
-        const response = await fetch('http://localhost:3000/api/run-monte-carlo', {
+        const response = await fetch('https://monte-carlo-api.fly.dev/api/run_monte_carlo', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            tickers,
-            period: '1y',
-            num_portfolios: 50000,
-          }),
+          body: JSON.stringify({ tickers, num_portfolios: 50000 }),
         });
-        if (!response.ok) {
-          const err = await response.json();
-          resultContainer.innerHTML = `<h4 class="text-danger">Error from server: ${JSON.stringify(
-            err
-          )}</h4>`;
-          return;
-        }
+
         const data = await response.json();
         if (data.error) {
           resultContainer.innerHTML = `<h4 class="text-danger">Simulation error: ${data.error}</h4>`;
           return;
         }
 
-        // Display results
         const { MinVolPortfolio, MaxSharpePortfolio } = data;
-
         let html = `<h4>Monte Carlo on: ${tickers.join(', ')}</h4>`;
-        html += `<p>Simulated <strong>${data.numPortfolios}</strong> random portfolios.</p><hr/>`;
+        html += `<h5>Minimum Volatility Portfolio</h5>`;
+        html += `<p>Return: ${(MinVolPortfolio.return * 100).toFixed(2)}%, Volatility: ${(MinVolPortfolio.volatility * 100).toFixed(2)}%</p>`;
 
-        // MINIMUM VOL
-        html += `<h5 style="margin-top:1em;">Minimum Volatility Portfolio</h5>`;
-        html += `<p>Annual Return: <strong>${(MinVolPortfolio.return * 100).toFixed(2)}%</strong><br/>
-                 Volatility: <strong>${(MinVolPortfolio.volatility * 100).toFixed(2)}%</strong><br/>
-                 Sharpe Ratio: <strong>${MinVolPortfolio.sharpe.toFixed(2)}</strong></p>`;
-        html += `<div><strong>Weights:</strong></div>`;
-        html += `<ul>`;
-        for (const [tk, w] of Object.entries(MinVolPortfolio.weights)) {
-          html += `<li>${tk}: ${(w * 100).toFixed(2)}%</li>`;
-        }
-        html += `</ul>`;
-
-        // MAX SHARPE
-        html += `<h5 style="margin-top:1em;">Maximum Sharpe Portfolio</h5>`;
-        html += `<p>Annual Return: <strong>${(MaxSharpePortfolio.return * 100).toFixed(2)}%</strong><br/>
-                 Volatility: <strong>${(MaxSharpePortfolio.volatility * 100).toFixed(2)}%</strong><br/>
-                 Sharpe Ratio: <strong>${MaxSharpePortfolio.sharpe.toFixed(2)}</strong></p>`;
-        html += `<div><strong>Weights:</strong></div>`;
-        html += `<ul>`;
-        for (const [tk, w] of Object.entries(MaxSharpePortfolio.weights)) {
-          html += `<li>${tk}: ${(w * 100).toFixed(2)}%</li>`;
-        }
-        html += `</ul>`;
+        html += `<h5>Maximum Sharpe Portfolio</h5>`;
+        html += `<p>Return: ${(MaxSharpePortfolio.return * 100).toFixed(2)}%, Volatility: ${(MaxSharpePortfolio.volatility * 100).toFixed(2)}%</p>`;
 
         resultContainer.innerHTML = html;
-
-        // OPTIONAL: Build a chart for each portfolio's weights
-        buildWeightsChart(MaxSharpePortfolio.weights, 'Max Sharpe Weights Chart');
       } catch (err) {
-        console.error('Error calling /api/run-monte-carlo:', err);
+        console.error('Error:', err);
         resultContainer.innerHTML = `<h4 class="text-danger">Request failed: ${err.message}</h4>`;
       }
     }
 
-    function buildWeightsChart(weightsObj, chartTitle) {
-      let chartCanvas = document.getElementById('weightsChart');
-      if (!chartCanvas) {
-        const canvasElem = document.createElement('canvas');
-        canvasElem.id = 'weightsChart';
-        canvasElem.width = 400;
-        canvasElem.height = 200;
-        document.getElementById('simulationResult').appendChild(canvasElem);
-        chartCanvas = canvasElem;
-      }
-
-      const labels = Object.keys(weightsObj);
-      const dataValues = Object.values(weightsObj).map((val) => val * 100);
-
-      new Chart(chartCanvas, {
-        type: 'bar',
-        data: {
-          labels,
-          datasets: [
-            {
-              label: chartTitle,
-              data: dataValues,
-              backgroundColor: 'rgba(100, 255, 218, 0.6)',
-              borderColor: '#64ffda',
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-          plugins: {
-            legend: { display: false },
-            title: { display: true, text: chartTitle },
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              title: { display: true, text: 'Weight (%)' },
-            },
-          },
-        },
-      });
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      renderPortfolios();
-    });
+    document.addEventListener('DOMContentLoaded', renderPortfolios);
   </script>
 </body>
 </html>
