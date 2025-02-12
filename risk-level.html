@@ -11,6 +11,9 @@
     rel="stylesheet"
   />
 
+  <!-- Chart.js CDN for the mock graph -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
     /* ==============================
        CSS VARIABLES & GLOBAL STYLES
@@ -126,50 +129,86 @@
 
     /* ====================================
        PAGE TITLE / INTRO SECTION
-       (Removed separate gradient)
+       (Now holds the slider's description)
     ====================================== */
     .page-title-section {
       text-align: center;
       padding: 60px 20px;
-      /* no separate background: let body’s gradient show through */
     }
-    .page-title-section h1 {
+
+    /* We place #descTitle and #descText here, 
+       so let's style them in a similar way. */
+    #descTitle {
       font-family: 'Montserrat', sans-serif;
-      font-weight: 900;
-      font-size: 2rem;
-      color: #ffffff;
+      font-size: 1.6rem;
       margin-bottom: 10px;
-      line-height: 1.3;
-      opacity: 0;
+      color: var(--accent-color);
       animation: fadeIn 1s forwards;
+      opacity: 0;
     }
-    .page-title-section p {
+    #descText {
       font-size: 1.1rem;
       color: var(--subtext-color);
       max-width: 700px;
       margin: 0 auto;
       line-height: 1.6;
-      opacity: 0;
       animation: fadeIn 1s forwards 0.3s;
+      opacity: 0;
     }
     @keyframes fadeIn {
       to { opacity: 1; }
     }
 
     /* ====================================
-       MAIN CONTAINER FOR SLIDER
+       MAIN FLEX WRAPPER FOR SLIDER + GRAPH
+       Desktop: row
+       Mobile (<=768px): column
+    ====================================== */
+    .main-content {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+
+    /* SHIFT THE LEFT COLUMN FURTHER LEFT */
+    .left-column {
+      margin-left: 80px; /* Increase to push more to left */
+      margin-right: 20px;
+    }
+
+    /* SHIFT THE RIGHT COLUMN FURTHER RIGHT */
+    .right-column {
+      margin-left: 20px;
+      margin-right: 80px; /* Increase to push more to right */
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        flex-direction: column; /* stack columns vertically on mobile */
+        align-items: center; /* center them horizontally */
+      }
+      .left-column {
+        margin: 0 auto 20px auto;
+      }
+      .right-column {
+        margin: 0 auto;
+      }
+    }
+
+    /* ====================================
+       RISK CONTAINER (SLIDER + BADGE)
     ====================================== */
     .risk-container {
-  max-width: 700px;
-  margin: 40px auto 60px;
-  padding: 30px 20px 40px;
-  
-  /* Make container transparent */
-  background: transparent;
-  
-  
-}
-
+      background: transparent;
+      padding: 20px;
+      /* remove fixed width to allow shrinking on mobile */
+      width: auto;
+      max-width: 600px; /* optional max-width */
+    }
     .risk-container h2 {
       font-family: 'Montserrat', sans-serif;
       font-size: 1.6rem;
@@ -192,7 +231,7 @@
     #riskBadgeImage {
       display: block;
       margin: 0 auto 20px;
-      width: 300px;
+      width: 250px;
       height: auto;
       transition: opacity 0.3s ease;
     }
@@ -246,25 +285,36 @@
     }
 
     /* ====================================
-       DESCRIPTION BOX
+       CHART AREA
     ====================================== */
-    #descriptionBox {
+    .chart-container {
+      position: relative; /* for the absolute-positioned returns text */
       background: transparent;
-      border-radius: 8px;
       padding: 20px;
-      max-width: 600px;
-      margin: 0 auto;
+      border-radius: 8px;
     }
-    #descTitle {
+
+    /* Large (default) chart for desktop */
+    #myChart {
+      width: 100%;
+      height: 500px; 
+    }
+
+    /* Smaller chart on mobile screens */
+    @media (max-width: 768px) {
+      #myChart {
+        height: 300px; /* reduce chart height on mobile */
+      }
+    }
+
+    .returns-info {
+      position: absolute;
+      top: 25px;
+      left: 25px;
+      color: #fff;
       font-family: 'Montserrat', sans-serif;
-      font-size: 1.2rem;
-      color: var(--accent-color);
-      margin-bottom: 10px;
-    }
-    #descText {
-      font-size: 0.95rem;
-      line-height: 1.5;
-      color: var(--text-color);
+      font-size: 1rem;
+      line-height: 1.4;
     }
   </style>
 </head>
@@ -286,38 +336,49 @@
     </div>
   </div>
 
-   <!-- Page Title / Intro Section -->
-   <section class="page-title-section">
-    <h1>Get a portfolio based on risk and goals.</h1>
-    <p>See which risk profile fits your investing style.</p>
+  <!-- Page Title / Intro Section -->
+  <!-- REPLACED original text with the SLIDER description -->
+  <section class="page-title-section">
+    <h3 id="descTitle">Balanced</h3>
+    <p id="descText">This is a moderate risk level, offering a balance between growth and stability.</p>
   </section>
 
-  <!-- Main Risk Container -->
-  <div class="risk-container">
+  <!-- MAIN CONTENT: SLIDER/BADGE (LEFT) + CHART (RIGHT) -->
+  <div class="main-content">
+    <!-- LEFT COLUMN: SLIDER + BADGE -->
+    <div class="left-column">
+      <div class="risk-container">
 
+        <!-- Badge Image (Default to R3) -->
+        <img
+          id="riskBadgeImage"
+          src="R3.png"
+          alt="Risk Badge 3"
+        />
 
-    <!-- Badge Image (Default to R5) -->
-    <img
-      id="riskBadgeImage"
-      src="R2.png"
-      alt="Risk Badge 2"
-    />
+        <!-- Slider -->
+        <input
+          type="range"
+          id="riskSlider"
+          min="1"
+          max="3"
+          value="3"
+        />
 
-    <!-- Slider -->
-    <input
-      type="range"
-      id="riskSlider"
-      min="1"
-      max="3"
-      value="5"
-    />
+      </div>
+    </div>
 
-    <!-- Description Box -->
-    <div id="descriptionBox">
-      <h3 id="descTitle">Balanced</h3>
-      <p id="descText">
-        This is a moderate risk level, offering a balance between growth and stability.
-      </p>
+    <!-- RIGHT COLUMN: HISTORICAL CHART -->
+    <div class="right-column">
+      <div class="chart-container">
+        <!-- Position our returns text box in the upper-left of the chart -->
+        <div class="returns-info" id="returnsInfo">
+          <!-- Default (risk=3) mock data here -->
+          <div><strong>Total Return:</strong> 142.67%</div>
+          <div><strong>Annual Return:</strong> 7.39%</div>
+        </div>
+        <canvas id="myChart"></canvas>
+      </div>
     </div>
   </div>
 
@@ -352,25 +413,85 @@
         title: "Defensive",
         text: "Primarily bonds. Very low volatility, but limited growth potential."
       },
-
       2: {
         title: "Balanced",
         text: "Even split between growth (stocks) and stability (bonds)."
-        },
+      },
       3: {
         title: "Maximizer",
         text: "Maximum growth potential, significant volatility risk."
       }
     };
 
+    // Mock graph data for each risk level
+    const graphData = {
+      1: [0, 20, 45, 65, 90, 95],
+      2: [0, 30, 50, 42, 80,110],
+      3: [0, 50, 30, 70, 120,140]
+    };
+
+    // Mock returns data to show in the chart's top-left
+    const returnsData = {
+      1: { total: "60.12%", annual: "3.45%" },
+      2: { total: "100.54%", annual: "5.62%" },
+      3: { total: "142.67%", annual: "7.39%" }
+    };
+
     const slider = document.getElementById("riskSlider");
     const badgeImage = document.getElementById("riskBadgeImage");
     const descTitle = document.getElementById("descTitle");
     const descText = document.getElementById("descText");
+    const returnsInfo = document.getElementById("returnsInfo");
 
-    // On slider change, update the badge image and description
+    // Initialize the Chart
+    const ctx = document.getElementById('myChart').getContext('2d');
+    let myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ["2018","2019","2020","2021","2022","2023"], // Example x-axis
+        datasets: [{
+          label: 'Historical Performance',
+          data: graphData[3],  // Start with risk level 3's data
+          borderColor: '#64ffda',
+          backgroundColor: 'rgba(100,255,218,0.1)',
+          fill: true,
+          tension: 0.2
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          x: {
+            border: {
+              display: false
+            },
+            title: {
+              display: false
+            },
+            grid: {
+              display: false
+            },
+            ticks: {
+              color: '#e0e0e0'
+            }
+          },
+          y: {
+            display: false,
+            min: 0,
+            max: 180
+          }
+        }
+      }
+    });
+
+    // On slider change, update the badge image, description, chart data, and returns info
     slider.addEventListener("input", () => {
-      const val = slider.value;  // "1" through "10"
+      const val = slider.value;  // "1" through "3"
 
       // Quick fade-out, then swap the image
       badgeImage.style.opacity = 0;
@@ -383,7 +504,18 @@
       // Update text
       descTitle.textContent = riskInfo[val].title;
       descText.textContent = riskInfo[val].text;
+
+      // Update chart data
+      myChart.data.datasets[0].data = graphData[val];
+      myChart.update();
+
+      // Update returns info
+      returnsInfo.innerHTML = `
+        <div><strong>Total Return:</strong> ${returnsData[val].total}</div>
+        <div><strong>Annual Return:</strong> ${returnsData[val].annual}</div>
+      `;
     });
   </script>
+
 </body>
 </html>

@@ -18,7 +18,7 @@
     :root {
       /* Dark Theme (Hero + Features) */
       --bg-color: #181818;
-      --light-bg: #202020;
+      --light-bg: #0e1318;
       --gradient-start: #1d2b3a;
       --gradient-end: #0e1318;
       --text-color: #e0e0e0;
@@ -62,67 +62,99 @@
     ================================ */
     .hamburger-menu {
       position: relative;
-      background-color: var(--light-bg);
+      /* Default desktop: transparent top bar */
+      background-color: transparent;
       padding: 10px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
+
     .hamburger-icon {
       font-size: 1.5em;
       cursor: pointer;
       user-select: none;
       color: var(--text-color);
+      transition: color 0.2s ease;
     }
+
+    /* The menu container */
     .menu-links {
-      display: none;
-      flex-direction: column;
-      margin-top: 10px;
-      width: 100%;
-      background-color: var(--light-bg);
-      position: absolute;
-      top: 50px;
-      left: 0;
-      padding: 10px 0;
-      z-index: 1000;
-      border-radius: 0 0 8px 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: row;
+      position: static;
+      background-color: transparent;
+      padding: 0;
+      box-shadow: none;
+      border: none;
     }
     .menu-links a {
-      padding: 10px 20px;
-      display: block;
-      font-size: 1em;
+      padding: 0 15px;
     }
+
     .menu-links a:hover {
       background-color: var(--accent-color);
       color: var(--bg-color);
     }
 
-    @media (max-width: 768px) {
-      .menu-links {
-        display: none; /* toggled via JS */
-      }
-    }
+    /* By default on large screens, the hamburger icon is hidden, and the links are visible inline */
     @media (min-width: 769px) {
       .hamburger-icon {
         display: none; /* hide icon on larger screens */
       }
       .menu-links {
-        display: flex;
-        flex-direction: row;
-        position: static;
-        background-color: transparent;
-        padding: 0;
-        box-shadow: none;
-        border: none;
-      }
-      .menu-links a {
-        padding: 0 15px;
+        display: flex; /* normal horizontal menu on desktop */
       }
     }
+
+    /* For mobile, cover entire screen from top to bottom. */
+    @media (max-width: 768px) {
+      .menu-links {
+        display: block;
+        position: fixed;
+        top: 0; 
+        left: 0;
+        width: 100%;         /* cover entire width */
+        height: 100vh;       /* cover entire viewport height */
+        background-color: var(--light-bg);
+        transform: translateY(-100%); /* hidden above screen */
+        transition: transform 0.3s ease; /* smooth slide down */
+        padding: 60px 20px;
+        flex-direction: column;
+        z-index: 9999;
+      }
+      .menu-links a {
+        padding: 15px 0;  /* vertical spacing between links */
+        display: block;
+        text-align: center;
+      }
+      .menu-links.open {
+        transform: translateY(0); /* slides down from top */
+      }
+      /* The "X" close icon inside the overlay */
+      .close-icon {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 1.7rem;
+        cursor: pointer;
+        color: var(--text-color);
+      }
+    }
+
+    /* active link style (desktop or mobile) */
     .menu-links a.active {
       background-color: var(--accent-color);
       color: var(--bg-color);
+    }
+
+    /* ========== SPECIFIC MOBILE-ONLY CHANGES ========== */
+    @media (max-width: 768px) {
+      /* Move the hamburger icon to top-right on mobile */
+      .hamburger-menu {
+        background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-start) 80%);
+        justify-content: flex-end; /* push icon to the right */
+      }
     }
 
     /* ==============================
@@ -300,7 +332,6 @@
 
     /* ==============================
        INVESTING NEEDS (DARK SECTION)
-       (unchanged, no token here now)
     ================================ */
     .investing-needs-section {
       position: relative;
@@ -385,11 +416,9 @@
       padding: 80px 20px;
       color: var(--section-text-color);
       overflow: hidden;
-      
       /* FANCY ABOUT PLATFORM CHANGES: gradient overlay + subtle pattern */
       background: linear-gradient(135deg, #1f1f1f 0%, #2c2c33 100%);
     }
-    /* A subtle swirling pattern overlay (using radial gradients) */
     #aboutPlatform::before {
       content: "";
       position: absolute;
@@ -398,52 +427,41 @@
                   radial-gradient(circle at 80% 50%, rgba(255,255,255,0.03), transparent 40%);
       z-index: 0;
     }
-
-    /* The token behind the about text, pinned bottom-right */
     .token-about {
       position: absolute;
       bottom: 0;
       right: 0;
-      z-index: 1; /* behind text container if we put container at z-index:2 below */
-      opacity: 0.25; /* slightly less visible for a fancy ghost effect */
+      z-index: 1; 
+      opacity: 0.25; 
     }
-
-    /* container text is above the token & pattern */
     #aboutPlatform .container {
       position: relative;
       z-index: 2;
       max-width: 900px;
       margin: 0 auto;
-      /* Optionally add a slight box-shadow or border to highlight text area */
       background: rgba(31, 31, 31, 0.6);
       padding: 40px;
       border-radius: 10px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-      animation: slideInUp 1.2s ease-out; /* fancy intro animation */
+      animation: slideInUp 1.2s ease-out;
     }
-
-    /* A gradient glow effect on the heading text */
     #aboutPlatform h2 {
       font-family: 'Montserrat', sans-serif;
       font-size: 3rem;
       line-height: 1.2;
       margin-bottom: 30px;
-      /* gradient text with glow */
       background: linear-gradient(90deg, #64ffda, #4d86ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-shadow: 0 0 10px rgba(100,255,218,0.4);
     }
-
-    /* Animate paragraphs for a fancy fade/slide effect */
     #aboutPlatform p {
       font-size: 1.1rem;
       margin-bottom: 20px;
       line-height: 1.7;
       animation: fadeSlide 1s ease forwards;
-      opacity: 0; /* default hidden, will fade in */
+      opacity: 0; 
     }
-    /* Delay each paragraph slightly for a staggered effect */
     #aboutPlatform p:nth-of-type(1) { animation-delay: 0.2s; }
     #aboutPlatform p:nth-of-type(2) { animation-delay: 0.4s; }
     #aboutPlatform p:nth-of-type(3) { animation-delay: 0.6s; }
@@ -452,7 +470,6 @@
     #aboutPlatform p:nth-of-type(6) { animation-delay: 1.2s; }
     #aboutPlatform p:nth-of-type(7) { animation-delay: 1.4s; }
     #aboutPlatform p:nth-of-type(8) { animation-delay: 1.6s; }
-
     #aboutPlatform p strong {
       color: var(--accent-color);
     }
@@ -463,7 +480,6 @@
     @keyframes fadeIn {
       to { opacity: 1; }
     }
-    /* Slide up + fade for paragraphs */
     @keyframes fadeSlide {
       0% {
         opacity: 0;
@@ -474,7 +490,6 @@
         transform: translateY(0);
       }
     }
-    /* Slide in from bottom for container */
     @keyframes slideInUp {
       0% {
         opacity: 0;
@@ -485,26 +500,36 @@
         transform: translateY(0);
       }
     }
+
   </style>
 </head>
 <body>
   <!-- Hamburger Menu -->
   <div class="hamburger-menu">
-    <span class="hamburger-icon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
+    <span class="hamburger-icon" id="hamburgerIcon" 
+          onclick="toggleMenu()" 
+          aria-label="Toggle navigation menu" 
+          role="button" 
+          tabindex="0"
+    >☰</span>
+
     <div class="menu-links" id="menu">
-        <a href="index.html">Home</a>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="momentum-factors.html">RoboTrader</a>
-        <a href="risk-level.html">Risk Level</a>
-        <a href="portfolio.html">Portfolio Management</a>
-        <a href="optimized-weights.html">Simulated Strategies</a>
-        <a href="demo.html">Demo</a>
-        <a href="support.html">Support</a>
-        <a href="create-profile.html">Create a Profile</a>
+      <!-- X close icon (shown in mobile overlay) -->
+      <div class="close-icon" onclick="toggleMenu()">✕</div>
+
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="momentum-factors.html">Trader</a>
+      <a href="risk-level.html">Risk Level</a>
+      <a href="portfolio.html">Portfolio Management</a>
+      <a href="optimized-weights.html">Simulated Strategies</a>
+      <a href="demo.html">Demo</a>
+      <a href="support.html">Support</a>
+      <a href="create-profile.html">Create a Profile</a>
     </div>
   </div>
 
-  <!-- HERO SECTION (unchanged) -->
+  <!-- HERO SECTION -->
   <section id="homeHero">
     <img src="logoSI.png" alt="Smart Invest Logo" style="width: 120px; margin-bottom: 20px;">
     <h1 class="hero-heading">
@@ -527,7 +552,7 @@
     </div>
   </section>
 
-  <!-- KEY FEATURES SECTION (unchanged) -->
+  <!-- KEY FEATURES SECTION -->
   <section class="features-section">
     <div class="features-container">
       <div class="phone-mockup-wrapper">
@@ -576,7 +601,7 @@
     </div>
   </section>
 
-  <!-- ABOUT PLATFORM SECTION (Dark, now fancy) -->
+  <!-- ABOUT PLATFORM SECTION (Dark, fancy) -->
   <section id="aboutPlatform">
     <!-- The token behind the about text, pinned bottom-right -->
     <div class="token-about">
@@ -622,11 +647,24 @@
   </section>
 
   <script>
+    // Toggle menu logic with slide effect and icon swap
     function toggleMenu() {
       const menu = document.getElementById('menu');
-      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+      const icon = document.getElementById('hamburgerIcon');
+
+      // On mobile, slide in/out
+      if (menu.classList.contains('open')) {
+        // If open, close it
+        menu.classList.remove('open');
+        icon.textContent = '☰';
+      } else {
+        // If closed, open it
+        menu.classList.add('open');
+        icon.textContent = '✕';
+      }
     }
 
+    // Allows pressing Enter/Space on the icon
     const hamburgerIcon = document.querySelector('.hamburger-icon');
     hamburgerIcon.addEventListener('keydown', function(event) {
       if (event.key === 'Enter' || event.key === ' ') {
@@ -635,6 +673,7 @@
       }
     });
 
+    // Highlight active link if matching the current page
     document.addEventListener('DOMContentLoaded', function() {
       const currentPage = window.location.pathname.split("/").pop();
       const menuLinks = document.querySelectorAll('.menu-links a');
