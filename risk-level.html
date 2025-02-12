@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Better Invest - Risk Level</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts (same as homepage) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Open+Sans:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ==============================
+       CSS VARIABLES & GLOBAL STYLES
+    ================================ */
+    :root {
+      --bg-color: #181818;
+      --light-bg: #202020;
+      --gradient-start: #1d2b3a;
+      --gradient-end: #0e1318;
+      --text-color: #e0e0e0;
+      --subtext-color: #b5b5b5;
+      --accent-color: #64ffda;
+      --accent-hover: #52dab8;
+      --cta-secondary: #4d86ff;
+
+      --section-bg: #1f1f1f;
+      --section-heading-color: #ffffff;
+      --section-text-color: #d4d4d4;
+      --divider-color: rgba(255, 255, 255, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Make the ENTIRE PAGE one gradient background */
+    body {
+      font-family: 'Open Sans', Arial, sans-serif;
+      background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+      color: var(--text-color);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--text-color);
+      transition: color 0.2s ease;
+    }
+    a:hover {
+      color: var(--accent-color);
+    }
+
+    /* ==============================
+       HAMBURGER MENU STYLES
+    ================================ */
+    .hamburger-menu {
+      position: relative;
+      background-color: var(--light-bg);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .hamburger-icon {
+      font-size: 1.5em;
+      cursor: pointer;
+      user-select: none;
+      color: var(--text-color);
+    }
+    .menu-links {
+      display: none;
+      flex-direction: column;
+      margin-top: 10px;
+      width: 100%;
+      background-color: var(--light-bg);
+      position: absolute;
+      top: 50px;
+      left: 0;
+      padding: 10px 0;
+      z-index: 1000;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+    .menu-links a {
+      padding: 10px 20px;
+      display: block;
+      font-size: 1em;
+    }
+    .menu-links a:hover {
+      background-color: var(--accent-color);
+      color: var(--bg-color);
+    }
+
+    @media (max-width: 768px) {
+      .menu-links {
+        display: none; /* toggled via JS */
+      }
+    }
+    @media (min-width: 769px) {
+      .hamburger-icon {
+        display: none; /* hide icon on larger screens */
+      }
+      .menu-links {
+        display: flex;
+        flex-direction: row;
+        position: static;
+        background-color: transparent;
+        padding: 0;
+        box-shadow: none;
+        border: none;
+      }
+      .menu-links a {
+        padding: 0 15px;
+      }
+    }
+    .menu-links a.active {
+      background-color: var(--accent-color);
+      color: var(--bg-color);
+    }
+
+    /* ====================================
+       PAGE TITLE / INTRO SECTION
+       (Removed separate gradient)
+    ====================================== */
+    .page-title-section {
+      text-align: center;
+      padding: 60px 20px;
+      /* no separate background: let body’s gradient show through */
+    }
+    .page-title-section h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 2rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.3;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+    .page-title-section p {
+      font-size: 1.1rem;
+      color: var(--subtext-color);
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeIn 1s forwards 0.3s;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* ====================================
+       MAIN CONTAINER FOR SLIDER
+    ====================================== */
+    .risk-container {
+  max-width: 700px;
+  margin: 40px auto 60px;
+  padding: 30px 20px 40px;
+  
+  /* Make container transparent */
+  background: transparent;
+  
+  
+}
+
+    .risk-container h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+      color: #ffffff;
+      text-align: center;
+      background: transparent;
+    }
+    .risk-container .slider-instructions {
+      font-size: 0.95rem;
+      color: var(--subtext-color);
+      text-align: center;
+      margin-bottom: 30px;
+      background: transparent;
+    }
+
+    /* ====================================
+       BADGE IMAGE
+    ====================================== */
+    #riskBadgeImage {
+      display: block;
+      margin: 0 auto 20px;
+      width: 300px;
+      height: auto;
+      transition: opacity 0.3s ease;
+    }
+
+    /* ====================================
+       SLIDER INPUT
+    ====================================== */
+    #riskSlider {
+      width: 100%;
+      margin: 20px 0 30px;
+      -webkit-appearance: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    /* Track - Chrome/Safari/Opera/Edge */
+    #riskSlider::-webkit-slider-runnable-track {
+      height: 5px;
+      background: #555;
+      border-radius: 5px;
+    }
+    #riskSlider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 20px;
+      width: 20px;
+      background: var(--accent-color);
+      border-radius: 50%;
+      margin-top: -8px;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s ease;
+    }
+    #riskSlider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+    /* Track - Firefox */
+    #riskSlider::-moz-range-track {
+      height: 5px;
+      background: #555;
+      border-radius: 5px;
+    }
+    #riskSlider::-moz-range-thumb {
+      height: 20px;
+      width: 20px;
+      background: var(--accent-color);
+      border-radius: 50%;
+      border: none;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s ease;
+    }
+    #riskSlider::-moz-range-thumb:hover {
+      transform: scale(1.15);
+    }
+
+    /* ====================================
+       DESCRIPTION BOX
+    ====================================== */
+    #descriptionBox {
+      background: transparent;
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    #descTitle {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      color: var(--accent-color);
+      margin-bottom: 10px;
+    }
+    #descText {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--text-color);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAV MENU -->
+  <div class="hamburger-menu">
+    <span class="hamburger-icon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
+    <div class="menu-links" id="menu">
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="momentum-factors.html">RoboTrader</a>
+      <a href="risk-level.html">Risk Level</a>
+      <a href="portfolio.html">Portfolio Management</a>
+      <a href="optimized-weights.html">Simulated Strategies</a>
+      <a href="demo.html">Demo</a>
+      <a href="support.html">Support</a>
+      <a href="create-profile.html">Create a Profile</a>
+    </div>
+  </div>
+
+   <!-- Page Title / Intro Section -->
+   <section class="page-title-section">
+    <h1>Get a portfolio based on risk and goals.</h1>
+    <p>See which risk profile fits your investing style.</p>
+  </section>
+
+  <!-- Main Risk Container -->
+  <div class="risk-container">
+
+
+    <!-- Badge Image (Default to R5) -->
+    <img
+      id="riskBadgeImage"
+      src="R2.png"
+      alt="Risk Badge 2"
+    />
+
+    <!-- Slider -->
+    <input
+      type="range"
+      id="riskSlider"
+      min="1"
+      max="3"
+      value="5"
+    />
+
+    <!-- Description Box -->
+    <div id="descriptionBox">
+      <h3 id="descTitle">Balanced</h3>
+      <p id="descText">
+        This is a moderate risk level, offering a balance between growth and stability.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // Toggle menu logic (same as homepage)
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    }
+    const hamburgerIcon = document.querySelector('.hamburger-icon');
+    hamburgerIcon.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        toggleMenu();
+      }
+    });
+
+    // Highlight active link if matching the current page
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split("/").pop();
+      const menuLinks = document.querySelectorAll('.menu-links a');
+      menuLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Risk data
+    const riskInfo = {
+      1: {
+        title: "Defensive",
+        text: "Primarily bonds. Very low volatility, but limited growth potential."
+      },
+
+      2: {
+        title: "Balanced",
+        text: "Even split between growth (stocks) and stability (bonds)."
+        },
+      3: {
+        title: "Maximizer",
+        text: "Maximum growth potential, significant volatility risk."
+      }
+    };
+
+    const slider = document.getElementById("riskSlider");
+    const badgeImage = document.getElementById("riskBadgeImage");
+    const descTitle = document.getElementById("descTitle");
+    const descText = document.getElementById("descText");
+
+    // On slider change, update the badge image and description
+    slider.addEventListener("input", () => {
+      const val = slider.value;  // "1" through "10"
+
+      // Quick fade-out, then swap the image
+      badgeImage.style.opacity = 0;
+      setTimeout(() => {
+        badgeImage.src = `R${val}.png`;
+        badgeImage.alt = `Risk Badge ${val}`;
+        badgeImage.style.opacity = 1;
+      }, 200);
+
+      // Update text
+      descTitle.textContent = riskInfo[val].title;
+      descText.textContent = riskInfo[val].text;
+    });
+  </script>
+</body>
+</html>

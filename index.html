@@ -1,394 +1,649 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Better Invest - Home</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Better Invest - Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Example: a Google Font for a modern heading style (optional) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Open+Sans:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Open+Sans:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
 
-    <style>
-        /* ------------ GLOBAL STYLES ------------ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <style>
+    /* ==============================
+       CSS VARIABLES & GLOBAL STYLES 
+    ================================ */
+    :root {
+      /* Dark Theme (Hero + Features) */
+      --bg-color: #181818;
+      --light-bg: #202020;
+      --gradient-start: #1d2b3a;
+      --gradient-end: #0e1318;
+      --text-color: #e0e0e0;
+      --subtext-color: #b5b5b5;
+      --accent-color: #64ffda;
+      --accent-hover: #52dab8;
+      --cta-secondary: #4d86ff;
 
-        body {
-            font-family: 'Open Sans', Arial, sans-serif;
-            background: #181818;
-            color: #e0e0e0;
-            margin: 0;
-        }
-        a {
-            text-decoration: none;
-            color: #e0e0e0;
-        }
+      /* New Dark Section for Lower Parts */
+      --section-bg: #1f1f1f;  /* Slightly lighter or different than hero for subtle contrast */
+      --section-heading-color: #ffffff; 
+      --section-text-color: #d4d4d4;
+      --divider-color: rgba(255, 255, 255, 0.15);
+    }
 
-        /* ------------ HAMBURGER MENU STYLES ------------ */
-        .hamburger-menu {
-            position: relative;
-            background-color: #202020;
-            padding: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .hamburger-icon {
-            font-size: 1.5em;
-            cursor: pointer;
-            user-select: none;
-            color: #e0e0e0;
-        }
-        .menu-links {
-            display: none;
-            flex-direction: column;
-            margin-top: 10px;
-            width: 100%;
-            background-color: #202020;
-            position: absolute;
-            top: 50px;
-            left: 0;
-            padding: 10px 0;
-            z-index: 1000;
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-        .menu-links a {
-            color: #e0e0e0;
-            text-decoration: none;
-            padding: 10px 20px;
-            display: block;
-            font-size: 1em;
-        }
-        .menu-links a:hover {
-            background-color: #64ffda;
-            color: #181818;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        /* Show the menu toggled on small screens */
-        @media (max-width: 768px) {
-            .menu-links {
-                display: none; /* toggled via JS */
-            }
-        }
+    body {
+      font-family: 'Open Sans', Arial, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      line-height: 1.6;
+    }
 
-        /* Desktop: show menu links inline, hide hamburger icon */
-        @media (min-width: 769px) {
-            .hamburger-icon {
-                display: none; /* hide icon on larger screens */
-            }
-            .menu-links {
-                display: flex;
-                flex-direction: row;
-                position: static;
-                background-color: transparent;
-                padding: 0;
-                box-shadow: none;
-                border: none;
-            }
-            .menu-links a {
-                padding: 0 15px;
-            }
-        }
+    a {
+      text-decoration: none;
+      color: var(--text-color);
+      transition: color 0.2s ease;
+    }
+    a:hover {
+      color: var(--accent-color);
+    }
 
-        .menu-links a.active {
-            background-color: #64ffda;
-            color: #181818;
-        }
+    /* ==============================
+       HAMBURGER MENU STYLES
+    ================================ */
+    .hamburger-menu {
+      position: relative;
+      background-color: var(--light-bg);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .hamburger-icon {
+      font-size: 1.5em;
+      cursor: pointer;
+      user-select: none;
+      color: var(--text-color);
+    }
+    .menu-links {
+      display: none;
+      flex-direction: column;
+      margin-top: 10px;
+      width: 100%;
+      background-color: var(--light-bg);
+      position: absolute;
+      top: 50px;
+      left: 0;
+      padding: 10px 0;
+      z-index: 1000;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+    .menu-links a {
+      padding: 10px 20px;
+      display: block;
+      font-size: 1em;
+    }
+    .menu-links a:hover {
+      background-color: var(--accent-color);
+      color: var(--bg-color);
+    }
 
-        /* ------------ HERO SECTION STYLES ------------ */
-        #homeHero {
-            background: linear-gradient(to bottom, #1d2b3a, #0e1318 80%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 30px 20px;
-            text-align: center;
-        }
-        .hero-heading {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: 2rem;
-            color: #ffffff;
-            margin-bottom: 20px;
-            line-height: 1.3;
-        }
-        @media (min-width: 768px) {
-            .hero-heading {
-                font-size: 3rem;
-            }
-        }
-        .hero-subheading {
-            font-family: 'Open Sans', sans-serif;
-            font-size: 1.15rem;
-            color: #b5b5b5;
-            max-width: 700px;
-            margin: 0 auto 25px auto;
-            line-height: 1.6;
-        }
-        .cta-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 20px;
-            justify-content: center;
-        }
-        .cta-button {
-            background-color: #64ffda; /* your brand highlight */
-            color: #181818;
-            padding: 15px 25px;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: background 0.2s ease;
-        }
-        .cta-button:hover {
-            background-color: #52dab8;
-        }
-        .hero-image {
-            width: 80%;
-            max-width: 600px;
-            margin: 40px auto 0 auto;
-        }
-        .hero-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        .hero-image img.demo-img {
-            width: 50%;
-            opacity: 0.45;
-            display: block;
-            margin: 0 auto;
-        }
+    @media (max-width: 768px) {
+      .menu-links {
+        display: none; /* toggled via JS */
+      }
+    }
+    @media (min-width: 769px) {
+      .hamburger-icon {
+        display: none; /* hide icon on larger screens */
+      }
+      .menu-links {
+        display: flex;
+        flex-direction: row;
+        position: static;
+        background-color: transparent;
+        padding: 0;
+        box-shadow: none;
+        border: none;
+      }
+      .menu-links a {
+        padding: 0 15px;
+      }
+    }
+    .menu-links a.active {
+      background-color: var(--accent-color);
+      color: var(--bg-color);
+    }
 
-        /* =========================
-           KEY FEATURES SECTION
-        ========================== */
-        .features-section {
-            background-color: #0e1318;
-            padding: 60px 20px;
-            color: #e0e0e0;
-        }
-        .features-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            gap: 40px;
-        }
-        .phone-mockup-wrapper {
-            position: relative;
-            flex: 1 1 350px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-width: 300px;
-            max-width: 450px;
-            margin: 0 auto;
-        }
-        .circle-background {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: #1f2a38;
-            border-radius: 50%;
-            z-index: 0;
-        }
-        .phone-mockup {
-            position: relative;
-            z-index: 1;
-            width: 210%;
-            max-width: 290px;
-            object-fit: contain;
-            transform: translate(5px,-5px);
-        }
-        .features-text {
-            flex: 1 1 400px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        .features-heading {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: #ffffff;
-        }
-        .features-subheading {
-            font-size: 1rem;
-            color: #b5b5b5;
-            margin-bottom: 30px;
-            line-height: 1.5;
-        }
-        .feature-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 20px;
-        }
-        .feature-icon {
-            font-size: 2rem;
-            margin-right: 15px;
-        }
-        .feature-info h3 {
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-            color: #64ffda; /* accent color */
-        }
-        .feature-info p {
-            font-size: 0.95rem;
-            line-height: 1.4;
-            color: #e0e0e0;
-        }
-        @media (max-width: 768px) {
-            .features-container {
-                flex-direction: column;
-                gap: 30px;
-            }
-            .circle-background {
-                width: 300px;
-                height: 300px;
-            }
-        }
-    </style>
+    /* ==============================
+       HERO SECTION STYLES
+    ================================ */
+    #homeHero {
+      background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end) 80%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .hero-heading {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 2rem;
+      color: #ffffff;
+      margin-bottom: 20px;
+      line-height: 1.3;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+    @media (min-width: 768px) {
+      .hero-heading {
+        font-size: 3rem;
+      }
+    }
+    .hero-subheading {
+      font-size: 1.15rem;
+      color: var(--subtext-color);
+      max-width: 700px;
+      margin: 0 auto 25px;
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeIn 1s forwards 0.3s;
+    }
+    .cta-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+    .cta-button {
+      background-color: var(--accent-color);
+      color: var(--bg-color);
+      padding: 15px 25px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .cta-button:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+    .hero-image {
+      width: 80%;
+      max-width: 600px;
+      margin: 40px auto 0;
+    }
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .hero-image img.demo-img {
+      width: 50%;
+      opacity: 0.45;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* ==============================
+       KEY FEATURES SECTION
+    ================================ */
+    .features-section {
+      background-color: var(--gradient-end);
+      padding: 60px 20px;
+      color: var(--text-color);
+    }
+    .features-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 40px;
+    }
+    .phone-mockup-wrapper {
+      position: relative;
+      flex: 1 1 350px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 300px;
+      max-width: 450px;
+      margin: 0 auto;
+    }
+    .circle-background {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: #1f2a38;
+      border-radius: 50%;
+      z-index: 0;
+    }
+    .phone-mockup {
+      position: relative;
+      z-index: 1;
+      width: 210%;
+      max-width: 290px;
+      object-fit: contain;
+      transform: translate(5px, -5px);
+    }
+    .features-text {
+      flex: 1 1 400px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .features-heading {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+    .features-subheading {
+      font-size: 1rem;
+      color: var(--subtext-color);
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+    .feature-item:nth-child(1) { animation-delay: 0.2s; }
+    .feature-item:nth-child(2) { animation-delay: 0.4s; }
+    .feature-item:nth-child(3) { animation-delay: 0.6s; }
+    .feature-icon {
+      font-size: 2rem;
+      margin-right: 15px;
+    }
+    .feature-info h3 {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+      color: var(--accent-color);
+    }
+    .feature-info p {
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 768px) {
+      .features-container {
+        flex-direction: column;
+        gap: 30px;
+      }
+      .circle-background {
+        width: 300px;
+        height: 300px;
+      }
+    }
+
+    /* ==============================
+       INVESTING NEEDS (DARK SECTION)
+       (unchanged, no token here now)
+    ================================ */
+    .investing-needs-section {
+      position: relative;
+      background-color: var(--section-bg);
+      padding: 80px 20px;
+      color: var(--section-text-color);
+      overflow: hidden;
+    }
+    .investing-needs-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+    .investing-text-block {
+      flex: 1 1 400px;
+      min-width: 300px;
+    }
+    .investing-needs-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      line-height: 1.2;
+      color: var(--section-heading-color);
+      margin-bottom: 20px;
+    }
+    .investing-needs-description {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 1.1rem;
+      color: var(--section-text-color);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .investing-needs-description strong {
+      color: var(--accent-color);
+    }
+    .needs-items {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .needs-items .item-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--section-heading-color);
+    }
+    .needs-items .item-subtitle {
+      font-size: 0.95rem;
+      color: var(--section-text-color);
+      margin-left: 5px;
+    }
+    .investing-illus-block {
+      flex: 1 1 300px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      position: relative;
+    }
+    .investing-illus-block img {
+      max-width: 80%;
+      height: auto;
+    }
+
+    .dark-divider {
+      border: none;
+      border-top: 1px solid var(--divider-color);
+      margin: 40px 0;
+    }
+
+    /* ==============================
+       ABOUT PLATFORM SECTION (Dark) 
+       FANCY UPDATES BELOW
+    ================================ */
+    #aboutPlatform {
+      position: relative;
+      background-color: var(--section-bg);
+      padding: 80px 20px;
+      color: var(--section-text-color);
+      overflow: hidden;
+      
+      /* FANCY ABOUT PLATFORM CHANGES: gradient overlay + subtle pattern */
+      background: linear-gradient(135deg, #1f1f1f 0%, #2c2c33 100%);
+    }
+    /* A subtle swirling pattern overlay (using radial gradients) */
+    #aboutPlatform::before {
+      content: "";
+      position: absolute;
+      top: 0; right: 0; bottom: 0; left: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.05), transparent 40%),
+                  radial-gradient(circle at 80% 50%, rgba(255,255,255,0.03), transparent 40%);
+      z-index: 0;
+    }
+
+    /* The token behind the about text, pinned bottom-right */
+    .token-about {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      z-index: 1; /* behind text container if we put container at z-index:2 below */
+      opacity: 0.25; /* slightly less visible for a fancy ghost effect */
+    }
+
+    /* container text is above the token & pattern */
+    #aboutPlatform .container {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      margin: 0 auto;
+      /* Optionally add a slight box-shadow or border to highlight text area */
+      background: rgba(31, 31, 31, 0.6);
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      animation: slideInUp 1.2s ease-out; /* fancy intro animation */
+    }
+
+    /* A gradient glow effect on the heading text */
+    #aboutPlatform h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3rem;
+      line-height: 1.2;
+      margin-bottom: 30px;
+      /* gradient text with glow */
+      background: linear-gradient(90deg, #64ffda, #4d86ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 10px rgba(100,255,218,0.4);
+    }
+
+    /* Animate paragraphs for a fancy fade/slide effect */
+    #aboutPlatform p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      line-height: 1.7;
+      animation: fadeSlide 1s ease forwards;
+      opacity: 0; /* default hidden, will fade in */
+    }
+    /* Delay each paragraph slightly for a staggered effect */
+    #aboutPlatform p:nth-of-type(1) { animation-delay: 0.2s; }
+    #aboutPlatform p:nth-of-type(2) { animation-delay: 0.4s; }
+    #aboutPlatform p:nth-of-type(3) { animation-delay: 0.6s; }
+    #aboutPlatform p:nth-of-type(4) { animation-delay: 0.8s; }
+    #aboutPlatform p:nth-of-type(5) { animation-delay: 1.0s; }
+    #aboutPlatform p:nth-of-type(6) { animation-delay: 1.2s; }
+    #aboutPlatform p:nth-of-type(7) { animation-delay: 1.4s; }
+    #aboutPlatform p:nth-of-type(8) { animation-delay: 1.6s; }
+
+    #aboutPlatform p strong {
+      color: var(--accent-color);
+    }
+
+    /* ==============================
+       KEYFRAMES / FANCY ANIMATIONS
+    ================================ */
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    /* Slide up + fade for paragraphs */
+    @keyframes fadeSlide {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    /* Slide in from bottom for container */
+    @keyframes slideInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Hamburger Menu -->
-    <div class="hamburger-menu">
-        <span class="hamburger-icon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
-        <div class="menu-links" id="menu">
-            <a href="index.html">Home</a>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="momentum-factors.html">RoboTrader</a>
-            <a href="portfolio.html">Portfolio Management</a>
-            <a href="optimized-weights.html">Simulated Strategies</a>
-            <a href="demo.html">Demo</a>
-            <a href="support.html">Support</a>
-            <a href="create-profile.html">Create a Profile</a>
-        </div>
+  <!-- Hamburger Menu -->
+  <div class="hamburger-menu">
+    <span class="hamburger-icon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
+    <div class="menu-links" id="menu">
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="momentum-factors.html">RoboTrader</a>
+        <a href="risk-level.html">Risk Level</a>
+        <a href="portfolio.html">Portfolio Management</a>
+        <a href="optimized-weights.html">Simulated Strategies</a>
+        <a href="demo.html">Demo</a>
+        <a href="support.html">Support</a>
+        <a href="create-profile.html">Create a Profile</a>
     </div>
+  </div>
 
-    <!-- HERO SECTION -->
-    <section id="homeHero">
-        <img src="logoSI.png" alt="Smart Invest Logo" style="width: 120px; margin-bottom: 20px;">
+  <!-- HERO SECTION (unchanged) -->
+  <section id="homeHero">
+    <img src="logoSI.png" alt="Smart Invest Logo" style="width: 120px; margin-bottom: 20px;">
+    <h1 class="hero-heading">
+      Better Investing, Simplified
+    </h1>
+    <p class="hero-subheading">
+      Discover how top investors manage portfolios using real-time data, Monte Carlo simulations, and advanced analytics. All in one place.
+    </p>
+    <div class="cta-buttons">
+      <button class="cta-button" onclick="location.href='create-profile.html'">
+        Get Started
+      </button>
+      <button
+        class="cta-button"
+        style="background-color: var(--cta-secondary); color: #ffffff;"
+        onclick="location.href='demo.html'"
+      >
+        View Demo
+      </button>
+    </div>
+  </section>
 
-        <h1 class="hero-heading">
-            Better Investing, Simplified
-        </h1>
-
-        <p class="hero-subheading">
-            Discover how top investors manage portfolios using real-time data, 
-            Monte Carlo simulations, and advanced analytics. All in one place.
+  <!-- KEY FEATURES SECTION (unchanged) -->
+  <section class="features-section">
+    <div class="features-container">
+      <div class="phone-mockup-wrapper">
+        <div class="circle-background"></div>
+        <img
+          class="phone-mockup"
+          src="mock5.png"
+          alt="App on Mobile Phone"
+        />
+      </div>
+      <div class="features-text">
+        <h2 class="features-heading">Key Features <span>🔑</span></h2>
+        <p class="features-subheading">
+          Unlock powerful tools to boost your investing potential—here’s how:
         </p>
-
-        <div class="cta-buttons">
-            <button class="cta-button" onclick="location.href='create-profile.html'">
-                Get Started
-            </button>
-            <button class="cta-button" style="background-color: #4d86ff; color: #ffffff;"
-                    onclick="location.href='demo.html'">
-                View Demo
-            </button>
-        </div>
-
-    </section>
-
-    <!-- =========================
-         KEY FEATURES SECTION
-    ========================== -->
-    <section class="features-section">
-      <div class="features-container">
-        <div class="phone-mockup-wrapper">
-          <div class="circle-background"></div>
-          <img 
-            class="phone-mockup" 
-            src="mock5.png" 
-            alt="App on Mobile Phone" 
-          />
-        </div>
-        <div class="features-text">
-          <h2 class="features-heading">Key Features <span>🔑</span></h2>
-          <p class="features-subheading">
-            Unlock powerful tools to boost your investing potential—here’s how:
-          </p>
-
-          <div class="feature-item">
-            <div class="feature-icon">📈</div>
-            <div class="feature-info">
-              <h3>Monte Carlo Simulations</h3>
-              <p>
-                Understand your portfolio’s future performance 
-                under countless “what-if” scenarios. Our simulations help you 
-                identify risk, set realistic goals, and optimize your strategy 
-                with confidence. No guesswork required.
-              </p>
-            </div>
+        <div class="feature-item">
+          <div class="feature-icon">📈</div>
+          <div class="feature-info">
+            <h3>Monte Carlo Simulations</h3>
+            <p>
+              Understand your portfolio’s future performance under countless “what-if” scenarios.
+              Our simulations help you identify risk, set realistic goals, and optimize your strategy with confidence.
+            </p>
           </div>
-
-          <div class="feature-item">
-            <div class="feature-icon">🚀</div>
-            <div class="feature-info">
-              <h3>Buy & Sell Notifications</h3>
-              <p>
-                Stay on top of every opportunity with real-time alerts. 
-                Whether you’re a hands-on trader or prefer a more passive approach, 
-                our timely notifications ensure you never miss a beat.
-              </p>
-            </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🚀</div>
+          <div class="feature-info">
+            <h3>Buy & Sell Notifications</h3>
+            <p>
+              Stay on top of every opportunity with real-time alerts. Whether you’re a hands-on trader or prefer a more passive approach, our timely notifications ensure you never miss a beat.
+            </p>
           </div>
-
-          <div class="feature-item">
-            <div class="feature-icon">🤖</div>
-            <div class="feature-info">
-              <h3>Technical Analysis &amp; Bot Trading</h3>
-              <p>
-                Leverage algorithms that analyze market trends 
-                and execute trades based on real-time data. Automate your 
-                strategy and make decisions faster—so you can 
-                focus on what truly matters.
-              </p>
-            </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🤖</div>
+          <div class="feature-info">
+            <h3>Technical Analysis &amp; Bot Trading</h3>
+            <p>
+              Leverage algorithms that analyze market trends and execute trades based on real-time data.
+              Automate your strategy and make decisions faster—so you can focus on what truly matters.
+            </p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <script>
-        function toggleMenu() {
-            const menu = document.getElementById('menu');
-            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+  <!-- ABOUT PLATFORM SECTION (Dark, now fancy) -->
+  <section id="aboutPlatform">
+    <!-- The token behind the about text, pinned bottom-right -->
+    <div class="token-about">
+      <img src="floating_token.png" alt="Floating Token" style="width: 2000px; height: auto;">
+    </div>
+
+    <div class="container">
+      <h2>Why Our Platform is Right For You</h2>
+      <hr class="dark-divider" />
+      <p>
+        It’s no secret that Wall Street has rigged the stock market in their favor…
+      </p>
+      <p>
+        It’s why they rake in billions of dollars any given day while retail traders like you are left picking up the scraps.
+      </p>
+      <p>
+        However, the main reason Wall Street institutions crush the markets day in and day out 
+        simply has to do with the fact that…
+      </p>
+      <p>
+        <strong>Computer Algorithms Do Up To 75% Of All Stock Trades</strong>
+      </p>
+      <p>That’s right.</p>
+      <p>
+        It’s not because they have superior strategies than you…<br>
+        Or even more experience…<br>
+        It’s simply because they’ve leveraged computer technology to do their dirty work.
+      </p>
+      <p>
+        This is why now is the time to officially level the playing field and gain access to 
+        the same powerful tools institutional traders use.
+      </p>
+      <hr class="dark-divider" />
+      <p>
+        At Better Invest,
+        Our platform not only creates diversified, data-driven portfolios but also sends real-time alerts 
+        for when to buy or sell—ensuring you never miss an opportunity.
+      </p>
+      <p>
+        Unlike other platforms, our service is completely free to use and doesn’t require any personal information whatsoever.
+      </p>
+    </div>
+  </section>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    }
+
+    const hamburgerIcon = document.querySelector('.hamburger-icon');
+    hamburgerIcon.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        toggleMenu();
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split("/").pop();
+      const menuLinks = document.querySelectorAll('.menu-links a');
+      menuLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+          link.classList.add('active');
         }
-
-        const hamburgerIcon = document.querySelector('.hamburger-icon');
-        hamburgerIcon.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                toggleMenu();
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const currentPage = window.location.pathname.split("/").pop();
-            const menuLinks = document.querySelectorAll('.menu-links a');
-            menuLinks.forEach(link => {
-                if (link.getAttribute('href') === currentPage) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
+      });
+    });
+  </script>
 </body>
 </html>
