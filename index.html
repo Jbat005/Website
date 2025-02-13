@@ -12,11 +12,7 @@
   />
 
   <style>
-    /* ==============================
-       CSS VARIABLES & GLOBAL STYLES 
-    ================================ */
     :root {
-      /* Dark Theme (Hero + Features) */
       --bg-color: #181818;
       --light-bg: #0e1318;
       --gradient-start: #1d2b3a;
@@ -27,8 +23,7 @@
       --accent-hover: #52dab8;
       --cta-secondary: #4d86ff;
 
-      /* New Dark Section for Lower Parts */
-      --section-bg: #1f1f1f;  /* Slightly lighter or different than hero for subtle contrast */
+      --section-bg: #1f1f1f;  
       --section-heading-color: #ffffff; 
       --section-text-color: #d4d4d4;
       --divider-color: rgba(255, 255, 255, 0.15);
@@ -58,12 +53,11 @@
     }
 
     /* ==============================
-       HAMBURGER MENU STYLES
-    ================================ */
+       HAMBURGER MENU
+    ============================== */
     .hamburger-menu {
       position: relative;
-      /* Default desktop: transparent top bar */
-      background-color: transparent;
+      background-color: #1d2b3a;
       padding: 10px 20px;
       display: flex;
       align-items: center;
@@ -78,7 +72,6 @@
       transition: color 0.2s ease;
     }
 
-    /* The menu container */
     .menu-links {
       display: flex;
       flex-direction: row;
@@ -88,51 +81,69 @@
       box-shadow: none;
       border: none;
     }
+    /* Replace "Home" with a clickable logo via the .logo-link class */
     .menu-links a {
       padding: 0 15px;
+      display: inline-block;
     }
-
     .menu-links a:hover {
-      background-color: var(--accent-color);
-      color: var(--bg-color);
+      color: var(--accent-color);
     }
 
-    /* By default on large screens, the hamburger icon is hidden, and the links are visible inline */
+    /* Style the logo image in the nav menu */
+    .logo-link img {
+      max-height: 200px;
+      width: 150px;
+      /* Adjust as needed for your design */
+    }
+
+    /* By default on large screens, the hamburger icon is hidden, 
+       and the links are visible inline */
     @media (min-width: 769px) {
       .hamburger-icon {
-        display: none; /* hide icon on larger screens */
+        display: none;
       }
       .menu-links {
-        display: flex; /* normal horizontal menu on desktop */
+        display: flex; 
+        flex-direction: row;
+        align-items: center; /* Vertically center links and buttons */
+        justify-content: space-between;
+        width: 100%;
       }
     }
 
-    /* For mobile, cover entire screen from top to bottom. */
+    .close-icon {
+      display: none;
+    }
+
+    /* Mobile overlay menu */
     @media (max-width: 768px) {
       .menu-links {
         display: block;
         position: fixed;
         top: 0; 
         left: 0;
-        width: 100%;         /* cover entire width */
-        height: 100vh;       /* cover entire viewport height */
+        width: 100%;
+        height: 100vh;
         background-color: var(--light-bg);
-        transform: translateY(-100%); /* hidden above screen */
-        transition: transform 0.3s ease; /* smooth slide down */
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
         padding: 60px 20px;
         flex-direction: column;
         z-index: 9999;
       }
       .menu-links a {
-        padding: 15px 0;  /* vertical spacing between links */
+        padding: 15px 0;
         display: block;
         text-align: center;
       }
       .menu-links.open {
-        transform: translateY(0); /* slides down from top */
+        transform: translateY(0);
       }
-      /* The "X" close icon inside the overlay */
+
+      /* Show the close icon on mobile */
       .close-icon {
+        display: block;
         position: absolute;
         top: 15px;
         right: 20px;
@@ -140,11 +151,15 @@
         cursor: pointer;
         color: var(--text-color);
       }
+      
+      /* Mobile: center the logo link */
+      .logo-link {
+        text-align: center;
+        margin-bottom: 20px;
+      }
     }
 
-    /* active link style (desktop or mobile) */
     .menu-links a.active {
-      background-color: var(--accent-color);
       color: var(--bg-color);
     }
 
@@ -158,15 +173,54 @@
     }
 
     /* ==============================
-       HERO SECTION STYLES
-    ================================ */
+       MENU BUTTONS (LOG IN / GET STARTED)
+    ============================== */
+    .menu-button {
+      background-color: var(--accent-color);
+      color: var(--bg-color);
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+      text-align: center;
+    }
+
+    .login-button {
+      background-color: var(--cta-secondary);
+      color: #ffffff;
+    }
+
+    /* Base (mobile-first) - stack & center buttons */
+    .menu-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+      align-items: center;
+    }
+
+    /* Desktop overrides */
+    @media (min-width: 769px) {
+      .menu-actions {
+        flex-direction: row;
+        margin-top: 0;
+        gap: 10px;
+        align-items: center;
+      }
+    }
+
+    /* ==============================
+       HERO SECTION
+    ============================== */
     #homeHero {
       background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end) 80%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 60px 20px;
+      padding: 40px 20px;
       text-align: center;
     }
     .hero-heading {
@@ -226,16 +280,10 @@
       height: auto;
       display: block;
     }
-    .hero-image img.demo-img {
-      width: 50%;
-      opacity: 0.45;
-      display: block;
-      margin: 0 auto;
-    }
 
     /* ==============================
-       KEY FEATURES SECTION
-    ================================ */
+       FEATURES SECTION
+    ============================== */
     .features-section {
       background-color: var(--gradient-end);
       padding: 60px 20px;
@@ -331,100 +379,22 @@
     }
 
     /* ==============================
-       INVESTING NEEDS (DARK SECTION)
-    ================================ */
-    .investing-needs-section {
-      position: relative;
-      background-color: var(--section-bg);
-      padding: 80px 20px;
-      color: var(--section-text-color);
-      overflow: hidden;
-    }
-    .investing-needs-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
-      z-index: 1;
-    }
-    .investing-text-block {
-      flex: 1 1 400px;
-      min-width: 300px;
-    }
-    .investing-needs-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 2.5rem;
-      line-height: 1.2;
-      color: var(--section-heading-color);
-      margin-bottom: 20px;
-    }
-    .investing-needs-description {
-      font-family: 'Open Sans', sans-serif;
-      font-size: 1.1rem;
-      color: var(--section-text-color);
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-    .investing-needs-description strong {
-      color: var(--accent-color);
-    }
-    .needs-items {
-      margin-top: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .needs-items .item-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--section-heading-color);
-    }
-    .needs-items .item-subtitle {
-      font-size: 0.95rem;
-      color: var(--section-text-color);
-      margin-left: 5px;
-    }
-    .investing-illus-block {
-      flex: 1 1 300px;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      position: relative;
-    }
-    .investing-illus-block img {
-      max-width: 80%;
-      height: auto;
-    }
-
-    .dark-divider {
-      border: none;
-      border-top: 1px solid var(--divider-color);
-      margin: 40px 0;
-    }
-
-    /* ==============================
-       ABOUT PLATFORM SECTION (Dark) 
-       FANCY UPDATES BELOW
-    ================================ */
+       ABOUT PLATFORM SECTION
+    ============================== */
     #aboutPlatform {
       position: relative;
       background-color: var(--section-bg);
       padding: 80px 20px;
       color: var(--section-text-color);
       overflow: hidden;
-      /* FANCY ABOUT PLATFORM CHANGES: gradient overlay + subtle pattern */
-      background: linear-gradient(135deg, #1f1f1f 0%, #2c2c33 100%);
+      background: linear-gradient( var(--gradient-end) 100%, var(--gradient-start) 100%);
     }
     #aboutPlatform::before {
       content: "";
       position: absolute;
       top: 0; right: 0; bottom: 0; left: 0;
-      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.05), transparent 40%),
-                  radial-gradient(circle at 80% 50%, rgba(255,255,255,0.03), transparent 40%);
+      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.05), transparent 10%),
+                  radial-gradient(circle at 80% 50%, rgba(255,255,255,0.03), transparent 10%);
       z-index: 0;
     }
     .token-about {
@@ -474,9 +444,6 @@
       color: var(--accent-color);
     }
 
-    /* ==============================
-       KEYFRAMES / FANCY ANIMATIONS
-    ================================ */
     @keyframes fadeIn {
       to { opacity: 1; }
     }
@@ -500,7 +467,6 @@
         transform: translateY(0);
       }
     }
-
   </style>
 </head>
 <body>
@@ -514,45 +480,47 @@
     >☰</span>
 
     <div class="menu-links" id="menu">
-      <!-- X close icon (shown in mobile overlay) -->
       <div class="close-icon" onclick="toggleMenu()">✕</div>
 
-      <a href="index.html">Home</a>
+      <!-- Replace the Home text with a clickable logo -->
+      <a href="index.html" class="logo-link">
+        <img src="logoSI.png" alt="Smart Invest Logo">
+      </a>
       <a href="dashboard.html">Dashboard</a>
       <a href="momentum-factors.html">Trader</a>
       <a href="risk-level.html">Risk Level</a>
       <a href="portfolio.html">Portfolio Management</a>
       <a href="optimized-weights.html">Simulated Strategies</a>
-      <a href="demo.html">Demo</a>
+      <a href="demo.html"> Watch Demo</a>
       <a href="support.html">Support</a>
-      <a href="create-profile.html">Create a Profile</a>
+
+      <!-- Buttons -->
+      <div class="menu-actions">
+        <button class="menu-button login-button" onclick="location.href='login.html'">
+          Log In
+        </button>
+        <button class="menu-button" onclick="location.href='create-profile.html'">
+          Get Started
+        </button>
+      </div>
     </div>
   </div>
 
   <!-- HERO SECTION -->
   <section id="homeHero">
-    <img src="logoSI.png" alt="Smart Invest Logo" style="width: 120px; margin-bottom: 20px;">
+    <!-- Removed the logo image from here -->
     <h1 class="hero-heading">
       Better Investing, Simplified
     </h1>
     <p class="hero-subheading">
       Discover how top investors manage portfolios using real-time data, Monte Carlo simulations, and advanced analytics. All in one place.
+      <p>
+        Unlike other platforms, our service is completely free to use and doesn’t require any personal information whatsoever.
+      </p>
     </p>
-    <div class="cta-buttons">
-      <button class="cta-button" onclick="location.href='create-profile.html'">
-        Get Started
-      </button>
-      <button
-        class="cta-button"
-        style="background-color: var(--cta-secondary); color: #ffffff;"
-        onclick="location.href='demo.html'"
-      >
-        View Demo
-      </button>
-    </div>
   </section>
 
-  <!-- KEY FEATURES SECTION -->
+  <!-- FEATURES SECTION -->
   <section class="features-section">
     <div class="features-container">
       <div class="phone-mockup-wrapper">
@@ -564,17 +532,16 @@
         />
       </div>
       <div class="features-text">
-        <h2 class="features-heading">Key Features <span>🔑</span></h2>
+        <h2 class="features-heading">Features</h2>
         <p class="features-subheading">
           Unlock powerful tools to boost your investing potential—here’s how:
         </p>
         <div class="feature-item">
           <div class="feature-icon">📈</div>
           <div class="feature-info">
-            <h3>Monte Carlo Simulations</h3>
+            <h3>Risk Assesment & Monte Carlo</h3>
             <p>
-              Understand your portfolio’s future performance under countless “what-if” scenarios.
-              Our simulations help you identify risk, set realistic goals, and optimize your strategy with confidence.
+              Identify risk, set realistic goals, and optimize your strategy with confidence. Get reccomendations on how to improve your portfolio.
             </p>
           </div>
         </div>
@@ -583,7 +550,7 @@
           <div class="feature-info">
             <h3>Buy & Sell Notifications</h3>
             <p>
-              Stay on top of every opportunity with real-time alerts. Whether you’re a hands-on trader or prefer a more passive approach, our timely notifications ensure you never miss a beat.
+              Real-time alerts for when to buy or sell.
             </p>
           </div>
         </div>
@@ -592,8 +559,8 @@
           <div class="feature-info">
             <h3>Technical Analysis &amp; Bot Trading</h3>
             <p>
-              Leverage algorithms that analyze market trends and execute trades based on real-time data.
-              Automate your strategy and make decisions faster—so you can focus on what truly matters.
+              Algorithms analyze market trends based on real-time data 24/7.
+              Automate your strategy and make decisions faster so you can focus on what truly matters.
             </p>
           </div>
         </div>
@@ -601,9 +568,8 @@
     </div>
   </section>
 
-  <!-- ABOUT PLATFORM SECTION (Dark, fancy) -->
+  <!-- ABOUT PLATFORM SECTION -->
   <section id="aboutPlatform">
-    <!-- The token behind the about text, pinned bottom-right -->
     <div class="token-about">
       <img src="floating_token.png" alt="Floating Token" style="width: 2000px; height: auto;">
     </div>
@@ -635,30 +601,18 @@
         the same powerful tools institutional traders use.
       </p>
       <hr class="dark-divider" />
-      <p>
-        At Better Invest,
-        Our platform not only creates diversified, data-driven portfolios but also sends real-time alerts 
-        for when to buy or sell—ensuring you never miss an opportunity.
-      </p>
-      <p>
-        Unlike other platforms, our service is completely free to use and doesn’t require any personal information whatsoever.
-      </p>
     </div>
   </section>
 
   <script>
-    // Toggle menu logic with slide effect and icon swap
     function toggleMenu() {
       const menu = document.getElementById('menu');
       const icon = document.getElementById('hamburgerIcon');
 
-      // On mobile, slide in/out
       if (menu.classList.contains('open')) {
-        // If open, close it
         menu.classList.remove('open');
         icon.textContent = '☰';
       } else {
-        // If closed, open it
         menu.classList.add('open');
         icon.textContent = '✕';
       }
@@ -673,7 +627,7 @@
       }
     });
 
-    // Highlight active link if matching the current page
+    // Highlight active link
     document.addEventListener('DOMContentLoaded', function() {
       const currentPage = window.location.pathname.split("/").pop();
       const menuLinks = document.querySelectorAll('.menu-links a');
