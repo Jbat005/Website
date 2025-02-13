@@ -6,10 +6,7 @@
 
   <!-- Google Fonts (same as homepage) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Open+Sans:wght@400;600&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
 
   <!-- Chart.js CDN for the mock graph -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -20,7 +17,7 @@
     ================================ */
     :root {
       --bg-color: #181818;
-      --light-bg: #202020;
+      --light-bg: #0e1318;
       --gradient-start: #1d2b3a;
       --gradient-end: #0e1318;
       --text-color: #e0e0e0;
@@ -28,7 +25,6 @@
       --accent-color: #64ffda;
       --accent-hover: #52dab8;
       --cta-secondary: #4d86ff;
-
       --section-bg: #1f1f1f;
       --section-heading-color: #ffffff;
       --section-text-color: #d4d4d4;
@@ -44,7 +40,7 @@
     /* Make the ENTIRE PAGE one gradient background */
     body {
       font-family: 'Open Sans', Arial, sans-serif;
-      background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+      background: linear-gradient(to bottom, var(--gradient-start) 0%, var(--gradient-start) 20%, var(--gradient-end) 100%);
       color: var(--text-color);
       margin: 0;
       line-height: 1.6;
@@ -60,11 +56,11 @@
     }
 
     /* ==============================
-       HAMBURGER MENU STYLES
-    ================================ */
+       NAVIGATION MENU (Updated to match Home)
+    ============================== */
     .hamburger-menu {
       position: relative;
-      background-color: var(--light-bg);
+      background-color: var(--gradient-start);
       padding: 10px 20px;
       display: flex;
       align-items: center;
@@ -75,69 +71,126 @@
       cursor: pointer;
       user-select: none;
       color: var(--text-color);
+      transition: color 0.2s ease;
     }
     .menu-links {
-      display: none;
-      flex-direction: column;
-      margin-top: 10px;
-      width: 100%;
-      background-color: var(--light-bg);
-      position: absolute;
-      top: 50px;
-      left: 0;
-      padding: 10px 0;
-      z-index: 1000;
-      border-radius: 0 0 8px 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: row;
+      position: static;
+      background-color: transparent;
+      padding: 0;
+      box-shadow: none;
+      border: none;
     }
     .menu-links a {
-      padding: 10px 20px;
-      display: block;
-      font-size: 1em;
+      padding: 0 15px;
+      display: inline-block;
     }
     .menu-links a:hover {
-      background-color: var(--accent-color);
-      color: var(--bg-color);
+      color: var(--accent-color);
     }
-
-    @media (max-width: 768px) {
-      .menu-links {
-        display: none; /* toggled via JS */
-      }
+    .logo-link img {
+      max-height: 150px;
+      width: 120px;
     }
     @media (min-width: 769px) {
       .hamburger-icon {
-        display: none; /* hide icon on larger screens */
+        display: none;
       }
       .menu-links {
         display: flex;
         flex-direction: row;
-        position: static;
-        background-color: transparent;
-        padding: 0;
-        box-shadow: none;
-        border: none;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+      }
+    }
+    .close-icon {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .menu-links {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--light-bg);
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+        padding: 60px 20px;
+        flex-direction: column;
+        z-index: 9999;
       }
       .menu-links a {
-        padding: 0 15px;
+        padding: 15px 0;
+        display: block;
+        text-align: center;
+      }
+      .menu-links.open {
+        transform: translateY(0);
+      }
+      .close-icon {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 1.7rem;
+        cursor: pointer;
+        color: var(--text-color);
+      }
+      .logo-link {
+        text-align: center;
+        margin-bottom: -10px;
       }
     }
-    .menu-links a.active {
+
+    @media (max-width: 768px) {
+      .hamburger-menu {
+        background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-start) 80%);
+        justify-content: flex-end;
+      }
+    }
+    /* MENU BUTTONS (Log In / Get Started) */
+    .menu-button {
       background-color: var(--accent-color);
       color: var(--bg-color);
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+      text-align: center;
+    }
+    .login-button {
+      background-color: var(--cta-secondary);
+      color: #ffffff;
+    }
+    .menu-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+      align-items: center;
+    }
+    @media (min-width: 769px) {
+      .menu-actions {
+        flex-direction: row;
+        margin-top: 0;
+        gap: 10px;
+        align-items: center;
+      }
     }
 
-    /* ====================================
+    /* ==============================
        PAGE TITLE / INTRO SECTION
-       (Now holds the slider's description)
-    ====================================== */
+    ================================ */
     .page-title-section {
       text-align: center;
       padding: 60px 20px;
     }
-
-    /* We place #descTitle and #descText here, 
-       so let's style them in a similar way. */
     #descTitle {
       font-family: 'Montserrat', sans-serif;
       font-size: 1.6rem;
@@ -159,11 +212,9 @@
       to { opacity: 1; }
     }
 
-    /* ====================================
-       MAIN FLEX WRAPPER FOR SLIDER + GRAPH
-       Desktop: row
-       Mobile (<=768px): column
-    ====================================== */
+    /* ==============================
+       MAIN CONTENT: SLIDER/BADGE + CHART
+    ================================ */
     .main-content {
       width: 100%;
       display: flex;
@@ -173,23 +224,18 @@
       margin-top: 40px;
       margin-bottom: 40px;
     }
-
-    /* SHIFT THE LEFT COLUMN FURTHER LEFT */
     .left-column {
-      margin-left: 80px; /* Increase to push more to left */
+      margin-left: 80px;
       margin-right: 20px;
     }
-
-    /* SHIFT THE RIGHT COLUMN FURTHER RIGHT */
     .right-column {
       margin-left: 20px;
-      margin-right: 80px; /* Increase to push more to right */
+      margin-right: 80px;
     }
-
     @media (max-width: 768px) {
       .main-content {
-        flex-direction: column; /* stack columns vertically on mobile */
-        align-items: center; /* center them horizontally */
+        flex-direction: column;
+        align-items: center;
       }
       .left-column {
         margin: 0 auto 20px auto;
@@ -198,16 +244,11 @@
         margin: 0 auto;
       }
     }
-
-    /* ====================================
-       RISK CONTAINER (SLIDER + BADGE)
-    ====================================== */
     .risk-container {
       background: transparent;
       padding: 20px;
-      /* remove fixed width to allow shrinking on mobile */
       width: auto;
-      max-width: 600px; /* optional max-width */
+      max-width: 600px;
     }
     .risk-container h2 {
       font-family: 'Montserrat', sans-serif;
@@ -224,10 +265,6 @@
       margin-bottom: 30px;
       background: transparent;
     }
-
-    /* ====================================
-       BADGE IMAGE
-    ====================================== */
     #riskBadgeImage {
       display: block;
       margin: 0 auto 20px;
@@ -235,10 +272,6 @@
       height: auto;
       transition: opacity 0.3s ease;
     }
-
-    /* ====================================
-       SLIDER INPUT
-    ====================================== */
     #riskSlider {
       width: 100%;
       margin: 20px 0 30px;
@@ -246,7 +279,7 @@
       background: transparent;
       cursor: pointer;
     }
-    /* Track - Chrome/Safari/Opera/Edge */
+    /* Webkit track & thumb */
     #riskSlider::-webkit-slider-runnable-track {
       height: 5px;
       background: #555;
@@ -265,7 +298,7 @@
     #riskSlider::-webkit-slider-thumb:hover {
       transform: scale(1.15);
     }
-    /* Track - Firefox */
+    /* Firefox track & thumb */
     #riskSlider::-moz-range-track {
       height: 5px;
       background: #555;
@@ -283,30 +316,21 @@
     #riskSlider::-moz-range-thumb:hover {
       transform: scale(1.15);
     }
-
-    /* ====================================
-       CHART AREA
-    ====================================== */
     .chart-container {
-      position: relative; /* for the absolute-positioned returns text */
+      position: relative;
       background: transparent;
       padding: 20px;
       border-radius: 8px;
     }
-
-    /* Large (default) chart for desktop */
     #myChart {
       width: 100%;
-      height: 500px; 
+      height: 500px;
     }
-
-    /* Smaller chart on mobile screens */
     @media (max-width: 768px) {
       #myChart {
-        height: 300px; /* reduce chart height on mobile */
+        height: 300px;
       }
     }
-
     .returns-info {
       position: absolute;
       top: 25px;
@@ -320,24 +344,30 @@
 </head>
 <body>
 
-  <!-- TOP NAV MENU -->
+  <!-- Updated Navigation Menu -->
   <div class="hamburger-menu">
-    <span class="hamburger-icon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
+    <span class="hamburger-icon" id="hamburgerIcon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
     <div class="menu-links" id="menu">
-      <a href="index.html">Home</a>
+      <div class="close-icon" onclick="toggleMenu()">✕</div>
+      <!-- Site logo replaces the Home text -->
+      <a href="index.html" class="logo-link">
+        <img src="logoSI.png" alt="Smart Invest Logo">
+      </a>
       <a href="dashboard.html">Dashboard</a>
-      <a href="momentum-factors.html">RoboTrader</a>
+      <a href="momentum-factors.html">Trader</a>
       <a href="risk-level.html">Risk Level</a>
       <a href="portfolio.html">Portfolio Management</a>
       <a href="optimized-weights.html">Simulated Strategies</a>
-      <a href="demo.html">Demo</a>
-      <a href="support.html">Support</a>
-      <a href="create-profile.html">Create a Profile</a>
+      <a href="demo.html">Watch Demo</a>
+      <!-- Login and Get Started Buttons -->
+      <div class="menu-actions">
+        <button class="menu-button login-button" onclick="location.href='login.html'">Log In</button>
+        <button class="menu-button" onclick="location.href='create-profile.html'">Get Started</button>
+      </div>
     </div>
   </div>
 
-  <!-- Page Title / Intro Section -->
-  <!-- REPLACED original text with the SLIDER description -->
+  <!-- PAGE TITLE / INTRO SECTION -->
   <section class="page-title-section">
     <h3 id="descTitle">Balanced</h3>
     <p id="descText">This is a moderate risk level, offering a balance between growth and stability.</p>
@@ -348,32 +378,17 @@
     <!-- LEFT COLUMN: SLIDER + BADGE -->
     <div class="left-column">
       <div class="risk-container">
-
         <!-- Badge Image (Default to R3) -->
-        <img
-          id="riskBadgeImage"
-          src="R3.png"
-          alt="Risk Badge 3"
-        />
-
+        <img id="riskBadgeImage" src="R3.png" alt="Risk Badge 3">
         <!-- Slider -->
-        <input
-          type="range"
-          id="riskSlider"
-          min="1"
-          max="3"
-          value="3"
-        />
-
+        <input type="range" id="riskSlider" min="1" max="3" value="3">
       </div>
     </div>
-
     <!-- RIGHT COLUMN: HISTORICAL CHART -->
     <div class="right-column">
       <div class="chart-container">
-        <!-- Position our returns text box in the upper-left of the chart -->
+        <!-- Returns Info positioned in the upper-left of the chart -->
         <div class="returns-info" id="returnsInfo">
-          <!-- Default (risk=3) mock data here -->
           <div><strong>Total Return:</strong> 142.67%</div>
           <div><strong>Annual Return:</strong> 7.39%</div>
         </div>
@@ -386,7 +401,14 @@
     // Toggle menu logic (same as homepage)
     function toggleMenu() {
       const menu = document.getElementById('menu');
-      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+      const icon = document.getElementById('hamburgerIcon');
+      if (menu.classList.contains('open')) {
+        menu.classList.remove('open');
+        icon.textContent = '☰';
+      } else {
+        menu.classList.add('open');
+        icon.textContent = '✕';
+      }
     }
     const hamburgerIcon = document.querySelector('.hamburger-icon');
     hamburgerIcon.addEventListener('keydown', function(event) {
@@ -396,7 +418,7 @@
       }
     });
 
-    // Highlight active link if matching the current page
+    // Highlight active link based on the current page URL
     document.addEventListener('DOMContentLoaded', function() {
       const currentPage = window.location.pathname.split("/").pop();
       const menuLinks = document.querySelectorAll('.menu-links a');
@@ -426,8 +448,8 @@
     // Mock graph data for each risk level
     const graphData = {
       1: [0, 20, 45, 65, 90, 95],
-      2: [0, 30, 50, 42, 80,110],
-      3: [0, 50, 30, 70, 120,140]
+      2: [0, 30, 50, 42, 80, 110],
+      3: [0, 50, 30, 70, 120, 140]
     };
 
     // Mock returns data to show in the chart's top-left
@@ -448,10 +470,10 @@
     let myChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ["2018","2019","2020","2021","2022","2023"], // Example x-axis
+        labels: ["2018","2019","2020","2021","2022","2023"],
         datasets: [{
           label: 'Historical Performance',
-          data: graphData[3],  // Start with risk level 3's data
+          data: graphData[3],
           borderColor: '#64ffda',
           backgroundColor: 'rgba(100,255,218,0.1)',
           fill: true,
@@ -460,25 +482,13 @@
       },
       options: {
         responsive: true,
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
+        plugins: { legend: { display: false } },
         scales: {
           x: {
-            border: {
-              display: false
-            },
-            title: {
-              display: false
-            },
-            grid: {
-              display: false
-            },
-            ticks: {
-              color: '#e0e0e0'
-            }
+            border: { display: false },
+            title: { display: false },
+            grid: { display: false },
+            ticks: { color: '#e0e0e0' }
           },
           y: {
             display: false,
@@ -489,27 +499,19 @@
       }
     });
 
-    // On slider change, update the badge image, description, chart data, and returns info
+    // On slider change, update badge image, description, chart data, and returns info
     slider.addEventListener("input", () => {
-      const val = slider.value;  // "1" through "3"
-
-      // Quick fade-out, then swap the image
+      const val = slider.value;
       badgeImage.style.opacity = 0;
       setTimeout(() => {
         badgeImage.src = `R${val}.png`;
         badgeImage.alt = `Risk Badge ${val}`;
         badgeImage.style.opacity = 1;
       }, 200);
-
-      // Update text
       descTitle.textContent = riskInfo[val].title;
       descText.textContent = riskInfo[val].text;
-
-      // Update chart data
       myChart.data.datasets[0].data = graphData[val];
       myChart.update();
-
-      // Update returns info
       returnsInfo.innerHTML = `
         <div><strong>Total Return:</strong> ${returnsData[val].total}</div>
         <div><strong>Annual Return:</strong> ${returnsData[val].annual}</div>

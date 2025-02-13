@@ -1,230 +1,308 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Better Invest - Demo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Better Invest - Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Google Fonts: Montserrat & Open Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Open+Sans:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
+  <!-- Google Fonts: Montserrat & Open Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Open+Sans:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
 
-    <style>
-        /* ------------ GLOBAL STYLES ------------ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Open Sans', Arial, sans-serif;
-            background: #181818;
-            color: #e0e0e0;
-            margin: 0;
-        }
-        a {
-            text-decoration: none;
-            color: #e0e0e0;
-        }
+  <style>
+    /* ------------ GLOBAL STYLES ------------ */
+    :root {
+      --bg-color: #181818;
+      --light-bg: #0e1318;
+      --gradient-start: #1d2b3a;
+      --gradient-end: #0e1318;
+      --text-color: #e0e0e0;
+      --subtext-color: #b5b5b5;
+      --accent-color: #64ffda;
+      --accent-hover: #52dab8;
+      --cta-secondary: #4d86ff;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Open Sans', Arial, sans-serif;
+      background: #181818;
+      color: var(--text-color);
+      margin: 0;
+    }
+    a {
+      text-decoration: none;
+      color: var(--text-color);
+    }
 
-        /* ------------ HAMBURGER MENU STYLES (matching home page) ------------ */
-        .hamburger-menu {
-            position: relative;
-            background-color: #202020;
-            padding: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .hamburger-icon {
-            font-size: 1.5em;
-            cursor: pointer;
-            user-select: none;
-            color: #e0e0e0;
-        }
-        .menu-links {
-            display: none;
-            flex-direction: column;
-            margin-top: 10px;
-            width: 100%;
-            background-color: #202020;
-            position: absolute;
-            top: 50px;
-            left: 0;
-            padding: 10px 0;
-            z-index: 1000;
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-        .menu-links a {
-            color: #e0e0e0;
-            text-decoration: none;
-            padding: 10px 20px;
-            display: block;
-            font-size: 1em;
-        }
-        .menu-links a:hover {
-            background-color: #64ffda;
-            color: #181818;
-        }
-        @media (max-width: 768px) {
-            .menu-links {
-                display: none; /* toggled via JS */
-            }
-        }
-        @media (min-width: 769px) {
-            .hamburger-icon {
-                display: none; /* hide icon on larger screens */
-            }
-            .menu-links {
-                display: flex;
-                flex-direction: row;
-                position: static;
-                background-color: transparent;
-                padding: 0;
-                box-shadow: none;
-                border: none;
-            }
-            .menu-links a {
-                padding: 0 15px;
-            }
-        }
-        /* Highlight active link */
-        .menu-links a.active {
-            background-color: #64ffda;
-            color: #181818;
-        }
+    /* ------------ UPDATED NAVIGATION MENU (matching Home) ------------ */
+    .hamburger-menu {
+      position: relative;
+      background-color: var(--gradient-start);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .hamburger-icon {
+      font-size: 1.5em;
+      cursor: pointer;
+      user-select: none;
+      color: var(--text-color);
+      transition: color 0.2s ease;
+    }
+    .menu-links {
+      display: flex;
+      flex-direction: row;
+      position: static;
+      background-color: transparent;
+      padding: 0;
+      box-shadow: none;
+      border: none;
+    }
+    .menu-links a {
+      padding: 0 15px;
+      display: inline-block;
+    }
+    .menu-links a:hover {
+      color: var(--accent-color);
+    }
+    .logo-link img {
+      max-height: 150px;
+      width: 120px;
+    }
+    @media (min-width: 769px) {
+      .hamburger-icon {
+        display: none;
+      }
+      .menu-links {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+      }
+    }
+    .close-icon {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .menu-links {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--light-bg);
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+        padding: 60px 20px;
+        flex-direction: column;
+        z-index: 1000;
+      }
+      .menu-links a {
+        padding: 15px 0;
+        display: block;
+        text-align: center;
+      }
+      .menu-links.open {
+        transform: translateY(0);
+      }
+      .close-icon {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 1.7rem;
+        cursor: pointer;
+        color: var(--text-color);
+      }
+      .logo-link {
+        text-align: center;
+        margin-bottom: -10px;
+      }
+    }
 
-        /* ------------ DEMO HERO SECTION ------------ */
-        #demoHero {
-            background: linear-gradient(to bottom, #1d2b3a, #0e1318 80%);
-            /* Removed min-height and justify-content to reduce vertical space */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 30px 20px;
-        }
-        .demo-heading {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: 2rem;
-            color: #ffffff;
-            margin-bottom: 20px;
-            line-height: 1.3;
-        }
-        @media (min-width: 768px) {
-            .demo-heading {
-                font-size: 3rem;
-            }
-        }
-        .demo-subheading {
-            font-family: 'Open Sans', sans-serif;
-            font-size: 1.15rem;
-            color: #b5b5b5;
-            max-width: 700px;
-            margin: 0 auto 25px auto;
-            line-height: 1.6;
-        }
+    @media (max-width: 768px) {
+      .hamburger-menu {
+        background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-start) 80%);
+        justify-content: flex-end;
+      }
+    }
+    /* MENU BUTTONS (Log In / Get Started) */
+    .menu-button {
+      background-color: var(--accent-color);
+      color: var(--bg-color);
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+      text-align: center;
+    }
+    .login-button {
+      background-color: var(--cta-secondary);
+      color: #ffffff;
+    }
+    .menu-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+      align-items: center;
+    }
+    @media (min-width: 769px) {
+      .menu-actions {
+        flex-direction: row;
+        margin-top: 0;
+        gap: 10px;
+        align-items: center;
+      }
+    }
 
-        /* ------------ VIDEO DEMO SECTION ------------ */
-        .video-demo-section {
-            background-color: #181818;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        .video-placeholder {
-            width: 80%;
-            max-width: 800px;
-            height: 450px; /* typical 16:9 ratio placeholder */
-            background-color: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-            font-size: 1.2rem;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        .demo-description {
-            max-width: 800px;
-            font-size: 1rem;
-            line-height: 1.6;
-            color: #b5b5b5;
-            text-align: left;
-        }
-    </style>
+    /* ------------ DEMO HERO SECTION ------------ */
+    #demoHero {
+      background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end) 80%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 30px 20px;
+    }
+    .demo-heading {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 2rem;
+      color: #ffffff;
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+    @media (min-width: 768px) {
+      .demo-heading {
+        font-size: 3rem;
+      }
+    }
+    .demo-subheading {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 1.15rem;
+      color: #b5b5b5;
+      max-width: 700px;
+      margin: 0 auto 25px auto;
+      line-height: 1.6;
+    }
+
+    /* ------------ VIDEO DEMO SECTION ------------ */
+    .video-demo-section {
+      background-color: var(--gradient-end);
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .video-placeholder {
+      width: 80%;
+      max-width: 800px;
+      height: 450px;
+      background-color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .demo-description {
+      max-width: 800px;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #b5b5b5;
+      text-align: left;
+    }
+  </style>
 </head>
 <body>
-    <!-- Hamburger Menu -->
-    <div class="hamburger-menu">
-        <span class="hamburger-icon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
-        <div class="menu-links" id="menu">
-            <a href="index.html">Home</a>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="momentum-factors.html">RoboTrader</a>
-            <a href="risk-level.html">Risk Level</a>
-            <a href="portfolio.html">Portfolio Management</a>
-            <a href="optimized-weights.html">Simulated Strategies</a>
-            <a href="demo.html">Demo</a>
-            <a href="support.html">Support</a>
-            <a href="create-profile.html">Create a Profile</a>
-        </div>
+  <!-- Updated Navigation Menu -->
+  <div class="hamburger-menu">
+    <span class="hamburger-icon" id="hamburgerIcon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
+    <div class="menu-links" id="menu">
+      <div class="close-icon" onclick="toggleMenu()">✕</div>
+      <!-- Site logo replaces the Home text -->
+      <a href="index.html" class="logo-link">
+        <img src="logoSI.png" alt="Smart Invest Logo">
+      </a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="momentum-factors.html">RoboTrader</a>
+      <a href="risk-level.html">Risk Level</a>
+      <a href="portfolio.html">Portfolio Management</a>
+      <a href="optimized-weights.html">Simulated Strategies</a>
+      <a href="demo.html">Watch Demo</a>
+      <!-- Login and Get Started Buttons -->
+      <div class="menu-actions">
+        <button class="menu-button login-button" onclick="location.href='login.html'">Log In</button>
+        <button class="menu-button" onclick="location.href='create-profile.html'">Get Started</button>
+      </div>
     </div>
+  </div>
 
-    <!-- DEMO HERO SECTION -->
-    <section id="demoHero">
-        <h1 class="demo-heading">Product Demo</h1>
-        <p class="demo-subheading">
-            Below you’ll find a walkthrough video showcasing features, 
-            analytics, and actionable insights in action.
-        </p>
-    </section>
+  <!-- DEMO HERO SECTION -->
+  <section id="demoHero">
+    <h1 class="demo-heading">Product Demo</h1>
+    <p class="demo-subheading">
+      Below you’ll find a walkthrough video showcasing features, analytics, and actionable insights in action.
+    </p>
+  </section>
 
-    <!-- VIDEO DEMO SECTION -->
-    <section class="video-demo-section">
-        <div class="video-placeholder">
-            <!-- Embed your actual video here (e.g., YouTube iframe or HTML5 video) -->
-            Demo Video.
-        </div>
-        <p class="demo-description">
-            In this demonstration, you’ll see how to navigate our platform, interpret Monte Carlo 
-            results, set alerts for buy/sell signals, and even automate your strategy with our 
-            bot-trading algorithms.
-        </p>
-    </section>
+  <!-- VIDEO DEMO SECTION -->
+  <section class="video-demo-section">
+    <div class="video-placeholder">
+      <!-- Embed your actual video here (e.g., YouTube iframe or HTML5 video) -->
+      Demo Video.
+    </div>
+    <p class="demo-description">
+      In this demonstration, you’ll see how to navigate our platform, interpret Monte Carlo results, set alerts for buy/sell signals, and even automate your strategy with our bot-trading algorithms.
+    </p>
+  </section>
 
-    <script>
-        // Toggle the menu for small screens
-        function toggleMenu() {
-            const menu = document.getElementById('menu');
-            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+  <script>
+    // Toggle navigation menu with class toggling for smooth mobile transitions
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      const icon = document.getElementById('hamburgerIcon');
+      if (menu.classList.contains('open')) {
+        menu.classList.remove('open');
+        icon.textContent = '☰';
+      } else {
+        menu.classList.add('open');
+        icon.textContent = '✕';
+      }
+    }
+    const hamburgerIcon = document.querySelector('.hamburger-icon');
+    hamburgerIcon.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        toggleMenu();
+      }
+    });
+
+    // Active Link Highlighting
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split("/").pop();
+      const menuLinks = document.querySelectorAll('.menu-links a');
+      menuLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+          link.classList.add('active');
         }
-
-        // Accessibility: toggle menu with keyboard
-        const hamburgerIcon = document.querySelector('.hamburger-icon');
-        hamburgerIcon.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                toggleMenu();
-            }
-        });
-
-        // Active Link Highlighting
-        document.addEventListener('DOMContentLoaded', function() {
-            const currentPage = window.location.pathname.split("/").pop();
-            const menuLinks = document.querySelectorAll('.menu-links a');
-            menuLinks.forEach(link => {
-                if (link.getAttribute('href') === currentPage) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
+      });
+    });
+  </script>
 </body>
 </html>

@@ -7,7 +7,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
 
     <style>
-        /* ------------ GLOBAL STYLES (match home page) ------------ */
+        /* CSS Variables (same as home page) */
+        :root {
+            --bg-color: #181818;
+            --light-bg: #0e1318;
+            --gradient-start: #1d2b3a;
+            --gradient-end: #0e1318;
+            --text-color: #e0e0e0;
+            --subtext-color: #b5b5b5;
+            --accent-color: #64ffda;
+            --accent-hover: #52dab8;
+            --cta-secondary: #4d86ff;
+        }
+
+        /* Global Styles */
         * {
             margin: 0;
             padding: 0;
@@ -15,20 +28,22 @@
         }
         body {
             font-family: 'Open Sans', Arial, sans-serif;
-            background: #181818;
-            color: #e0e0e0;
+            background: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
         }
         a {
             text-decoration: none;
-            color: #e0e0e0;
+            color: var(--text-color);
         }
 
-        /* ------------ MENU STYLES (identical to home) ------------ */
+        /* ==============================
+           HAMBURGER MENU (Navigation)
+        ============================== */
         .hamburger-menu {
             position: relative;
-            background-color: #202020;
-            padding: 10px;
+            background-color: var(--gradient-start);
+            padding: 10px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -37,30 +52,28 @@
             font-size: 1.5em;
             cursor: pointer;
             user-select: none;
-            color: #e0e0e0;
+            color: var(--text-color);
+            transition: color 0.2s ease;
         }
         .menu-links {
-            display: none;
-            flex-direction: column;
-            margin-top: 10px;
-            width: 100%;
-            background-color: #202020;
-            position: absolute;
-            top: 50px;
-            left: 0;
-            padding: 10px 0;
-            z-index: 1000;
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: row;
+            position: static;
+            background-color: transparent;
+            padding: 0;
+            box-shadow: none;
+            border: none;
         }
         .menu-links a {
-            padding: 10px 20px;
-            display: block;
-            font-size: 1em;
+            padding: 0 15px;
+            display: inline-block;
         }
         .menu-links a:hover {
-            background-color: #64ffda;
-            color: #181818;
+            color: var(--accent-color);
+        }
+        .logo-link img {
+            max-height: 150px;
+            width: 120px;
         }
         @media (min-width: 769px) {
             .hamburger-icon {
@@ -69,23 +82,94 @@
             .menu-links {
                 display: flex;
                 flex-direction: row;
-                position: static;
-                background-color: transparent;
-                padding: 0;
-                box-shadow: none;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+            }
+        }
+        .close-icon {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .menu-links {
+                display: block;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: var(--light-bg);
+                transform: translateY(-100%);
+                transition: transform 0.3s ease;
+                padding: 60px 20px;
+                flex-direction: column;
+                z-index: 9999;
             }
             .menu-links a {
-                padding: 0 15px;
+                padding: 15px 0;
+                display: block;
+                text-align: center;
+            }
+            .menu-links.open {
+                transform: translateY(0);
+            }
+            .close-icon {
+                display: block;
+                position: absolute;
+                top: 15px;
+                right: 20px;
+                font-size: 1.7rem;
+                cursor: pointer;
+                color: var(--text-color);
+            }
+            .logo-link {
+                text-align: center;
+                margin-bottom: -10px;
             }
         }
-        .menu-links a.active {
-            background-color: #64ffda;
-            color: #181818;
+        @media (max-width: 768px) {
+            .hamburger-menu {
+                background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-start) 80%);
+                justify-content: flex-end;
+            }
+        }
+        /* MENU BUTTONS (Log In / Get Started) */
+        .menu-button {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+            text-align: center;
+        }
+        .login-button {
+            background-color: var(--cta-secondary);
+            color: #ffffff;
+        }
+        .menu-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+            align-items: center;
+        }
+        @media (min-width: 769px) {
+            .menu-actions {
+                flex-direction: row;
+                margin-top: 0;
+                gap: 10px;
+                align-items: center;
+            }
         }
 
-        /* ------------ HERO SECTION (matching home) ------------ */
+        /* ==============================
+           HERO SECTION (matching home)
+        ============================== */
         #momentumHero {
-            background: linear-gradient(to bottom, #1d2b3a, #0e1318 80%);
+            background: linear-gradient(to bottom, var(--gradient-start) 0%, var(--gradient-start) 20%, var(--gradient-end) 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -109,7 +193,7 @@
         .hero-subheading {
             font-family: 'Open Sans', sans-serif;
             font-size: 1.15rem;
-            color: #b5b5b5;
+            color: var(--subtext-color);
             max-width: 700px;
             margin: 0 auto 25px auto;
             line-height: 1.6;
@@ -117,8 +201,8 @@
         /* New button style for prompting portfolio creation */
         .generate-button {
             padding: 10px 20px;
-            background-color: #64ffda;
-            color: #181818;
+            background-color: var(--accent-color);
+            color: var(--bg-color);
             font-size: 1rem;
             font-weight: 600;
             border: none;
@@ -128,10 +212,12 @@
             margin-top: 15px;
         }
         .generate-button:hover {
-            background-color: #52e0c4;
+            background-color: var(--accent-hover);
         }
 
-        /* ------------ PORTFOLIO SECTION ------------ */
+        /* ==============================
+           PORTFOLIO SECTION
+        ============================== */
         .portfolio-section {
             background-color: #0e1318;
             padding: 60px 20px;
@@ -148,8 +234,8 @@
             border-collapse: collapse;
         }
         .weights-table th {
-            background: #64ffda;
-            color: #181818;
+            background: var(--accent-color);
+            color: var(--bg-color);
             padding: 15px;
             font-weight: 700;
         }
@@ -161,10 +247,12 @@
             border-bottom: none;
         }
         .weight-percentage {
-            color: #64ffda;
+            color: var(--accent-color);
             font-weight: 600;
         }
-        /* ------------ METRICS CARDS ------------ */
+        /* ==============================
+           METRICS CARDS
+        ============================== */
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -176,11 +264,11 @@
             background: #1d2b3a;
             padding: 25px;
             border-radius: 8px;
-            border: 1px solid #64ffda33;
+            border: 1px solid rgba(100,255,218,0.2);
             text-align: center;
         }
         .metric-label {
-            color: #64ffda;
+            color: var(--accent-color);
             font-size: 1rem;
             margin-bottom: 10px;
         }
@@ -189,32 +277,36 @@
             font-weight: 700;
             color: #ffffff;
         }
-        /* ------------ SAVE BUTTON STYLES ------------ */
+        /* ==============================
+           SAVE BUTTON STYLES
+        ============================== */
         .save-button {
             padding: 10px 15px;
             font-size: 1em;
             border-radius: 8px;
             margin-top: 10px;
-            background-color: #64ffda;
-            color: #181818;
+            background-color: var(--accent-color);
+            color: var(--bg-color);
             border: none;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
         .save-button:hover {
-            background-color: #52dab8;
+            background-color: var(--accent-hover);
         }
         .save-button:disabled {
             background-color: #666;
             cursor: not-allowed;
         }
         #saveMessage {
-            color: #64ffda;
+            color: var(--accent-color);
             margin-top: 10px;
             text-align: center;
         }
 
-        /* ------------ FULLSCREEN SPINNER & CHECKMARK OVERLAYS ------------ */
+        /* ==============================
+           FULLSCREEN SPINNER & CHECKMARK OVERLAYS
+        ============================== */
         .fullscreen-spinner-overlay {
             position: fixed;
             top: 0;
@@ -230,7 +322,7 @@
         }
         .spinner {
             border: 6px solid #3a3a3a;
-            border-top: 6px solid #64ffda;
+            border-top: 6px solid var(--accent-color);
             border-radius: 50%;
             width: 60px;
             height: 60px;
@@ -258,7 +350,7 @@
             height: 80px;
         }
         .checkmark__circle {
-            stroke: #64ffda;
+            stroke: var(--accent-color);
             stroke-dasharray: 166;
             stroke-dashoffset: 166;
             stroke-width: 2;
@@ -266,7 +358,7 @@
             animation: strokeCircle 0.6s ease-in-out forwards;
         }
         .checkmark__check {
-            stroke: #64ffda;
+            stroke: var(--accent-color);
             stroke-dasharray: 48;
             stroke-dashoffset: 48;
             stroke-width: 2;
@@ -282,19 +374,26 @@
     </style>
 </head>
 <body>
-    <!-- Hamburger Menu -->
+    <!-- Navigation Menu (Updated to match Home page) -->
     <div class="hamburger-menu">
-        <span class="hamburger-icon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
+        <span class="hamburger-icon" id="hamburgerIcon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
         <div class="menu-links" id="menu">
-            <a href="index.html">Home</a>
+            <div class="close-icon" onclick="toggleMenu()">✕</div>
+            <!-- Site logo replaces the Home text -->
+            <a href="index.html" class="logo-link">
+                <img src="logoSI.png" alt="Smart Invest Logo">
+            </a>
             <a href="dashboard.html">Dashboard</a>
-            <a href="momentum-factors.html">RoboTrader</a>
+            <a href="momentum-factors.html">Trader</a>
             <a href="risk-level.html">Risk Level</a>
             <a href="portfolio.html">Portfolio Management</a>
             <a href="optimized-weights.html">Simulated Strategies</a>
-            <a href="demo.html">Demo</a>
-            <a href="support.html">Support</a>
-            <a href="create-profile.html">Create a Profile</a>
+            <a href="demo.html">Watch Demo</a>
+            <!-- Login and Get Started Buttons -->
+            <div class="menu-actions">
+                <button class="menu-button login-button" onclick="location.href='login.html'">Log In</button>
+                <button class="menu-button" onclick="location.href='create-profile.html'">Get Started</button>
+            </div>
         </div>
     </div>
 
@@ -354,7 +453,13 @@
         // Toggle navigation menu
         function toggleMenu() {
             const menu = document.getElementById('menu');
-            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+            if (menu.classList.contains('open')) {
+                menu.classList.remove('open');
+                document.getElementById('hamburgerIcon').textContent = '☰';
+            } else {
+                menu.classList.add('open');
+                document.getElementById('hamburgerIcon').textContent = '✕';
+            }
         }
 
         // Helper: Fetch with timeout
@@ -502,7 +607,6 @@
             // Setup event listener for the Generate Portfolio button
             document.getElementById('generatePortfolioButton').addEventListener('click', function() {
                 runPortfolioCreation();
-                // Optionally, disable the button once clicked to prevent re-runs
                 this.disabled = true;
             });
             // Setup save functionality

@@ -10,6 +10,17 @@
 
   <style>
     /* ------------ GLOBAL STYLES ------------ */
+    :root {
+      --bg-color: #181818;
+      --light-bg: #0e1318;
+      --gradient-start: #1d2b3a;
+      --gradient-end: #0e1318;
+      --text-color: #e0e0e0;
+      --subtext-color: #b5b5b5;
+      --accent-color: #64ffda;
+      --accent-hover: #52dab8;
+      --cta-secondary: #4d86ff;
+    }
     * {
       margin: 0;
       padding: 0;
@@ -17,19 +28,20 @@
     }
     body {
       font-family: 'Open Sans', Arial, sans-serif;
-      background: #181818;
-      color: #e0e0e0;
+      background: linear-gradient(to bottom, var(--gradient-start) 0%, var(--gradient-start) 20%, var(--gradient-end) 100%);
+      color: var(--text-color);
       margin: 0;
     }
     a {
       text-decoration: none;
-      color: #e0e0e0;
+      color: var(--text-color);
     }
 
-    /* ------------ HAMBURGER MENU ------------ */
+    /* ------------ UPDATED NAVIGATION MENU ------------ */
     .hamburger-menu {
-      background-color: #202020;
-      padding: 10px;
+      position: relative;
+      background-color: var(--gradient-start);
+      padding: 10px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -37,26 +49,29 @@
     .hamburger-icon {
       font-size: 1.5em;
       cursor: pointer;
-      color: #e0e0e0;
+      user-select: none;
+      color: var(--text-color);
+      transition: color 0.2s ease;
     }
     .menu-links {
-      display: none;
-      flex-direction: column;
-      background-color: #202020;
-      padding: 10px 0;
-      position: absolute;
-      width: 100%;
-      top: 50px;
-      left: 0;
-      z-index: 1000;
+      display: flex;
+      flex-direction: row;
+      position: static;
+      background-color: transparent;
+      padding: 0;
+      box-shadow: none;
+      border: none;
     }
     .menu-links a {
-      padding: 10px 20px;
-      display: block;
+      padding: 0 15px;
+      display: inline-block;
     }
     .menu-links a:hover {
-      background-color: #64ffda;
-      color: #181818;
+      color: var(--accent-color);
+    }
+    .logo-link img {
+      max-height: 150px;
+      width: 120px;
     }
     @media (min-width: 769px) {
       .hamburger-icon {
@@ -65,21 +80,92 @@
       .menu-links {
         display: flex;
         flex-direction: row;
-        position: static;
-        background-color: transparent;
-      }
-      .menu-links a {
-        padding: 0 15px;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
       }
     }
-    .menu-links a.active {
-      background-color: #64ffda;
-      color: #181818;
+    .close-icon {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .menu-links {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--light-bg);
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+        padding: 60px 20px;
+        flex-direction: column;
+        z-index: 1000;
+      }
+      .menu-links a {
+        padding: 15px 0;
+        display: block;
+        text-align: center;
+      }
+      .menu-links.open {
+        transform: translateY(0);
+      }
+      .close-icon {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 1.7rem;
+        cursor: pointer;
+        color: var(--text-color);
+      }
+      .logo-link {
+        text-align: center;
+        margin-bottom: -10px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hamburger-menu {
+        background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-start) 80%);
+        justify-content: flex-end;
+      }
+    }
+    /* MENU BUTTONS (Log In / Get Started) */
+    .menu-button {
+      background-color: var(--accent-color);
+      color: var(--bg-color);
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+      text-align: center;
+    }
+    .login-button {
+      background-color: var(--cta-secondary);
+      color: #ffffff;
+    }
+    .menu-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+      align-items: center;
+    }
+    @media (min-width: 769px) {
+      .menu-actions {
+        flex-direction: row;
+        margin-top: 0;
+        gap: 10px;
+        align-items: center;
+      }
     }
 
     /* ------------ MONTE CARLO SECTION ------------ */
     #optimizedWeights {
-      background: linear-gradient(to bottom, #1d2b3a, #0e1318 80%);
       text-align: center;
       padding: 40px 20px;
     }
@@ -123,11 +209,11 @@
       font-size: 1.3rem;
       font-weight: 700;
       margin-bottom: 10px;
-      color: #64ffda;
+      color: var(--accent-color);
     }
     .monte-carlo-button {
-      background-color: #64ffda;
-      color: #181818;
+      background-color: var(--accent-color);
+      color: var(--bg-color);
       border: none;
       padding: 10px 15px;
       border-radius: 4px;
@@ -137,10 +223,10 @@
       margin-top: 10px;
     }
     .monte-carlo-button:hover {
-      background-color: #52e0c4;
+      background-color: var(--accent-hover);
     }
 
-    /* Simulation Results - New Aesthetic Styles */
+    /* Simulation Results */
     #simulationResult {
       margin: 40px auto 0 auto;
       max-width: 700px;
@@ -157,7 +243,6 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
-    /* Headings for simulation results */
     .sim-result-title {
       font-family: 'Montserrat', sans-serif;
       font-size: 1.5rem;
@@ -172,7 +257,7 @@
     .sim-section h5 {
       font-family: 'Montserrat', sans-serif;
       font-size: 1.25rem;
-      color: #64ffda;
+      color: var(--accent-color);
       margin-bottom: 5px;
     }
     .sim-section p {
@@ -195,10 +280,9 @@
     .text-danger {
       color: #ff7373;
     }
-    /* Style for Apply buttons */
     .apply-button {
-      background-color: #64ffda;
-      color: #181818;
+      background-color: var(--accent-color);
+      color: var(--bg-color);
       border: none;
       padding: 8px 12px;
       border-radius: 4px;
@@ -208,12 +292,12 @@
       transition: background-color 0.2s;
     }
     .apply-button:hover {
-      background-color: #52e0c4;
+      background-color: var(--accent-hover);
     }
     .apply-msg {
       margin-top: 10px;
       font-size: 0.95rem;
-      color: #64ffda;
+      color: var(--accent-color);
     }
 
     /* ------------ FULLSCREEN SPINNER & CHECKMARK OVERLAYS ------------ */
@@ -232,7 +316,7 @@
     }
     .spinner {
       border: 6px solid #3a3a3a;
-      border-top: 6px solid #64ffda;
+      border-top: 6px solid var(--accent-color);
       border-radius: 50%;
       width: 60px;
       height: 60px;
@@ -255,13 +339,12 @@
       z-index: 2500;
       display: none;
     }
-    /* SVG Checkmark styles */
     .checkmark {
       width: 80px;
       height: 80px;
     }
     .checkmark__circle {
-      stroke: #64ffda;
+      stroke: var(--accent-color);
       stroke-dasharray: 166;
       stroke-dashoffset: 166;
       stroke-width: 2;
@@ -269,7 +352,7 @@
       animation: strokeCircle 0.6s ease-in-out forwards;
     }
     .checkmark__check {
-      stroke: #64ffda;
+      stroke: var(--accent-color);
       stroke-dasharray: 48;
       stroke-dashoffset: 48;
       stroke-width: 2;
@@ -286,19 +369,26 @@
 </head>
 
 <body>
-  <!-- HAMBURGER MENU -->
+  <!-- UPDATED NAVIGATION MENU -->
   <div class="hamburger-menu">
-    <span class="hamburger-icon" onclick="toggleMenu()">☰</span>
+    <span class="hamburger-icon" id="hamburgerIcon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
     <div class="menu-links" id="menu">
-      <a href="index.html">Home</a>
+      <div class="close-icon" onclick="toggleMenu()">✕</div>
+      <!-- Site logo replaces the Home text -->
+      <a href="index.html" class="logo-link">
+        <img src="logoSI.png" alt="Smart Invest Logo">
+      </a>
       <a href="dashboard.html">Dashboard</a>
-      <a href="momentum-factors.html">RoboTrader</a>
+      <a href="momentum-factors.html">Trader</a>
       <a href="risk-level.html">Risk Level</a>
       <a href="portfolio.html">Portfolio Management</a>
       <a href="optimized-weights.html">Simulated Strategies</a>
-      <a href="demo.html">Demo</a>
-      <a href="support.html">Support</a>
-      <a href="create-profile.html">Create a Profile</a>
+      <a href="demo.html">Watch Demo</a>
+      <!-- Login and Get Started Buttons -->
+      <div class="menu-actions">
+        <button class="menu-button login-button" onclick="location.href='login.html'">Log In</button>
+        <button class="menu-button" onclick="location.href='create-profile.html'">Get Started</button>
+      </div>
     </div>
   </div>
 
@@ -325,18 +415,42 @@
   </section>
 
   <script>
-    // Global variables to store simulation results and current portfolio index
+    // Toggle navigation menu with class toggling for smooth mobile transitions
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      const icon = document.getElementById('hamburgerIcon');
+      if (menu.classList.contains('open')) {
+        menu.classList.remove('open');
+        icon.textContent = '☰';
+      } else {
+        menu.classList.add('open');
+        icon.textContent = '✕';
+      }
+    }
+    const hamburgerIcon = document.querySelector('.hamburger-icon');
+    hamburgerIcon.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        toggleMenu();
+      }
+    });
+
+    // Highlight active link based on current page URL
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split("/").pop();
+      const menuLinks = document.querySelectorAll('.menu-links a');
+      menuLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Monte Carlo simulation JavaScript (unchanged)
     let currentPortfolioIndex = null;
     let currentMinPortfolio = null;
     let currentMaxPortfolio = null;
 
-    // Toggle navigation menu
-    function toggleMenu() {
-      const menu = document.getElementById('menu');
-      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-    }
-
-    // Load portfolios from localStorage
     function loadUserPortfolios() {
       const currentUser = localStorage.getItem('loggedInUser');
       if (!currentUser) return [];
@@ -344,17 +458,14 @@
       return data ? JSON.parse(data) : [];
     }
 
-    // Render portfolio cards
     function renderPortfolios() {
       const portfolioList = document.getElementById('portfolioList');
       portfolioList.innerHTML = '';
-
       const portfolios = loadUserPortfolios();
       if (!portfolios.length) {
         portfolioList.innerHTML = `<p>No portfolios found. Create one in the Portfolio Visualizer.</p>`;
         return;
       }
-
       portfolios.forEach((portfolio, idx) => {
         const card = document.createElement('div');
         card.className = 'portfolio-card';
@@ -365,7 +476,6 @@
         `;
         portfolioList.appendChild(card);
       });
-
       document.querySelectorAll('.monte-carlo-button').forEach((btn) => {
         btn.addEventListener('click', () => {
           const index = btn.getAttribute('data-index');
@@ -374,7 +484,6 @@
       });
     }
 
-    // Fetch helper with timeout
     function fetchWithTimeout(url, options = {}, timeout = 10000) {
       return Promise.race([
         fetch(url, options),
@@ -384,55 +493,38 @@
       ]);
     }
 
-    // Run Monte Carlo simulation and update UI with formatted results
     async function runMonteCarlo(portfolioIndex) {
-      // Store current portfolio index for later use
       currentPortfolioIndex = portfolioIndex;
-
-      // Show spinner overlay
       document.getElementById('spinnerOverlay').style.display = 'flex';
       const resultContainer = document.getElementById('simulationResult');
       resultContainer.style.display = 'none';
-
       const portfolios = loadUserPortfolios();
       const portfolio = portfolios[portfolioIndex];
       const tickers = portfolio.stocks || [];
-
       try {
         const response = await fetchWithTimeout('https://monte-carlo-api.fly.dev/api/run_monte_carlo', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ tickers, num_portfolios: 50000 }),
         }, 25000);
-
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-
-        // Hide spinner overlay
         document.getElementById('spinnerOverlay').style.display = 'none';
-
-        // Check for API error
         if (data.error) {
           resultContainer.style.display = 'block';
           resultContainer.innerHTML = `<h4 class="text-danger">Simulation error: ${data.error}</h4>`;
           resultContainer.scrollIntoView({ behavior: 'smooth' });
           return;
         }
-
-        // Store simulation results for later use
         currentMinPortfolio = data.MinVolPortfolio;
         currentMaxPortfolio = data.MaxSharpePortfolio;
-
-        // Show checkmark overlay briefly
         const checkmarkOverlay = document.getElementById('checkmarkOverlay');
         checkmarkOverlay.style.display = 'flex';
         setTimeout(() => {
           checkmarkOverlay.style.display = 'none';
           resultContainer.style.display = 'block';
-
-          // Build formatted simulation results with Apply buttons for each portfolio
           let html = `
             <div class="sim-result-title">Monte Carlo Simulation Results</div>
             <p style="margin-bottom:20px; font-size:1rem;">Portfolio: <strong>${tickers.join(', ')}</strong></p>
@@ -441,7 +533,6 @@
               <p>Return: <strong>${(currentMinPortfolio.return * 100).toFixed(2)}%</strong> &nbsp;&nbsp; Volatility: <strong>${(currentMinPortfolio.volatility * 100).toFixed(2)}%</strong></p>
               <ul>`;
           Object.entries(currentMinPortfolio.weights).forEach(([ticker, weight]) => {
-            // Display with 4 decimal places for more precision
             html += `<li>${ticker}: ${(weight * 100).toFixed(4)}%</li>`;
           });
           html += `
@@ -455,7 +546,6 @@
               <p>Return: <strong>${(currentMaxPortfolio.return * 100).toFixed(2)}%</strong> &nbsp;&nbsp; Volatility: <strong>${(currentMaxPortfolio.volatility * 100).toFixed(2)}%</strong></p>
               <ul>`;
           Object.entries(currentMaxPortfolio.weights).forEach(([ticker, weight]) => {
-            // Display with 4 decimal places for more precision
             html += `<li>${ticker}: ${(weight * 100).toFixed(4)}%</li>`;
           });
           html += `
@@ -467,11 +557,8 @@
             <div id="applyMsg" class="apply-msg"></div>
           `;
           resultContainer.innerHTML = html;
-
-          // Scroll smoothly to the results
           resultContainer.scrollIntoView({ behavior: 'smooth' });
         }, 1000);
-
       } catch (err) {
         console.error('Error:', err);
         document.getElementById('spinnerOverlay').style.display = 'none';
@@ -481,7 +568,6 @@
       }
     }
 
-    // Apply the selected portfolio weights to the user's saved portfolio
     function applyPortfolio(type) {
       const portfolios = loadUserPortfolios();
       if (currentPortfolioIndex === null || !portfolios[currentPortfolioIndex]) {
@@ -493,8 +579,6 @@
         alert('You must be logged in to update your portfolio.');
         return;
       }
-
-      // Determine which new weight distribution to use
       let newWeights;
       if (type === 'min') {
         newWeights = currentMinPortfolio.weights;
@@ -504,12 +588,8 @@
         alert('Invalid portfolio type.');
         return;
       }
-
-      // Update the selected portfolio's weights in the saved list
       portfolios[currentPortfolioIndex].weights = newWeights;
       localStorage.setItem(`portfolios_${currentUser}`, JSON.stringify(portfolios));
-
-      // Display a success message
       const msgEl = document.getElementById('applyMsg');
       msgEl.textContent = 'Portfolio updated successfully!';
       setTimeout(() => {
