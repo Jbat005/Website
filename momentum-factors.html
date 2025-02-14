@@ -16,7 +16,7 @@
             --text-color: #e0e0e0;
             --subtext-color: #b5b5b5;
             --accent-color: #64ffda;
-            --accent-hover: #52dab8;
+            --accent-hover: linear-gradient(90deg, #ef253f, #30e9fd);
             --cta-secondary: #4d86ff;
         }
 
@@ -56,6 +56,8 @@
             transition: color 0.2s ease;
         }
         .menu-links {
+            font-weight: 800;
+            font-size: .9em;
             display: flex;
             flex-direction: row;
             position: static;
@@ -63,29 +65,51 @@
             padding: 0;
             box-shadow: none;
             border: none;
+            margin-bottom: 50px;
+            margin-top: -10px;
         }
         .menu-links a {
             padding: 0 15px;
             display: inline-block;
         }
         .menu-links a:hover {
-            color: var(--accent-color);
-        }
+  background: var(--accent-hover);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientAnimation 3s ease infinite;
+}
+@keyframes gradientAnimation {
+      0% {
+        background-position: 0%;
+      }
+      50% {
+        background-position: 100%;
+      }
+      100% {
+        background-position: 0%;
+      }
+    }
+
         .logo-link img {
-            max-height: 150px;
-            width: 120px;
-        }
+      max-height: 110px;
+      width: 110px;
+      position: relative;
+      top: 9px;
+      margin-left: 50px;
+    }
         @media (min-width: 769px) {
             .hamburger-icon {
                 display: none;
             }
             .menu-links {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                width: 100%;
-            }
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 8px;
+      }
         }
         .close-icon {
             display: none;
@@ -97,7 +121,7 @@
                 top: 0;
                 left: 0;
                 width: 100%;
-                height: 100vh;
+                height: 110vh;
                 background-color: var(--light-bg);
                 transform: translateY(-100%);
                 transition: transform 0.3s ease;
@@ -124,7 +148,8 @@
             }
             .logo-link {
                 text-align: center;
-                margin-bottom: -10px;
+                margin-left: -50px;
+                margin-bottom: 30px;
             }
         }
         @media (max-width: 768px) {
@@ -391,7 +416,7 @@
             <a href="demo.html">Watch Demo</a>
             <!-- Login and Get Started Buttons -->
             <div class="menu-actions">
-                <button class="menu-button login-button" onclick="location.href='login.html'">Log In</button>
+                <button class="menu-button login-button" onclick="location.href='create-profile.html'">Log In</button>
                 <button class="menu-button" onclick="location.href='create-profile.html'">Get Started</button>
             </div>
         </div>
@@ -412,7 +437,6 @@
 
     <!-- HERO SECTION -->
     <section id="momentumHero">
-        <img src="logoSI.png" alt="Smart Invest Logo" style="width: 120px; margin-bottom: 20px;">
         <h1 class="hero-heading">AI-Powered Momentum Portfolio</h1>
         <p class="hero-subheading">
             Optimal momentum portfolio based on real-time momentum analysis. Give it 10-15 seconds to generate.

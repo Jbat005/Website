@@ -20,9 +20,8 @@
       --text-color: #e0e0e0;
       --subtext-color: #b5b5b5;
       --accent-color: #64ffda;
-      --accent-hover: #52dab8;
+      --accent-hover: linear-gradient(90deg, #ef253f, #30e9fd);
       --cta-secondary: #4d86ff;
-
       --section-bg: #1f1f1f;  
       --section-heading-color: #ffffff; 
       --section-text-color: #d4d4d4;
@@ -73,6 +72,8 @@
     }
 
     .menu-links {
+      font-weight: 800;
+      font-size: .9em;
       display: flex;
       flex-direction: row;
       position: static;
@@ -80,6 +81,8 @@
       padding: 0;
       box-shadow: none;
       border: none;
+      margin-bottom: 50px;
+      margin-top: -10px;
     }
     /* Replace "Home" with a clickable logo via the .logo-link class */
     .menu-links a {
@@ -87,15 +90,34 @@
       display: inline-block;
     }
     .menu-links a:hover {
-      color: var(--accent-color);
+  background: var(--accent-hover);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientAnimation 3s ease infinite;
+}
+@keyframes gradientAnimation {
+      0% {
+        background-position: 0%;
+      }
+      50% {
+        background-position: 100%;
+      }
+      100% {
+        background-position: 0%;
+      }
     }
+
 
     /* Style the logo image in the nav menu */
     .logo-link img {
-      max-height: 150px;
-      width: 120px;
-      /* Adjust as needed for your design */
+      max-height: 110px;
+      width: 110px;
+      position: relative;
+      top: 9px;
+      margin-left: 50px;
     }
+
 
     /* By default on large screens, the hamburger icon is hidden, 
        and the links are visible inline */
@@ -109,6 +131,7 @@
         align-items: center; /* Vertically center links and buttons */
         justify-content: space-between;
         width: 100%;
+        margin-top: 8px;
       }
     }
 
@@ -124,7 +147,7 @@
         top: 0; 
         left: 0;
         width: 100%;
-        height: 100vh;
+        height: 110vh;
         background-color: var(--light-bg);
         transform: translateY(-100%);
         transition: transform 0.3s ease;
@@ -155,7 +178,8 @@
       /* Mobile: center the logo link */
       .logo-link {
         text-align: center;
-        margin-bottom: -10px;
+        margin-left: -50px;
+        margin-bottom: 30px;
       }
     }
 
@@ -495,7 +519,7 @@
 
       <!-- Buttons -->
       <div class="menu-actions">
-        <button class="menu-button login-button" onclick="location.href='login.html'">
+        <button class="menu-button login-button" onclick="location.href='create-profile.html'">
           Log In
         </button>
         <button class="menu-button" onclick="location.href='create-profile.html'">

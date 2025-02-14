@@ -23,7 +23,7 @@
       --text-color: #e0e0e0;
       --subtext-color: #b5b5b5;
       --accent-color: #64ffda;
-      --accent-hover: #52dab8;
+      --accent-hover: linear-gradient(90deg, #ef253f, #30e9fd);
       --cta-secondary: #4d86ff;
       --section-bg: #1f1f1f;
       --section-heading-color: #ffffff;
@@ -37,7 +37,7 @@
       box-sizing: border-box;
     }
 
-    /* Make the ENTIRE PAGE one gradient background */
+    /* Entire page gradient background */
     body {
       font-family: 'Open Sans', Arial, sans-serif;
       background: linear-gradient(to bottom, var(--gradient-start) 0%, var(--gradient-start) 20%, var(--gradient-end) 100%);
@@ -56,8 +56,8 @@
     }
 
     /* ==============================
-       NAVIGATION MENU (Updated to match Home)
-    ============================== */
+       NAVIGATION MENU
+    ================================ */
     .hamburger-menu {
       position: relative;
       background-color: var(--gradient-start);
@@ -74,24 +74,47 @@
       transition: color 0.2s ease;
     }
     .menu-links {
-      display: flex;
-      flex-direction: row;
-      position: static;
-      background-color: transparent;
-      padding: 0;
-      box-shadow: none;
-      border: none;
-    }
+            font-weight: 800;
+            font-size: .9em;
+            display: flex;
+            flex-direction: row;
+            position: static;
+            background-color: transparent;
+            padding: 0;
+            box-shadow: none;
+            border: none;
+            margin-bottom: 50px;
+            margin-top: -10px;
+        }
     .menu-links a {
       padding: 0 15px;
       display: inline-block;
     }
     .menu-links a:hover {
-      color: var(--accent-color);
+  background: var(--accent-hover);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientAnimation 3s ease infinite;
+}
+@keyframes gradientAnimation {
+      0% {
+        background-position: 0%;
+      }
+      50% {
+        background-position: 100%;
+      }
+      100% {
+        background-position: 0%;
+      }
     }
+
     .logo-link img {
-      max-height: 150px;
-      width: 120px;
+      max-height: 110px;
+      width: 110px;
+      position: relative;
+      top: 9px;
+      margin-left: 50px;
     }
     @media (min-width: 769px) {
       .hamburger-icon {
@@ -103,6 +126,7 @@
         align-items: center;
         justify-content: space-between;
         width: 100%;
+        margin-top: 8px;
       }
     }
     .close-icon {
@@ -115,7 +139,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: 100vh;
+        height: 110vh;
         background-color: var(--light-bg);
         transform: translateY(-100%);
         transition: transform 0.3s ease;
@@ -142,10 +166,10 @@
       }
       .logo-link {
         text-align: center;
-        margin-bottom: -10px;
+        margin-left: -50px;
+        margin-bottom: 30px;
       }
     }
-
     @media (max-width: 768px) {
       .hamburger-menu {
         background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-start) 80%);
@@ -193,14 +217,18 @@
     }
     #descTitle {
       font-family: 'Montserrat', sans-serif;
-      font-size: 1.6rem;
+      font-weight: 900;
+      font-size: 3rem;
       margin-bottom: 10px;
       color: var(--accent-color);
       animation: fadeIn 1s forwards;
+      line-height: 1.3;
       opacity: 0;
     }
     #descText {
-      font-size: 1.1rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      font-size: 1.5rem;
       color: var(--subtext-color);
       max-width: 700px;
       margin: 0 auto;
@@ -213,57 +241,47 @@
     }
 
     /* ==============================
-       MAIN CONTENT: SLIDER/BADGE + CHART
+       MAIN CONTENT: SLIDER/BADGE, TRADER BUTTON, & CHART
+       Vertical layout: Top row (risk slider + trader redirect) & Chart below.
     ================================ */
     .main-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       width: 100%;
+      margin: 40px 0;
+    }
+
+    /* Top row: risk slider container and trader redirect button */
+    .top-row {
       display: flex;
       flex-direction: row;
-      align-items: flex-start;
-      justify-content: space-between;
-      margin-top: 40px;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 800px;
       margin-bottom: 40px;
+      gap: 20px;
     }
-    .left-column {
-      margin-left: 80px;
-      margin-right: 20px;
-    }
-    .right-column {
-      margin-left: 20px;
-      margin-right: 80px;
-    }
-    @media (max-width: 768px) {
-      .main-content {
-        flex-direction: column;
-        align-items: center;
-      }
-      .left-column {
-        margin: 0 auto 20px auto;
-      }
-      .right-column {
-        margin: 0 auto;
-      }
-    }
+
     .risk-container {
       background: transparent;
       padding: 20px;
-      width: auto;
-      max-width: 600px;
+      max-width: 400px;
     }
     .risk-container h2 {
       font-family: 'Montserrat', sans-serif;
-      font-size: 1.6rem;
+      font-weight: 300px;
+      font-size: 1.4rem;
       margin-bottom: 10px;
       color: #ffffff;
       text-align: center;
-      background: transparent;
     }
     .risk-container .slider-instructions {
       font-size: 0.95rem;
       color: var(--subtext-color);
       text-align: center;
       margin-bottom: 30px;
-      background: transparent;
     }
     #riskBadgeImage {
       display: block;
@@ -316,11 +334,46 @@
     #riskSlider::-moz-range-thumb:hover {
       transform: scale(1.15);
     }
+
+    /* Trader Redirect Container */
+    .trader-redirect {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900px;
+      font-size: 1.5rem;
+      background: transparent;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--text-color);
+      max-width: 300px;
+    }
+    .trader-redirect p {
+      font-size: 1.4rem;
+      font-weight: 900px;
+      margin-bottom: 10px;
+    }
+    .trader-redirect button {
+      background-color: var(--accent-color);
+      color: var(--bg-color);
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    /* Chart Container */
     .chart-container {
       position: relative;
       background: transparent;
       padding: 20px;
       border-radius: 8px;
+      width: 90%;
+      max-width: 800px;
     }
     #myChart {
       width: 100%;
@@ -330,13 +383,16 @@
       #myChart {
         height: 300px;
       }
+      .top-row {
+        flex-direction: column;
+      }
     }
     .returns-info {
       position: absolute;
       top: 25px;
       left: 25px;
       color: #fff;
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Open Sans', Arial, sans-serif;
       font-size: 1rem;
       line-height: 1.4;
     }
@@ -344,12 +400,12 @@
 </head>
 <body>
 
-  <!-- Updated Navigation Menu -->
+  <!-- Navigation Menu -->
   <div class="hamburger-menu">
     <span class="hamburger-icon" id="hamburgerIcon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
     <div class="menu-links" id="menu">
       <div class="close-icon" onclick="toggleMenu()">✕</div>
-      <!-- Site logo replaces the Home text -->
+      <!-- Site logo -->
       <a href="index.html" class="logo-link">
         <img src="logoSI.png" alt="Smart Invest Logo">
       </a>
@@ -361,7 +417,7 @@
       <a href="demo.html">Watch Demo</a>
       <!-- Login and Get Started Buttons -->
       <div class="menu-actions">
-        <button class="menu-button login-button" onclick="location.href='login.html'">Log In</button>
+        <button class="menu-button login-button" onclick="location.href='create-profile.html'">Log In</button>
         <button class="menu-button" onclick="location.href='create-profile.html'">Get Started</button>
       </div>
     </div>
@@ -373,32 +429,32 @@
     <p id="descText">This is a moderate risk level, offering a balance between growth and stability.</p>
   </section>
 
-  <!-- MAIN CONTENT: SLIDER/BADGE (LEFT) + CHART (RIGHT) -->
+  <!-- MAIN CONTENT: Top Row (Risk Slider & Trader Redirect) & Chart -->
   <div class="main-content">
-    <!-- LEFT COLUMN: SLIDER + BADGE -->
-    <div class="left-column">
+    <div class="top-row">
+      <!-- Risk Slider & Badge Container -->
       <div class="risk-container">
-        <!-- Badge Image (Default to R3) -->
-        <img id="riskBadgeImage" src="R3.png" alt="Risk Badge 3">
-        <!-- Slider -->
-        <input type="range" id="riskSlider" min="1" max="3" value="3">
+        <img id="riskBadgeImage" src="R2.png" alt="Risk Badge 2">
+        <input type="range" id="riskSlider" min="1" max="3" value="2">
+      </div>
+      <!-- Trader Redirect Container -->
+      <div class="trader-redirect">
+        <p>Based on your risk we've constructed a portfolio for your needs.</p>
+        <button class="menu-button" onclick="location.href='momentum-factors.html'">Trader</button>
       </div>
     </div>
-    <!-- RIGHT COLUMN: HISTORICAL CHART -->
-    <div class="right-column">
-      <div class="chart-container">
-        <!-- Returns Info positioned in the upper-left of the chart -->
-        <div class="returns-info" id="returnsInfo">
-          <div><strong>Total Return:</strong> 142.67%</div>
-          <div><strong>Annual Return:</strong> 7.39%</div>
-        </div>
-        <canvas id="myChart"></canvas>
+    <!-- Chart Container -->
+    <div class="chart-container">
+      <div class="returns-info" id="returnsInfo">
+        <div><strong>Total Return:</strong> 142.67%</div>
+        <div><strong>Annual Return:</strong> 7.39%</div>
       </div>
+      <canvas id="myChart"></canvas>
     </div>
   </div>
 
   <script>
-    // Toggle menu logic (same as homepage)
+    // Toggle menu logic
     function toggleMenu() {
       const menu = document.getElementById('menu');
       const icon = document.getElementById('hamburgerIcon');
@@ -418,7 +474,7 @@
       }
     });
 
-    // Highlight active link based on the current page URL
+    // Highlight active link based on current URL
     document.addEventListener('DOMContentLoaded', function() {
       const currentPage = window.location.pathname.split("/").pop();
       const menuLinks = document.querySelectorAll('.menu-links a');
@@ -452,7 +508,7 @@
       3: [0, 50, 30, 70, 120, 140]
     };
 
-    // Mock returns data to show in the chart's top-left
+    // Mock returns data for the chart's info box
     const returnsData = {
       1: { total: "60.12%", annual: "3.45%" },
       2: { total: "100.54%", annual: "5.62%" },
@@ -465,12 +521,12 @@
     const descText = document.getElementById("descText");
     const returnsInfo = document.getElementById("returnsInfo");
 
-    // Initialize the Chart
+    // Initialize Chart.js
     const ctx = document.getElementById('myChart').getContext('2d');
     let myChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ["2018","2019","2020","2021","2022","2023"],
+        labels: ["2018", "2019", "2020", "2021", "2022", "2023"],
         datasets: [{
           label: 'Historical Performance',
           data: graphData[3],
@@ -499,7 +555,7 @@
       }
     });
 
-    // On slider change, update badge image, description, chart data, and returns info
+    // Update elements on slider change
     slider.addEventListener("input", () => {
       const val = slider.value;
       badgeImage.style.opacity = 0;
