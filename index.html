@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 <head>
   <title>Better Invest - Home</title>
@@ -15,6 +15,7 @@
     :root {
       --bg-color: #181818;
       --light-bg: #0e1318;
+      --background: #0c002ce7;
       --gradient-start: #1d2b3a;
       --gradient-end: #0e1318;
       --text-color: #e0e0e0;
@@ -34,14 +35,17 @@
       box-sizing: border-box;
     }
 
+    /* Global background that mixes the color with the image */
     body {
       font-family: 'Open Sans', Arial, sans-serif;
-      background: var(--bg-color);
+      background: var(--background) url('background.jpg') repeat;
+      background-blend-mode: overlay;
+      position: relative;
       color: var(--text-color);
       margin: 0;
       line-height: 1.6;
     }
-
+  
     a {
       text-decoration: none;
       color: var(--text-color);
@@ -56,24 +60,23 @@
     ============================== */
     .hamburger-menu {
       position: relative;
-      background-color: #1d2b3a;
+      background: var(--background) url('background.jpg') repeat;
+      background-blend-mode: overlay;
       padding: 10px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-
     .hamburger-icon {
-      font-size: 1.5em;
+      font-size: 1.8em;
       cursor: pointer;
       user-select: none;
       color: var(--text-color);
       transition: color 0.2s ease;
     }
-
     .menu-links {
       font-weight: 800;
-      font-size: .9em;
+      font-size: 0.9em;
       display: flex;
       flex-direction: row;
       position: static;
@@ -84,32 +87,22 @@
       margin-bottom: 50px;
       margin-top: -10px;
     }
-    /* Replace "Home" with a clickable logo via the .logo-link class */
     .menu-links a {
       padding: 0 15px;
       display: inline-block;
     }
     .menu-links a:hover {
-  background: var(--accent-hover);
-  background-size: 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientAnimation 3s ease infinite;
-}
-@keyframes gradientAnimation {
-      0% {
-        background-position: 0%;
-      }
-      50% {
-        background-position: 100%;
-      }
-      100% {
-        background-position: 0%;
-      }
+      background: var(--accent-hover);
+      background-size: 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientAnimation 3s ease infinite;
     }
-
-
-    /* Style the logo image in the nav menu */
+    @keyframes gradientAnimation {
+      0% { background-position: 0%; }
+      50% { background-position: 100%; }
+      100% { background-position: 0%; }
+    }
     .logo-link img {
       max-height: 110px;
       width: 110px;
@@ -117,38 +110,37 @@
       top: 9px;
       margin-left: 50px;
     }
-
-
-    /* By default on large screens, the hamburger icon is hidden, 
-       and the links are visible inline */
+    /* Desktop: hide hamburger icon */
     @media (min-width: 769px) {
       .hamburger-icon {
         display: none;
       }
       .menu-links {
-        display: flex; 
+        display: flex;
         flex-direction: row;
-        align-items: center; /* Vertically center links and buttons */
+        align-items: center;
         justify-content: space-between;
         width: 100%;
         margin-top: 8px;
       }
     }
-
     .close-icon {
       display: none;
     }
-
     /* Mobile overlay menu */
     @media (max-width: 768px) {
+      .hamburger-menu {
+        justify-content: flex-end;
+      }
       .menu-links {
         display: block;
         position: fixed;
-        top: 0; 
+        top: 0;
         left: 0;
         width: 100%;
         height: 110vh;
-        background-color: var(--light-bg);
+        background: var(--background) url('background.jpg') repeat;
+        background-blend-mode: overlay;
         transform: translateY(-100%);
         transition: transform 0.3s ease;
         padding: 60px 20px;
@@ -163,8 +155,6 @@
       .menu-links.open {
         transform: translateY(0);
       }
-
-      /* Show the close icon on mobile */
       .close-icon {
         display: block;
         position: absolute;
@@ -174,26 +164,14 @@
         cursor: pointer;
         color: var(--text-color);
       }
-      
-      /* Mobile: center the logo link */
       .logo-link {
         text-align: center;
         margin-left: -50px;
         margin-bottom: 30px;
       }
     }
-
     .menu-links a.active {
       color: var(--bg-color);
-    }
-
-    /* ========== SPECIFIC MOBILE-ONLY CHANGES ========== */
-    @media (max-width: 768px) {
-      /* Move the hamburger icon to top-right on mobile */
-      .hamburger-menu {
-        background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-start) 80%);
-        justify-content: flex-end; /* push icon to the right */
-      }
     }
 
     /* ==============================
@@ -207,16 +185,17 @@
       border-radius: 4px;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.2s ease, transform 0.2s ease;
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
       text-align: center;
     }
-
+    .menu-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
     .login-button {
       background-color: var(--cta-secondary);
       color: #ffffff;
     }
-
-    /* Base (mobile-first) - stack & center buttons */
     .menu-actions {
       display: flex;
       flex-direction: column;
@@ -224,8 +203,6 @@
       margin-top: 20px;
       align-items: center;
     }
-
-    /* Desktop overrides */
     @media (min-width: 769px) {
       .menu-actions {
         flex-direction: row;
@@ -239,27 +216,29 @@
        HERO SECTION
     ============================== */
     #homeHero {
-      background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end) 80%);
+      background: transparent;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 40px 20px;
       text-align: center;
+      min-height: 80vh;
     }
     .hero-heading {
       font-family: 'Montserrat', sans-serif;
       font-weight: 900;
-      font-size: 2rem;
+      font-size: 2.5rem;
       color: #ffffff;
       margin-bottom: 20px;
       line-height: 1.3;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
       opacity: 0;
       animation: fadeIn 1s forwards;
     }
     @media (min-width: 768px) {
       .hero-heading {
-        font-size: 3rem;
+        font-size: 3.5rem;
       }
     }
     .hero-subheading {
@@ -304,12 +283,25 @@
       height: auto;
       display: block;
     }
+    /* Scroll down indicator */
+    .scroll-down {
+      margin-top: 20px;
+      font-size: 2rem;
+      color: var(--text-color);
+      animation: bounce 2s infinite;
+      cursor: pointer;
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(10px); }
+      60% { transform: translateY(5px); }
+    }
 
     /* ==============================
        FEATURES SECTION
     ============================== */
     .features-section {
-      background-color: var(--gradient-end);
+      background: transparent;
       padding: 60px 20px;
       color: var(--text-color);
     }
@@ -336,7 +328,7 @@
       position: absolute;
       width: 400px;
       height: 400px;
-      background: #1f2a38;
+      background: #ffffff3d;
       border-radius: 50%;
       z-index: 0;
     }
@@ -361,7 +353,7 @@
       color: #ffffff;
     }
     .features-subheading {
-      font-size: 1rem;
+      font-size: 1.3rem;
       color: var(--subtext-color);
       margin-bottom: 30px;
       line-height: 1.5;
@@ -381,16 +373,17 @@
       margin-right: 15px;
     }
     .feature-info h3 {
-      font-weight: 700;
-      font-size: 1.2rem;
+      font-weight: 800;
+      font-size: 1.4rem;
       margin-bottom: 5px;
       color: var(--accent-color);
     }
     .feature-info p {
-      font-size: 0.95rem;
+      font-size: 1.2rem;
+      font-weight: 600;
       line-height: 1.4;
+      margin-bottom: -10px;
     }
-
     @media (max-width: 768px) {
       .features-container {
         flex-direction: column;
@@ -407,19 +400,10 @@
     ============================== */
     #aboutPlatform {
       position: relative;
-      background-color: var(--section-bg);
+      background: transparent;
       padding: 80px 20px;
       color: var(--section-text-color);
       overflow: hidden;
-      background: linear-gradient( var(--gradient-end) 100%, var(--gradient-start) 100%);
-    }
-    #aboutPlatform::before {
-      content: "";
-      position: absolute;
-      top: 0; right: 0; bottom: 0; left: 0;
-      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.05), transparent 10%),
-                  radial-gradient(circle at 80% 50%, rgba(255,255,255,0.03), transparent 10%);
-      z-index: 0;
     }
     .token-about {
       position: absolute;
@@ -467,7 +451,6 @@
     #aboutPlatform p strong {
       color: var(--accent-color);
     }
-
     @keyframes fadeIn {
       to { opacity: 1; }
     }
@@ -500,12 +483,9 @@
           onclick="toggleMenu()" 
           aria-label="Toggle navigation menu" 
           role="button" 
-          tabindex="0"
-    >☰</span>
-
+          tabindex="0">☰</span>
     <div class="menu-links" id="menu">
       <div class="close-icon" onclick="toggleMenu()">✕</div>
-
       <!-- Replace the Home text with a clickable logo -->
       <a href="index.html" class="logo-link">
         <img src="logoSI.png" alt="Smart Invest Logo">
@@ -515,76 +495,52 @@
       <a href="risk-level.html">Risk Level</a>
       <a href="portfolio.html">Portfolio Management</a>
       <a href="optimized-weights.html">Simulated Strategies</a>
-      <a href="demo.html"> Watch Demo</a>
-
+      <a href="demo.html">Watch Demo</a>
       <!-- Buttons -->
       <div class="menu-actions">
-        <button class="menu-button login-button" onclick="location.href='create-profile.html'">
-          Log In
-        </button>
-        <button class="menu-button" onclick="location.href='create-profile.html'">
-          Get Started
-        </button>
+        <button class="menu-button login-button" onclick="location.href='create-profile.html'">Log In</button>
+        <button class="menu-button" onclick="location.href='create-profile.html'">Get Started</button>
       </div>
     </div>
   </div>
 
   <!-- HERO SECTION -->
   <section id="homeHero">
-    <!-- Removed the logo image from here -->
-    <h1 class="hero-heading">
-      Better Investing, Simplified
-    </h1>
-    <p class="hero-subheading">
-      Discover how top investors manage portfolios using real-time data, Monte Carlo simulations, and advanced analytics. All in one place.
-      <p>
-        Unlike other platforms, our service is completely free to use and doesn’t require any personal information whatsoever.
-      </p>
-    </p>
+    <h1 class="hero-heading">Better Investing, Simplified</h1>
+    <p class="hero-subheading">Discover how top investors manage portfolios using real-time data, Monte Carlo simulations, and advanced analytics. All in one place.</p>
+    <p class="hero-subheading">Unlike other platforms, our service is completely free to use and doesn’t require any personal information whatsoever.</p>
+    <div class="scroll-down" onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'});">↓</div>
   </section>
 
   <!-- FEATURES SECTION -->
-  <section class="features-section">
+  <section class="features-section" id="features">
     <div class="features-container">
       <div class="phone-mockup-wrapper">
         <div class="circle-background"></div>
-        <img
-          class="phone-mockup"
-          src="mock5.png"
-          alt="App on Mobile Phone"
-        />
+        <img class="phone-mockup" src="mock5.png" alt="App on Mobile Phone">
       </div>
       <div class="features-text">
         <h2 class="features-heading">Features</h2>
-        <p class="features-subheading">
-          Unlock powerful tools to boost your investing potential—here’s how:
-        </p>
+        <p class="features-subheading">Unlock powerful tools to boost your investing potential—here’s how:</p>
         <div class="feature-item">
           <div class="feature-icon">📈</div>
           <div class="feature-info">
-            <h3>Risk Assesment & Monte Carlo</h3>
-            <p>
-              Identify risk, set realistic goals, and optimize your strategy with confidence. Get reccomendations on how to improve your portfolio.
-            </p>
+            <h3>Risk Assessment & Monte Carlo</h3>
+            <p>Identify risk, set realistic goals, and optimize your strategy with confidence. Get recommendations on how to improve your portfolio.</p>
           </div>
         </div>
         <div class="feature-item">
           <div class="feature-icon">🚀</div>
           <div class="feature-info">
             <h3>Buy & Sell Notifications</h3>
-            <p>
-              Real-time alerts for when to buy or sell.
-            </p>
+            <p>Real-time alerts for when to buy or sell.</p>
           </div>
         </div>
         <div class="feature-item">
           <div class="feature-icon">🤖</div>
           <div class="feature-info">
             <h3>Technical Analysis &amp; Bot Trading</h3>
-            <p>
-              Algorithms analyze market trends based on real-time data 24/7.
-              Automate your strategy and make decisions faster so you can focus on what truly matters.
-            </p>
+            <p>Algorithms analyze market trends based on real-time data 24/7. Automate your strategy and make decisions faster so you can focus on what truly matters.</p>
           </div>
         </div>
       </div>
@@ -596,25 +552,14 @@
     <div class="token-about">
       <img src="floating_token.png" alt="Floating Token" style="width: 2000px; height: auto;">
     </div>
-
     <div class="container">
       <h2>Why Our Platform is Right For You</h2>
       <hr class="dark-divider" />
-      <p>
-        Lets be real... Wall Street has the game rigged in their favor.
-      </p>
-      <p>
-        They pull in billions of dollars every single day, while regular people end up with mere crumbs.
-      </p>
-      <p>
-        And heres the kicker: their secret weapon isnt some mystical strategy or decades of experience— its technology.
-      </p>
-      <p>
-        <strong>Computer algorithms execute up to 75% Of all trades, accoding to Select USA.</strong>
-      </p>
-      <p>
-        Now's your chance to level the playing field and tap into the same powerful tools that the pros rely on.
-      </p>
+      <p>Let's be real... Wall Street has the game rigged in their favor.</p>
+      <p>They pull in billions of dollars every single day, while regular people end up with mere crumbs.</p>
+      <p>And here's the kicker: their secret weapon isn't some mystical strategy or decades of experience—it's technology.</p>
+      <p><strong>Computer algorithms execute up to 75% of all trades, according to Select USA.</strong></p>
+      <p>Now's your chance to level the playing field and tap into the same powerful tools that the pros rely on.</p>
       <hr class="dark-divider" />
     </div>
   </section>
@@ -623,7 +568,6 @@
     function toggleMenu() {
       const menu = document.getElementById('menu');
       const icon = document.getElementById('hamburgerIcon');
-
       if (menu.classList.contains('open')) {
         menu.classList.remove('open');
         icon.textContent = '☰';
@@ -632,8 +576,6 @@
         icon.textContent = '✕';
       }
     }
-
-    // Allows pressing Enter/Space on the icon
     const hamburgerIcon = document.querySelector('.hamburger-icon');
     hamburgerIcon.addEventListener('keydown', function(event) {
       if (event.key === 'Enter' || event.key === ' ') {
@@ -641,8 +583,6 @@
         toggleMenu();
       }
     });
-
-    // Highlight active link
     document.addEventListener('DOMContentLoaded', function() {
       const currentPage = window.location.pathname.split("/").pop();
       const menuLinks = document.querySelectorAll('.menu-links a');
