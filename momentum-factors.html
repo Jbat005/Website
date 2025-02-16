@@ -503,7 +503,7 @@
 
             try {
                 // Use fetchWithTimeout to load momentum data
-                const response = await fetchWithTimeout('https://my-vercel-momentum-snowy-frost-9643.fly.dev/api/momentum', {}, 15000);
+                const response = await fetchWithTimeout('https://my-vercel-momentum-snowy-frost-9643.fly.dev/api/momentum', {}, 30000);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
