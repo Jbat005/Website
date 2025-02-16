@@ -17,7 +17,7 @@
   <style>
     /* CSS Variables (same as home page) */
     :root {
-      --bg-color: #181818;
+      --bg-color: #16024b;
       --light-bg: #0e1318;
       --gradient-start: #1d2b3a;
       --gradient-end: #0e1318;
@@ -36,7 +36,7 @@
     }
     body {
       font-family: 'Open Sans', Arial, sans-serif;
-      background: var(--gradient-end);
+      background: var(--bg-color);
       color: var(--text-color);
       margin: 0;
     }
@@ -50,7 +50,7 @@
     ============================== */
     .hamburger-menu {
       position: relative;
-      background-color: var(--gradient-start);
+      background: transparent;
       padding: 10px 20px;
       display: flex;
       align-items: center;
@@ -69,7 +69,7 @@
             display: flex;
             flex-direction: row;
             position: static;
-            background-color: transparent;
+            background: var(--bg-color);
             padding: 0;
             box-shadow: none;
             border: none;
@@ -132,7 +132,7 @@
         left: 0;
         width: 100%;
         height: 110vh;
-        background-color: var(--light-bg);
+        background: var(--bg-color);
         transform: translateY(-100%);
         transition: transform 0.3s ease;
         padding: 60px 20px;
@@ -165,7 +165,7 @@
 
     @media (max-width: 768px) {
       .hamburger-menu {
-        background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-start) 80%);
+        background: transparent;
         justify-content: flex-end;
       }
     }
@@ -205,7 +205,7 @@
        DASHBOARD HERO SECTION
     ============================== */
     .dashboard-hero {
-      background: linear-gradient(to bottom, var(--gradient-start) 0%, var(--gradient-start) 20%, var(--gradient-end) 100%);
+      background: transparent;
       padding: 40px 20px;
       text-align: center;
     }
@@ -239,9 +239,11 @@
     /* Portfolio Selection */
     #portfolioSelection {
       margin-bottom: 30px;
+      background: transparent;
       text-align: center;
     }
     #portfolioSelection label {
+      background: transparent;
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
       margin-right: 10px;
@@ -250,9 +252,10 @@
       padding: 8px 12px;
       border-radius: 4px;
       border: 1px solid #444;
-      background-color: var(--gradient-end);
-      color: #e0e0e0;
+      background: transparent;
+      color: #000000;
       font-size: 1em;
+      font-weight: 800;
     }
 
     /* Stats Grid */
@@ -263,7 +266,7 @@
       margin-bottom: 40px;
     }
     .stat-card {
-      background-color: var(--gradient-end);
+      background: transparent;
       border-radius: 8px;
       padding: 20px;
       text-align: center;
@@ -302,7 +305,7 @@
     #performanceGraph {
       width: 100%;
       height: 500px;
-      background-color: var(--gradient-end);
+      background: transparent;
       border-radius: 8px;
       padding: 10px;
     }
@@ -317,7 +320,7 @@
     }
     #graphControls select {
       padding: 8px;
-      background-color: var(--gradient-end);
+      background: transparent;
       color: #e0e0e0;
       border-radius: 4px;
       border: 1px solid #444;
@@ -328,7 +331,7 @@
       font-size: 1em;
       border-radius: 8px;
       margin: 5px;
-      background-color: var(--gradient-end);
+      background: transparent;
       color: #e0e0e0;
       border: 1px solid #e0e0e0;
       cursor: pointer;
@@ -380,7 +383,7 @@
 
     /* Notifications/Alerts */
     .notifications-section .notification-item {
-      background-color: var(--gradient-end);
+      background: transparent;
       border-radius: 8px;
       padding: 15px 20px;
       margin-bottom: 10px;
@@ -421,10 +424,10 @@
 
   <!-- Dashboard Hero Section -->
   <section class="dashboard-hero">
-    <h1 class="dashboard-heading">Welcome to Your Dashboard</h1>
+    <h1 class="dashboard-heading">Dashboard</h1>
     <p class="dashboard-subheading">
-      Keep track of your portfolio performance, monitor the latest transactions, 
-      and stay informed with real-time alerts.
+      Select different portfolios, view performance charts, 
+      statistics, and stay informed with real-time alerts.
     </p>
   </section>
 
@@ -613,7 +616,7 @@
       }
 
       function populatePortfolioSelection() {
-        portfolioSelection.innerHTML = '<option value="" disabled selected>-- Choose Portfolio --</option>';
+        portfolioSelection.innerHTML = '<option value="" disabled selected>Choose Portfolio</option>';
         activePortfolios.forEach((portfolio, index) => {
           const option = document.createElement("option");
           option.value = index;

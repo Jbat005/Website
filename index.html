@@ -15,7 +15,7 @@
     :root {
       --bg-color: #181818;
       --light-bg: #0e1318;
-      --background: #0c002ce7;
+      
       --gradient-start: #1d2b3a;
       --gradient-end: #0e1318;
       --text-color: #e0e0e0;
@@ -35,11 +35,10 @@
       box-sizing: border-box;
     }
 
-    /* Global background that mixes the color with the image */
+    /* Global background */
     body {
       font-family: 'Open Sans', Arial, sans-serif;
-      background: var(--background) url('background.jpg') repeat;
-      background-blend-mode: overlay;
+      background: url('background.png') repeat;
       position: relative;
       color: var(--text-color);
       margin: 0;
@@ -55,39 +54,22 @@
       color: var(--accent-color);
     }
 
-    /* Shake animation for mobile logo */
-    @keyframes shake {
-      0% { transform: translate(0px, 0px) rotate(0deg); }
-      10% { transform: translate(-3px, -3px) rotate(-2deg); }
-      20% { transform: translate(3px, 3px) rotate(2deg); }
-      30% { transform: translate(-3px, 3px) rotate(-2deg); }
-      40% { transform: translate(3px, -3px) rotate(2deg); }
-      50% { transform: translate(-3px, 3px) rotate(-2deg); }
-      60% { transform: translate(3px, -3px) rotate(2deg); }
-      70% { transform: translate(-3px, 3px) rotate(-2deg); }
-      80% { transform: translate(3px, -3px) rotate(2deg); }
-      90% { transform: translate(-3px, 3px) rotate(-2deg); }
-      100% { transform: translate(0,0) rotate(0deg); }
-    }
-    .shake {
-      animation: shake 0.1s;
-    }
-
-    /* ==============================
-       HAMBURGER MENU
-    ============================== */
+    /* HAMBURGER MENU */
     .hamburger-menu {
       position: relative;
-      background: var(--background) url('background.jpg') repeat;
-      background-blend-mode: overlay;
+      background: transparent;
       padding: 10px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    /* Desktop hamburger icon */
+    /* Hamburger Icon for Mobile */
     .hamburger-icon {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      z-index: 10000; /* bring it to the front */
       font-size: 1.5em;
       cursor: pointer;
       user-select: none;
@@ -95,32 +77,32 @@
       transition: color 0.2s ease;
     }
 
-    /* Mobile logo (trigger) - hidden on desktop */
-    .mobile-logo {
-      display: none;
-    }
-    .mobile-logo img {
-      max-height: 110px;
-      width: 110px;
-      cursor: pointer;
-    }
-
+    /* Navigation Menu (Mobile) */
     .menu-links {
       font-weight: 800;
       font-size: 0.9em;
+      /* Use flex display for proper flex-direction and transition */
       display: flex;
-      flex-direction: row;
-      position: static;
-      background-color: transparent;
-      padding: 0;
-      box-shadow: none;
-      border: none;
-      margin-bottom: 50px;
-      margin-top: -10px;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 110vh;
+      /* Changed background to a solid color for mobile */
+      background: transparent;
+      transform: translateY(-100%);
+      transition: transform 0.3s ease;
+      padding: 60px 20px;
+      z-index: 9999;
+    }
+    .menu-links.open {
+      transform: translateY(0);
     }
     .menu-links a {
-      padding: 0 15px;
-      display: inline-block;
+      padding: 15px 0;
+      display: block;
+      text-align: center;
     }
     .menu-links a:hover {
       background: var(--accent-hover);
@@ -137,85 +119,73 @@
     .logo-link img {
       max-height: 110px;
       width: 110px;
-      position: relative;
-      top: 9px;
-      margin-left: 50px;
+      
     }
-
-    /* Desktop styles */
-    @media (min-width: 769px) {
-      .hamburger-icon {
-        display: block;
-      }
-      .mobile-logo {
-        display: none;
-      }
-      .menu-links {
-        display: flex;
-        flex-direction: row;
-        align-items: center; /* Vertically center links and buttons */
-        justify-content: space-between;
-        width: 100%;
-        margin-top: 8px;
-      }
+    .close-icon {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 1.7rem;
+      cursor: pointer;
+      color: var(--text-color);
     }
-
-    /* Mobile styles */
+    
+    /* Mobile Styles */
     @media (max-width: 768px) {
       .hamburger-menu {
-        justify-content: center;
+        justify-content: flex-end;
       }
       .hamburger-icon {
-        display: none;
-      }
-      .mobile-logo {
-        display: block;
-      }
-      .menu-links {
-        display: block;
-        position: fixed;
-        top: 0; 
-        left: 0;
-        width: 100%;
-        height: 110vh;
-        background: var(--background) url('background.jpg') repeat;
-        background-blend-mode: overlay;
-        transform: translateY(-100%);
-        transition: transform 0.3s ease;
-        padding: 60px 20px;
-        flex-direction: column;
-        z-index: 9999;
-      }
-      .menu-links a {
-        padding: 15px 0;
-        display: block;
-        text-align: center;
-      }
-      .menu-links.open {
-        transform: translateY(0);
-      }
-      .close-icon {
         display: block;
         position: absolute;
-        top: 15px;
+        top: 10px;
         right: 20px;
-        font-size: 1.7rem;
-        cursor: pointer;
-        color: var(--text-color);
       }
-      .logo-link {
-        text-align: center;
-        margin-left: -50px;
-        margin-bottom: 30px;
+      /* Set a solid background for the menu on mobile for reliable transform */
+      .menu-links {
+        background: url('background.png');
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+        pointer-events: none; /* disable clicks when closed */
+      }
+
+      .menu-links.open {
+  transform: translateY(0);
+  pointer-events: auto; /* enable clicks when open */
+}
+      }
+
+    
+    /* Desktop Styles: Inline Navigation */
+    @media (min-width: 769px) {
+      .hamburger-icon,
+      .close-icon {
+        display: none;
+      }
+      .menu-links {
+        position: static;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        transform: none;
+        height: auto;
+        padding: 0;
+        margin-top: 8px;
+      }
+      .menu-links a {
+        padding: 0 15px;
+        display: inline-block;
+        text-align: left;
       }
     }
+    
     .menu-links a.active {
       color: var(--bg-color);
     }
-
-    /* ==============================
-       MENU BUTTONS (LOG IN / GET STARTED)
-    ============================== */
+    
+    /* MENU BUTTONS (LOG IN / GET STARTED) */
     .menu-button {
       background-color: var(--accent-color);
       color: var(--bg-color);
@@ -250,10 +220,8 @@
         align-items: center;
       }
     }
-
-    /* ==============================
-       HERO SECTION
-    ============================== */
+    
+    /* HERO SECTION */
     #homeHero {
       background: transparent;
       display: flex;
@@ -262,7 +230,7 @@
       justify-content: center;
       padding: 40px 20px;
       text-align: center;
-      min-height: 80vh;
+      min-height: 70vh;
     }
     .hero-heading {
       font-family: 'Montserrat', sans-serif;
@@ -313,6 +281,7 @@
       transform: translateY(-2px);
     }
     .hero-image {
+      margin-top: -50px;
       width: 80%;
       max-width: 600px;
       margin: 40px auto 0;
@@ -334,11 +303,10 @@
       40% { transform: translateY(10px); }
       60% { transform: translateY(5px); }
     }
-
-    /* ==============================
-       FEATURES SECTION
-    ============================== */
+    
+    /* FEATURES SECTION */
     .features-section {
+      margin-top: -200px;
       background: transparent;
       padding: 60px 20px;
       color: var(--text-color);
@@ -432,10 +400,8 @@
         height: 300px;
       }
     }
-
-    /* ==============================
-       ABOUT PLATFORM SECTION
-    ============================== */
+    
+    /* ABOUT PLATFORM SECTION */
     #aboutPlatform {
       position: relative;
       background: transparent;
@@ -447,8 +413,8 @@
       position: absolute;
       bottom: 0;
       right: 0;
-      z-index: 1; 
-      opacity: 0.25; 
+      z-index: 1;
+      opacity: 0.25;
     }
     #aboutPlatform .container {
       position: relative;
@@ -476,7 +442,7 @@
       margin-bottom: 20px;
       line-height: 1.7;
       animation: fadeSlide 1s ease forwards;
-      opacity: 0; 
+      opacity: 0;
     }
     #aboutPlatform p:nth-of-type(1) { animation-delay: 0.2s; }
     #aboutPlatform p:nth-of-type(2) { animation-delay: 0.4s; }
@@ -493,44 +459,25 @@
       to { opacity: 1; }
     }
     @keyframes fadeSlide {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
     @keyframes slideInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(50px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      0% { opacity: 0; transform: translateY(50px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
   <!-- Hamburger Menu -->
   <div class="hamburger-menu">
-    <!-- Desktop Hamburger Icon -->
+    <!-- Simple Hamburger Icon on Mobile (Top Right) -->
     <span class="hamburger-icon" id="hamburgerIcon" onclick="toggleMenu()" aria-label="Toggle navigation menu" role="button" tabindex="0">☰</span>
-    
-    <!-- Mobile Logo Trigger (visible only on mobile) -->
-    <div class="mobile-logo" onclick="mobileLogoClick()">
-      <img src="logoSI.png" alt="Smart Invest Logo">
-    </div>
     
     <div class="menu-links" id="menu">
       <div class="close-icon" onclick="toggleMenu()">✕</div>
       <!-- Navigation Links -->
-      <a href="index.html" class="logo-link">
-        <img src="logoSI.png" alt="Smart Invest Logo">
-      </a>
+      <a href="index.html" class="logo-link"><img src="logoSI.png" alt="Smart Invest Logo"></a>
       <a href="dashboard.html">Dashboard</a>
       <a href="momentum-factors.html">Trader</a>
       <a href="risk-level.html">Risk Level</a>
@@ -545,11 +492,36 @@
     </div>
   </div>
 
+  <section id="aboutPlatform">
+    <div class="token-about">
+      <img src="floating_token.png" alt="Floating Token" style="width: 2000px; height: auto;">
+    </div>
+    <div class="container">
+      <h2>Stocks By Bots</h2>
+      <p>This website is a work in progress with the intention of providing all in one investment tools for all.</p>
+      <p>Scroll down to view platform features.</p>
+      <p>For mobile click on the ☰ icon above to open the navigation menu, on desktop click the links above.</p>
+      <p>Unlike other platforms, our service will be free to use and doesn’t require any personal information whatsoever.</p>
+      <p>Current investment strategies and automated trading are still being refined and tested but will be added soon.</p>
+      <hr class="dark-divider" />
+      <h2>Why us?</h2>
+      <p>This platform aims to provide a fair chance for all.</p>
+      <p>The institutions that use algorithms to trade make billions of dollars every single day, while regular people end up with mere crumbs.</p>
+      <p>Expert strategy or decades of experience isn't necessarily the answer.</p>
+      <p><strong>Computer algorithms execute up to 75% of all trades, according to Select USA.</strong></p>
+      <p>Using our automated investment strategies, based on your risk level, we're giving you the chance to:</p>
+      <p>- Level the playing field and tap into the same powerful tools that the pros rely on.</p>
+      <p>- All for free.</p>
+      <p>- No tedious sign up or consultations.</p>
+      <hr class="dark-divider" />
+    </div>
+  </section>
+
   <!-- HERO SECTION -->
   <section id="homeHero">
     <h1 class="hero-heading">Better Investing, Simplified</h1>
-    <p class="hero-subheading">Discover how top investors manage portfolios using real-time data, Monte Carlo simulations, and advanced analytics. All in one place.</p>
-    <p class="hero-subheading">Unlike other platforms, our service is completely free to use and doesn’t require any personal information whatsoever.</p>
+    <p class="hero-subheading">This website is a work in progress with the intention of providing all in one investment tools for all.</p>
+    <p class="hero-subheading">Unlike other platforms, our service will be free to use and doesn’t require any personal information whatsoever.</p>
     <div class="scroll-down" onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'});">↓</div>
   </section>
 
@@ -588,23 +560,6 @@
     </div>
   </section>
 
-  <!-- ABOUT PLATFORM SECTION -->
-  <section id="aboutPlatform">
-    <div class="token-about">
-      <img src="floating_token.png" alt="Floating Token" style="width: 2000px; height: auto;">
-    </div>
-    <div class="container">
-      <h2>Why Our Platform is Right For You</h2>
-      <hr class="dark-divider" />
-      <p>Let's be real... Wall Street has the game rigged in their favor.</p>
-      <p>They pull in billions of dollars every single day, while regular people end up with mere crumbs.</p>
-      <p>And here's the kicker: their secret weapon isn't some mystical strategy or decades of experience—it's technology.</p>
-      <p><strong>Computer algorithms execute up to 75% of all trades, according to Select USA.</strong></p>
-      <p>Now's your chance to level the playing field and tap into the same powerful tools that the pros rely on.</p>
-      <hr class="dark-divider" />
-    </div>
-  </section>
-
   <script>
     function toggleMenu() {
       const menu = document.getElementById('menu');
@@ -616,15 +571,6 @@
         menu.classList.add('open');
         icon.textContent = '✕';
       }
-    }
-    
-    function mobileLogoClick() {
-      const mobileLogo = document.querySelector('.mobile-logo');
-      mobileLogo.classList.add('shake');
-      setTimeout(function() {
-        mobileLogo.classList.remove('shake');
-        toggleMenu();
-      }, 500);
     }
 
     const hamburgerIcon = document.querySelector('.hamburger-icon');
