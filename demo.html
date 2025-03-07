@@ -32,7 +32,7 @@
     }
     body {
       font-family: 'Open Sans', Arial, sans-serif;
-      background: #181818;
+      background: linear-gradient(to bottom, var(--gradient-start) 0%, var(--gradient-start) 20%, var(--gradient-end) 100%);
       color: var(--text-color);
       margin: 0;
     }
@@ -44,7 +44,7 @@
     /* ------------ UPDATED NAVIGATION MENU (matching Home) ------------ */
     .hamburger-menu {
       position: relative;
-      background-color: var(--gradient-start);
+      background-color: transparent;
       padding: 10px 20px;
       display: flex;
       align-items: center;
@@ -158,7 +158,7 @@
 
     @media (max-width: 768px) {
       .hamburger-menu {
-        background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-start) 80%);
+        background: transparent;
         justify-content: flex-end;
       }
     }
@@ -196,7 +196,7 @@
 
     /* ------------ DEMO HERO SECTION ------------ */
     #demoHero {
-      background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end) 80%);
+      background: transparent;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -227,7 +227,7 @@
 
     /* ------------ VIDEO DEMO SECTION ------------ */
     .video-demo-section {
-      background-color: var(--gradient-end);
+      background-color: transparent;
       padding: 40px 20px;
       display: flex;
       flex-direction: column;
@@ -238,11 +238,11 @@
       width: 80%;
       max-width: 800px;
       height: 450px;
-      background-color: #333;
+      background-color: #0d0d0dac;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #888;
+      color: #ffffff89;
       font-size: 1.2rem;
       border-radius: 8px;
       margin-bottom: 20px;
@@ -251,7 +251,7 @@
       max-width: 800px;
       font-size: 1rem;
       line-height: 1.6;
-      color: #b5b5b5;
+      color: #ffffff;
       text-align: left;
     }
   </style>
@@ -292,7 +292,7 @@
   <section class="video-demo-section">
     <div class="video-placeholder">
       <!-- Embed your actual video here (e.g., YouTube iframe or HTML5 video) -->
-      Demo Video.
+      Demo Video will go here when it is ready. Currently not available.
     </div>
     <p class="demo-description">
       In this demonstration, you’ll see how to navigate our platform, interpret Monte Carlo results, set alerts for buy/sell signals, and even automate your strategy with our bot-trading algorithms.
