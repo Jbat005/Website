@@ -11,8 +11,8 @@
         :root {
             --bg-color: #181818;
             --light-bg: #0e1318;
-            --gradient-start: #1d2b3a;
-            --gradient-end: #0e1318;
+            --gradient-start: #000000;
+            --gradient-end: #fb6749;
             --text-color: #e0e0e0;
             --subtext-color: #b5b5b5;
             --accent-color: #64ffda;
@@ -26,9 +26,10 @@
             padding: 0;
             box-sizing: border-box;
         }
-        body {
+        html, body {
+            min-height: 100vh;
             font-family: 'Open Sans', Arial, sans-serif;
-            background: var(--bg-color);
+            background: linear-gradient(to bottom, var(--gradient-start) 0%, var(--gradient-start) 20%, var(--gradient-end) 100%);
             color: var(--text-color);
             margin: 0;
         }
@@ -42,7 +43,7 @@
         ============================== */
         .hamburger-menu {
             position: relative;
-            background-color: var(--gradient-start);
+            background-color: transparent;
             padding: 10px 20px;
             display: flex;
             align-items: center;
@@ -194,7 +195,7 @@
            HERO SECTION (matching home)
         ============================== */
         #momentumHero {
-            background: linear-gradient(to bottom, var(--gradient-start) 0%, var(--gradient-start) 20%, var(--gradient-end) 100%);
+            background: transparent;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -244,13 +245,13 @@
            PORTFOLIO SECTION
         ============================== */
         .portfolio-section {
-            background-color: #0e1318;
+            background-color: transparent;
             padding: 60px 20px;
         }
         .weights-table {
             max-width: 800px;
             margin: 30px auto;
-            background: #1d2b3a;
+            background: transparent;
             border-radius: 8px;
             overflow: hidden;
         }
